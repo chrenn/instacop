@@ -1,3 +1,4 @@
 # InstaCop
 
-# Coming soon! twitter.com/InstaCopV2
+Coming soon.
+twitter.com/InstaCopV2
