@@ -6,6 +6,8 @@ Like the infamous Solemartyr script, InstaCop runs solely in the browser and is 
 
 **⚠️ This will not help you get through splash.**
 
+![Screenshot](https://github.com/bequadro/instacop/blob/master/v2.8.0.png?raw=true)
+
 ## Features
 
 - Single Page Interface
