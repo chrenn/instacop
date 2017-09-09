@@ -23,62 +23,62 @@ Installation is similar to Solemartyr's. Type the macOS commands into `Terminal.
 
 #### 1. Download and unzip
 
-[Button](https://github.com/bequadro/instacop)
-   
+   [Button](https://github.com/bequadro/instacop)
+
 #### 2. Start a local server
-   
-###### macOS
 
-Terminal: `sudo apachectl start`
-   
-###### Windows
+   ###### macOS
 
-Install MAMP or XAMPP
-   
+   Terminal: `sudo apachectl start`.
+
+   ###### Windows
+
+   Install MAMP or XAMPP.
+
 #### 3. Put the files into the server root folder
-   
-Make sure to place `index.html` and the `instacop` folder directly on the root.
-   
-###### macOS
 
-Go to `/Library/WebServer/Documents`
-   
-###### Windows
+   Make sure to place `index.html` and the `instacop` folder directly on the root.
 
-Look for some folder called `htdocs`, e.g. `C:\MAMP\htdocs`
-   
+   ###### macOS
+
+   Go to `/Library/WebServer/Documents`.
+
+   ###### Windows
+
+   Look for some folder called `htdocs`, e.g. `C:\MAMP\htdocs`.
+
 #### 4. Open your host file
-   
-###### macOS
 
-Terminal: `sudo nano /private/etc/hosts`
-   
-###### Windows
+   ###### macOS
 
-Edit `C:\Windows\System32\Drivers\etc\hosts` as admin
-   
+   Terminal: `sudo nano /private/etc/hosts`.
+
+   ###### Windows
+
+   Edit `C:\Windows\System32\Drivers\etc\hosts` as admin.
+
 #### 5. Edit your host file
-   
-Add the following line, where `.tld` is your country's top level domain (`.com` for US, `.de` for Germany, ...)
 
-`127.0.0.1 w.www.adidas.tld`
+   Add the following line, where `.tld` is your country's top level domain (`.com` for US, `.de` for Germany, ...).
 
-Do not forget the additional `.w`
+   `127.0.0.1 w.www.adidas.tld`
+
+   Do not forget the additional `.w`.
 
 #### 6. Edit your host file
-   
-###### macOS
 
-Press `Ctrl+x` to exit, `y` to confirm, `Enter` to save
-   
-###### Windows
+   ###### macOS
 
-Just save the file.
+   Press `Ctrl+x` to exit, `y` to confirm, `Enter` to save.
+
+   ###### Windows
+
+   Just save the file.
 
 #### 6. Open InstaCop in your browser
 
-Use the domain you specified in step 5
-   
+   Use the domain you specified in step 5.
+
 ## Usage
 
 ### Parameters
