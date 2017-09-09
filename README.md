@@ -23,7 +23,7 @@ Installation is similar to Solemartyr's. Type the macOS commands into `Terminal.
 
 #### 1. Download and unzip
 
-   [Button](https://github.com/bequadro/instacop)
+   [![Github All Releases](https://img.shields.io/github/downloads/bequadro/instacop/total.svg?style=flat-square)](https://github.com/bequadro/instacop)
 
 #### 2. Start a local server
 
@@ -65,7 +65,7 @@ Installation is similar to Solemartyr's. Type the macOS commands into `Terminal.
 
    Do not forget the additional `.w`.
 
-#### 6. Edit your host file
+#### 6. Save your host file
 
    ###### macOS
 
@@ -75,7 +75,7 @@ Installation is similar to Solemartyr's. Type the macOS commands into `Terminal.
 
    Just save the file.
 
-#### 6. Open InstaCop in your browser
+#### 7. Open InstaCop in your browser
 
    Use the domain you specified in step 5.
 
