@@ -14,8 +14,6 @@ Like the infamous Solemartyr script, InstaCop runs solely in the browser and is 
 
 **This will not help you get through splash.**
 
-![Screenshot](v2.8.0.png)
-
 # Features
 
 - Single Page Interface
@@ -24,6 +22,8 @@ Like the infamous Solemartyr script, InstaCop runs solely in the browser and is 
 - Captcha Harvesting
 - 2Captcha & AntiCaptcha Support
 - HMAC Cookie Management
+
+![Screenshot](v2.8.0.png)
 
 # Installation
 
