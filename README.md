@@ -4,9 +4,9 @@ I decided to open source my adidas.com script. This has been in development sinc
 
 Like the infamous Solemartyr script, InstaCop runs solely in the browser and is therefore limited in its scope.
 
-**⚠️ This will not help you get through splash.**
+**This will not help you get through splash.**
 
-![Screenshot](https://github.com/bequadro/instacop/blob/master/v2.8.0.png?raw=true)
+![Screenshot](v2.8.0.png)
 
 ## Features
 
@@ -21,7 +21,7 @@ Like the infamous Solemartyr script, InstaCop runs solely in the browser and is 
 
 Installation is similar to Solemartyr's. Type the macOS commands into `Terminal.app`.
 
-1. [Download](https://github.com/instacop.zip) and unzip.
+1. [Download](https://github.com/bequadro/instacop) and unzip.
    
 2. Start a local server.
    
@@ -73,7 +73,7 @@ Pairs that are ready to be carted | Current stock including cart holds | Diffe
 
 **Client** stock checking is the primary method and the only one that can show avail. pairs. It checks the Demandware API with the provided ClientID key.
 
-**HTML** stock checking is the first fallback method and usually shows the same stock amount as **Client**. It scrapes the product page for stock numbers.
+**HTML** stock checking is the first fallback method and usually shows the same stock amount as *Client*. It scrapes the product page for stock numbers.
 
 **Variant** stock checking is the second fallback and uses an adidas.com endpoint, but the numbers are way off nowadays.
 
@@ -81,7 +81,7 @@ You can force the fallback options toggling the `Avail.` and `Stock` table heade
 
 ### Auto Mode
 
-`Auto` ATC Mode adds the size with the highest avail. number. Only works with **Client** stock checking.
+`Auto` ATC Mode adds the size with the highest avail. number. Only works with *Client* stock checking.
 
 `Monitor` alerts the stock number during each refresh with a browser notification. Works best with Auto Refresh.
 
@@ -121,11 +121,11 @@ Feature-wise we are probably at the limit of what can be done with a client side
 
 Please excuse the (in parts) messy code. This was my first JavaScript project.
 
-I put everything in a single Vue component. `app.js` and `inventory.js` are coupled in a strange way. I put my CSS on top of bulma.css with way too many `!important`s.
+I put everything in a single Vue.js component. `app.js` and `inventory.js` are coupled in a strange way. The CSS on top of bulma.css has way too many `!important`s in it.
 
 I also did not use any build tools for this project, which is kind of insane, but makes forking it easier for you.
 
-Unfortunately, I don't have the time to refactor this project. If you feel the need to do this, please submit a pull request.
+Unfortunately, I don't have the time to refactor this project. If you'd like to contribute, please contact me or submit a pull request.
 
 ## License
 
