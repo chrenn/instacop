@@ -21,39 +21,63 @@ Like the infamous Solemartyr script, InstaCop runs solely in the browser and is 
 
 Installation is similar to Solemartyr's. Type the macOS commands into `Terminal.app`.
 
-1. [Download](https://github.com/bequadro/instacop) and unzip.
+#### 1. Download and unzip
+
+[Button](https://github.com/bequadro/instacop)
    
-2. Start a local server.
+#### 2. Start a local server
    
-   MAC: `sudo apachectl start`.
+###### macOS
+
+Terminal: `sudo apachectl start`
    
-   WIN: Install MAMP or XAMPP.
+###### Windows
+
+Install MAMP or XAMPP
    
-3. Put the files into the server root folder.
+#### 3. Put the files into the server root folder
    
-   Make sure to place `index.html` and the `instacop` folder directly on the root.
+Make sure to place `index.html` and the `instacop` folder directly on the root.
    
-   MAC: `/Library/WebServer/Documents`.
+###### macOS
+
+Go to `/Library/WebServer/Documents`
    
-   WIN: Some folder called `htdocs`.
+###### Windows
+
+Look for some folder called `htdocs`, e.g. `C:\MAMP\htdocs`
    
-4. Open your host file.
+#### 4. Open your host file
    
-   MAC: `sudo nano /private/etc/hosts`.
+###### macOS
+
+Terminal: `sudo nano /private/etc/hosts`
    
-   WIN: Edit `C:\Windows\System32\Drivers\etc\hosts` as admin.
+###### Windows
+
+Edit `C:\Windows\System32\Drivers\etc\hosts` as admin
    
-5. Edit your host file.
+#### 5. Edit your host file
    
-   Add the following line. `.tld` is your top level domain (`.com` for US, `.de` for Germany, ...) .
-   
-   `127.0.0.1 w.www.adidas.tld`
-   
-   Do not forget the additional `.w`.
+Add the following line, where `.tld` is your country's top level domain (`.com` for US, `.de` for Germany, ...)
+
+`127.0.0.1 w.www.adidas.tld`
+
+Do not forget the additional `.w`
+
+#### 6. Edit your host file
    
-   MAC: Press `Ctrl+x` to exit, `y` to confirm, `Enter` to save.
+###### macOS
+
+Press `Ctrl+x` to exit, `y` to confirm, `Enter` to save
    
-   WIN: Just save the file.
+###### Windows
+
+Just save the file.
+
+#### 6. Open InstaCop in your browser
+
+Use the domain you specified in step 5
    
 ## Usage
 
