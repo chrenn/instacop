@@ -1,8 +1,4 @@
-<!--**************************************************************************************
-
-(c) 2017 twitter.com/InstaCopV2 twitter.com/bqdxo
-
-***************************************************************************************-->
+<!-- (c) 2017 twitter.com/InstaCopV2 twitter.com/bqdxo -->
 
 <!DOCTYPE html>
 
@@ -15,18 +11,11 @@
 		<meta name="referrer" content="no-referrer">
 
 		<link rel="mask-icon" href="instacop/mask.svg" color="#ff4727">
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
 		<title>InstaCop V2</title>
 
-		<script src='https://www.google.com/recaptcha/api.js'></script>
-
-		<script src="instacop/jquery.min.js"></script>
-		<script src="instacop/bootstrap/js/bootstrap.min.js"></script>
-		<script src='instacop/js.cookie.js'></script>
-		<script src="instacop/jquery.timer.js"></script>
-		<script src="instacop/jquery.countdown.js"></script>
-		<script src="instacop/json2html.js"></script>
-		<script src="instacop/jquery.json2html.js"></script>
+		<script src='https://www.google.com/recaptcha/api.js' async defer></script>
 
 		<link rel="stylesheet" href="instacop/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="instacop/instacop.css">
@@ -36,702 +25,450 @@
 
 	<body class="beluga-fg steeple-bg">
 
+		<div id="app">
 
-		<form action="" method="post" target="cart_frame" hidden="true" id="post_form" name="addProductForm">
+			<form action="" method="post" target="cart_frame" hidden="true" id="post_form" name="addProductForm">
 
-			<input name="layer" value="Add To Bag overlay">
-			<input name="pid" value="" id="post_pid">
-			<input name="Quantity" value="1">
-			<input name="g-recaptcha-response" value="" id="post_token">
-			<input name="x-PrdRt" value="" id="post_xpr">
-			<input name="masterPid" value="" id="post_mpid">
-			<input name="sessionSelectedStoreID" value="null">
-			<input name="responseformat" value="json" disabled="disabled">
-			<input name="ajax" value="true">
+				<input name="layer" value="Add To Bag overlay">
+				<input name="pid" id="post_pid" value="">
+				<input name="Quantity" value="1">
+				<input name="g-recaptcha-response" id="post_token" value="">
+				<input name="x-PrdRt" id="post_dup" value="">
+				<input name="masterPid" id="post_mpid" value="">
+				<input name="sessionSelectedStoreID" value="null">
+				<input name="responseformat" value="json" disabled="disabled">
+				<input name="ajax" value="true">
 
-		</form>
-
-		<form action="" method="post" target="cart_frame" hidden="true" id="post_form_serialized" name="addProductForm"></form>
-
-		<form action="" method="post" target="hmac_frame" hidden="true" id="hmac_form"></form>
-
-		<iframe src="" hidden="true" id="hmac_frame" name="hmac_frame"></iframe>
+			</form>
 
 
-		<div class="container">
+			<div class="container">
 
-			<header class="header"><h2><span class="pointer" onclick="location.reload();">InstaCop <span class="solar-fg">V2</span></span></h2></header>
+				<header class="header"><h2>
+					<span class="pointer" onclick="location.reload();">InstaCop </span>
+					<span class="pointer" :class="{ 'solar-fg': auth }" @click="editPW">V2</span>
+				</h2></header>
 
-			<div class="row main">
+				<div class="row main">
 
-				<div class="col-lg-4 col-sm-6">
+					<div class="col-lg-4 col-sm-6">
 
-					<h4><span class="label beluga-bg">Settings</span></h4>
+						<h4><span class="label beluga-bg">Settings</span></h4>
 
-					<div class="row captcha-w-row">
+						<div class="row captcha-w-row">
 
-						<div class="form-group col-sm-6">
+							<div class="form-group col-sm-6">
 
-							<label for="user_locale">Locale &nbsp;<span class="caret"></span></label>
-							<div class="pull-right">Default</div>
+								<label for="user_locale">Locale &nbsp;<span class="caret"></span></label>
 
-							<div class="input-group">
-
-								<select class="form-control input-select" id="user_locale">
+								<select class="form-control input-select" id="user_locale" v-model="config.locale">
 
 									<optgroup label="Oceania">
-										<option   data-domain="com.au"   value="AU"   data-lang="en_AU"   >Australia</option>
-										<option   data-domain="co.nz"    value="NZ"   data-lang="en_NZ"   >New Zealand</option>
+										<option :value="{ id: 'AU', domain: 'com.au', lang: 'en' }">Australia</option>
+										<option :value="{ id: 'NZ', domain: 'co.nz', lang: 'en' }">New Zealand</option>
 									</optgroup>
 									<optgroup label="Europe">
-										<option   data-domain="at"       value="AT"   data-lang="de_AT"   >Austria</option>
-										<option   data-domain="be"       value="BE"   data-lang="fr_BE"   >Belgium</option>
-										<option   data-domain="cz"       value="CZ"   data-lang="cs_CZ"   >Czech Republic</option>
-										<option   data-domain="dk"       value="DK"   data-lang="da_DK"   >Denmark</option>
-										<option   data-domain="fi"       value="FI"   data-lang="fi_FI"   >Finland</option>
-										<option   data-domain="fr"       value="FR"   data-lang="fr_FR"   >France</option>
-										<option   data-domain="de"       value="DE"   data-lang="de_DE"   >Germany</option>
-										<option   data-domain="ie"       value="IE"   data-lang="en_IE"   >Ireland</option>
-										<option   data-domain="it"       value="IT"   data-lang="it_IT"   >Italy</option>
-										<option   data-domain="nl"       value="NL"   data-lang="nl_NL"   >Netherlands</option>
-										<option   data-domain="pl"       value="PL"   data-lang="pl_PL"   >Poland</option>
-										<option   data-domain="es"       value="ES"   data-lang="es_ES"   >Spain</option>
-										<option   data-domain="se"       value="SE"   data-lang="sv_SE"   >Sweden</option>
-										<option   data-domain="co.uk"    value="GB"   data-lang="en_GB"   >United Kingdom</option>
+										<option :value="{ id: 'AT', domain: 'at', lang: 'de' }">Austria</option>
+										<option :value="{ id: 'BE', domain: 'be', lang: 'fr' }">Belgium</option>
+										<option :value="{ id: 'CZ', domain: 'cz', lang: 'cs' }">Czech Republic</option>
+										<option :value="{ id: 'DK', domain: 'dk', lang: 'da' }">Denmark</option>
+										<option :value="{ id: 'FI', domain: 'fi', lang: 'fi' }">Finland</option>
+										<option :value="{ id: 'FR', domain: 'fr', lang: 'fr' }">France</option>
+										<option :value="{ id: 'DE', domain: 'de', lang: 'de' }">Germany</option>
+										<option :value="{ id: 'IE', domain: 'ie', lang: 'en' }">Ireland</option>
+										<option :value="{ id: 'IT', domain: 'it', lang: 'it' }">Italy</option>
+										<option :value="{ id: 'NL', domain: 'nl', lang: 'nl' }">Netherlands</option>
+										<option :value="{ id: 'PL', domain: 'pl', lang: 'pl' }">Poland</option>
+										<option :value="{ id: 'RU', domain: 'ru', lang: 'ru' }">Russia</option>
+										<option :value="{ id: 'ES', domain: 'es', lang: 'es' }">Spain</option>
+										<option :value="{ id: 'SE', domain: 'se', lang: 'sv' }">Sweden</option>
+										<option :value="{ id: 'GB', domain: 'co.uk', lang: 'en' }">United Kingdom</option>
 									</optgroup>
 									<optgroup label="America">
-										<option   data-domain="com"      value="US"   data-lang="en_US"   >United States</option>
-										<option   data-domain="ca"       value="CA"   data-lang="en_CA"   >Canada</option>
-										<option   data-domain="mx"       value="MX"   data-lang="es_MX"   >Mexico</option>
-										<option   data-domain="com.br"   value="BR"   data-lang="pt_BR"   >Brazil</option>
+										<option :value="{ id: 'US', domain: 'com', lang: 'en' }">United States</option>
+										<option :value="{ id: 'CA', domain: 'ca', lang: 'en' }">Canada</option>
+										<option :value="{ id: 'MX', domain: 'mx', lang: 'es' }">Mexico</option>
+										<option :value="{ id: 'BR', domain: 'com.br', lang: 'pt' }">Brazil</option>
 									</optgroup>
 
 								</select>
 
-								<span class="input-group-addon"> 
-									<input type="checkbox" id="default_check" value="">
-								</span>
-
 							</div>
 
-						</div>
+							<div class="form-group col-sm-6">
 
-						<div class="form-group col-sm-6">
+								<label for="pid_style">Product</label>
 
-							<label for="pid_style">Product</label>
+								<div class="pull-right">
+									<span class="badge pointer v2-green invisible" @click="config.style = 'DA9572';">V2</span>
+									<span class="badge pointer v2-zebra" @click="config.style = 'CP9654';">V2</span>
+								</div>
 
-							<div class="pull-right">
-								<span class="badge pointer v2-bred invisible" onclick="$('#pid_style').val('CP9652').change();">V2</span>
-								<span class="badge pointer v2-zebra" onclick="$('#pid_style').val('CP9654').change();">V2</span>
-							</div>
+								<div class="input-group">
 
-							<div class="input-group">
+									<input class="form-control" type="text" spellcheck="false" placeholder="XX0000" v-model="config.style">
+									<span class="input-group-btn">
+										<a class="form-control btn btn-default" id="pid_img" target="_blank" :href="pidLink" :style="{ 'background-image': 'url(' + pidImg + ')' }">{{ pidImg ? "" : "-" }}</a>
+									</span>
 
-								<input class="form-control" id="pid_style" type="text" placeholder="XX0000" value=" ">
-								<span class="input-group-btn">
-									<button class="form-control btn btn-default" id="pid_img" onclick="$('#pid_style').change(); openPID();">-</button>
-								</span>
-
-							</div>
-
-						</div>
-
-					</div>
-
-					<div class="row captcha-w-row">
-						
-						<div class="form-group col-sm-6">
-
-							<label for="xpr_val">x-PrdRt</label>
-							<div class="pull-right">Serialize</div>
-
-							<div class="input-group">
-
-								<input class="form-control" id="xpr_val" type="text" placeholder="XxXXX0xxX" value=" ">
-
-								<span class="input-group-addon"> 
-									<input type="checkbox" id="serialize_check" value="">
-								</span>
-								
-							</div>
-
-						</div>
-
-						<div class="form-group col-sm-6">
-
-							<label for="pid_size">Size</label>
-
-							<div class="input-group">
-
-								<input class="form-control" id="pid_size" type="text" placeholder="000" value=" ">
-
-								<span class="input-group-btn">
-									<button class="btn btn-default" id="size_add" onclick="addToCart($('#pid_size').val());">Add</button>
-								</span>
-								
-							</div>
-
-						</div>
-
-					</div>
-
-					<div class="row captcha-w-row">
-
-						<div class="form-group col-sm-12">
-
-							<label for="client_id">Client ID</label>
-
-							<input class="form-control" id="client_id" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" value=" ">
-
-						</div>
-
-					</div>
-
-					<div class="spacer"></div>
-
-					<h4><span class="label beluga-bg">Captcha</span></h4>
-
-					<div class="form-group captcha-w">
-
-						<label for="site_key">Sitekey</label>
-
-						<div class="pull-right">
-							<span class="badge btn-bg beluga-fg invisible" id="token_timer"></span>
-							<span class="badge btn-bg beluga-fg pointer" id="token_status" onclick="prompt('Copy this!',getToken());">Tokens: 0</span>
-						</div>
-
-						<input class="form-control steeple-bg" id="site_key" type="text" readonly="true">
-
-					</div>
-
-					<div class="g-recaptcha" id="g_captcha" data-sitekey="" data-callback="captchaCallback"></div>
-
-					<script> //thank you @bapeyeezy!
-
-						function addSiteKey() {
-
-							var defaultKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
-
-							var siteKey = getUrlParam('sitekey');
-
-							if ((siteKey == null) || (siteKey == '')) {
-								siteKey = defaultKey;
-							}
-
-							document.getElementById('g_captcha').setAttribute('data-sitekey', siteKey);
-							document.getElementById('site_key').value = siteKey;
-
-						}
-
-						addSiteKey();
-
-					</script>
-
-					<div class="spacer"></div>
-					<div class="spacer"></div>
-					<div class="spacer-sm"></div>
-
-					<h4><span class="label beluga-bg">Tools</span></h4>
-
-					<div class="row captcha-w-row">
-
-						<div class="form-group col-sm-6">
-
-							<label>Splash</label>
-
-							<div class="input-group">
-
-								<div class="btn-group">
-									<button class="btn btn-default" onclick="generateSplash();">ATC</button>
-									<button class="btn btn-default" onclick="openSplash();">Open</button>
 								</div>
 
 							</div>
 
 						</div>
 
-						<div class="form-group col-sm-6">
-
-							<label>HMAC</label>
-
-							<div class="pull-right">
-								<span class="badge btn-bg beluga-fg invisible" id="hmac_status"></span>
-							</div>
+						<div class="row captcha-w-row">
 							
-							<div class="btn-group btn-group-justified">
-								<div class="btn-group">
-									<button class="btn btn-default" id="hmac_edit" onclick="setHMAC(prompt('HMAC value:', getHMAC()));">Edit</button>
-								</div>
-								<div class="btn-group">
-									<button class="btn btn-default" id="hmac_check" onclick="checkHMAC();">Check</button>
-								</div>
+							<div class="form-group col-sm-6">
+
+								<label for="xpr_val">Duplicate</label>
+
+								<input class="form-control" type="text" spellcheck="false" placeholder="XXXXXX" v-model="config.captchaDup">
+
 							</div>
 
 						</div>
 
-					</div>
+						<div class="row captcha-w-row">
 
-					<div class="form-group captcha-w">
+							<div class="form-group col-sm-12">
 
-						<label for="hmac_r_page">HMAC Retrieval (EU only)</label>
-						<span class="badge btn-bg beluga-fg pointer pull-right" id="hmac_r_status" onclick="prompt('HMAC Link',getHMACLink());"></span>
+								<label for="client_id">Client ID</label>
 
-						<div class="input-group">
+								<input class="form-control" type="text" spellcheck="false" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" style="font-size: 11px" v-model="config.clientID">
 
-							<input class="form-control" id="hmac_r_page" type="text" placeholder="http://www.adidas.com/yeezy" data-hmaclink="" value="www.adidas.com/de/apps/yeezy/">
-
-							<span class="input-group-btn">
-								<button class="btn btn-default" onclick="injectHMAC();">
-									<span class="glyphicon glyphicon-cloud-download" id="hmac_r_gif"></span>
-								</button>
-							</span>
-
-						</div>
-
-					</div>
-
-				</div>
-
-
-				<div class="col-lg-4 col-sm-6">
-
-					<h4><span class="label beluga-bg">Inventory ATC</span></h4>
-
-					<div class="row table-w-row">
-
-						<div class="form-group col-sm-6">
-
-							<label for="auto_atc">Mode</label>
-
-							<div class="input-group" id="auto_atc">
-
-								<div class="btn-group btn-group-sm" data-toggle="buttons">
-
-									<label class="btn btn-default active">
-										<input type="radio" name="auto_atc_options" id="auto_atc_off" checked="true">Off
-									</label>
-									<label class="btn btn-default">
-										<input type="radio" name="auto_atc_options" id="auto_atc_auto">Auto
-									</label>
-									<!--RELEASE-->
-									<!--label class="btn btn-default disabled monitor-disabled"-->
-									<label class="btn btn-default" onclick="enableNotifications();">
-										<input type="radio" name="auto_atc_options" id="auto_atc_restock">Monitor
-									</label>
-
-								</div>
-								
 							</div>
 
 						</div>
 
-						<div class="form-group col-sm-6">
+						<div class="spacer"></div>
 
-							<label for="refresh_s">Refresh</label>
-							<span class="badge btn-bg beluga-fg pull-right" id="stock_status"></span>
+						<h4><span class="label beluga-bg">Captcha</span></h4>
 
-							<div class="input-group input-group-sm" id="test">
+						<div class="form-group captcha-w">
 
-								<span class="input-group-btn" style="padding-right:5px"> 
-									<button type="button" class="btn btn-default" id="refresh_mode" data-toggle="button" data-mode="off">
-										<span class="glyphicon glyphicon-off" id="refresh_mode_glyph"></span>
+							<label for="site_key">Sitekey</label>
+
+							<div class="pull-right">
+								<span class="badge btn-bg beluga-fg" id="token_timer" :class="{ invisible : !tokens.length }"></span>
+								<span class="badge btn-bg beluga-fg pointer" :class="{ 'solar-bg' : tokens.length }" @click="popToken">Tokens: {{tokens.length}}</span>
+							</div>
+
+							<div class="input-group">
+
+								<input class="form-control steeple-bg" type="text" spellcheck="false" readonly="true" style="font-size: 9px" v-model="config.sitekey">
+
+								<span class="input-group-btn">
+									<button class="btn btn-default" @click="fetchSitekey">
+										<span class="glyphicon glyphicon-download" :class="{ 'gly-spin' : sitekey.loading }"></span>
+									</button>
+									<button class="btn btn-default" @click="editSitekey">
+										<span class="glyphicon glyphicon-cog"></span>
 									</button>
 								</span>
 
-								<input class="form-control" id="refresh_sleep" type="number" min="1" placeholder="" value="10">
-								<span id="refresh_unit">s</span>
+							</div>
 
-								<span class="input-group-btn" style="padding-left:5px"> 
-									<button class="btn btn-default" id="stock_load" onclick="loadStock();">
-										<span class="glyphicon glyphicon-refresh" id="stock_gif"></span>
+						</div>
+
+						<div class="form-group captcha-w">
+
+							<label for="site_key">2Captcha</label>
+
+							<div class="pull-right">
+								<span class="badge btn-bg solar-bg" v-if="tucap.error">{{tucap.error}}</span>
+								<span class="badge btn-bg beluga-fg pointer" v-if="!tucap.error" @click="popToken">Requests: {{tucap.requests}}</span>
+							</div>
+
+							<div class="input-group">
+
+								<input class="form-control steeple-bg" type="text" spellcheck="false" style="font-size: 9px" v-model="config.tucap">
+
+								<span class="input-group-btn">
+									<button class="btn btn-default" @click="requestTucap">
+										<span class="glyphicon glyphicon-plus-sign" :class="{ 'gly-spin' : tucap.requests }"></span>
 									</button>
 								</span>
-								
+
+							</div>
+
+						</div>
+
+						<div class="g-recaptcha" :data-sitekey="config.sitekey" data-callback="captchaCallback"></div>
+
+						<div class="spacer"></div>
+						<div class="spacer"></div>
+						<div class="spacer-sm"></div>
+
+						<h4><span class="label beluga-bg">HMAC</span></h4>
+
+						<div class="row captcha-w-row">
+
+							<div class="form-group col-sm-6">
+
+								<label>Cookie</label>
+
+								<input class="form-control steeple-bg" type="text" spellcheck="false" v-model="config.hmac">
+
+							</div>
+
+							<div class="form-group col-sm-6">
+
+								<label>Splash</label>
+
+								<div class="input-group btn-group-justified">
+
+									<a class="btn btn-default btn-block" :href="splashLink" target="_blank">Open</a>
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="form-group captcha-w">
+
+							<div class="input-group col-sm-12">
+
+								<label>Value</label>
+
+								<div class="pull-right">
+									<span class="badge btn-bg beluga-fg" id="hmac_timer" :class="{ invisible : !(hmac.status == 'Valid') }"></span>
+									<span class="badge btn-bg beluga-fg" :class="{ 'solar-bg' : (hmac.status == 'Valid') }">{{hmac.status}}</span>
+								</div>
+
+								<div class="input-group">
+
+									<input class="form-control steeple-bg" type="text" spellcheck="false" readonly="true" style="font-size: 10px" :disabled="!cookiesAccess" v-model="hmac.cookie">
+
+									<span class="input-group-btn">
+										<button class="btn btn-default" :disabled="!cookiesAccess" @click="editHMAC">
+											<span class="glyphicon glyphicon-cog"></span>
+										</button>
+									</span>
+
+								</div>
+
 							</div>
 
 						</div>
 
 					</div>
 
-					<table class="table table-hover table-condensed form-bg table-w" id="table_full">
+					<div class="col-lg-4 col-sm-6">
 
-						<colgroup>
-							<col width="13%">
-							<col width="17%">
-							<col width="15%">
-							<col width="15%">
-							<col width="15%">
-							<col width="25%">
-						</colgroup>
-						<thead>
-							<tr>
-								<th>Size</th>
-								<th id="table_locale"></th>
-								<th class="text-right pointer" id="table_total_avail" onclick="toggleAvail();">Avail.</th>
-								<th class="text-right pointer" id="table_total_stock" onclick="toggleStock();">Stock</th>
-								<th class="text-right">Δ</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody id="stock_table">
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-						</tbody>
+						<h4><span class="label beluga-bg">Inventory</span></h4>
 
-					</table>
+						<div class="row table-w-row">
 
-				</div>
+							<div class="form-group col-sm-6">
 
+								<label for="auto_atc">Mode</label>
 
-				<div class="col-lg-4 col-sm-12">
+								<div class="input-group">
 
-					<h4><span class="label beluga-bg">adidas.com</span></h4>
+									<div class="btn-group btn-group-sm" data-toggle="buttons">
 
-					<div class="row">
+										<label class="btn btn-default" :class="{ active : inventory.atc.mode == 'Off'}">
+											<input type="radio" name="atc_mode" v-model="inventory.atc.mode" value="Off">
+												<span class="glyphicon glyphicon-off"></span>
+											</input>
+										</label>
+										<label class="btn btn-default" :class="{ active : inventory.atc.mode == 'Auto'}">
+											<input type="radio" name="atc_mode" v-model="inventory.atc.mode" value="Auto">Auto
+										</label>
+										<label class="btn btn-default" :class="{ active : inventory.atc.mode == 'Monitor'}" @click.prevent="inventory.atc.mode = 'Monitor'; enableNotifications();">
+											<input type="radio" name="atc_mode">Monitor
+										</label>
 
-						<div class="form-group col-sm-5">
+									</div>
+									
+								</div>
 
-							<label for="account_buttons">Account</label>
-							
-							<div class="btn-group btn-group-sm input-group" role="group">
-								<button class="btn btn-default" name="account_buttons" onclick="goToADC('login');">Login</button>
-								<button class="btn btn-default" name="account_buttons" onclick="goToADC('logout');">Logout</button>
+							</div>
+
+							<div class="form-group col-sm-6">
+
+								<label for="refresh_s">Refresh</label>
+								<span class="badge btn-bg beluga-fg pull-right">{{inventory.status}}</span>
+
+								<div class="input-group input-group-sm">
+
+									<div class="btn-group btn-group-sm" data-toggle="buttons">
+
+										<label class="btn btn-default" :class="{ active : inventory.refresh.mode == 'Off'}">
+											<input type="radio" name="refresh_mode" v-model="inventory.refresh.mode" value="Off">
+												<span class="glyphicon glyphicon-off"></span>
+											</input>
+										</label>
+										<label class="btn btn-default" :class="{ active : inventory.refresh.mode == 'Captcha'}">
+											<input type="radio" name="refresh_mode" v-model="inventory.refresh.mode" value="Captcha">
+												<span class="glyphicon glyphicon-repeat"></span>
+											</input>
+										</label>
+										<label class="btn btn-default" :class="{ active : inventory.refresh.mode == 'Timer'}" @click.prevent="setSleep">
+											<input type="radio" name="refresh_mode">{{inventory.refresh.sleep}} s
+										</label>
+
+									</div>
+
+									<span class="input-group-btn"> 
+										<button class="btn btn-default" :disabled="inventory.refresh.mode == 'Timer' || inventory.status == '...'" @click="loadInventory">
+											<span class="glyphicon glyphicon-refresh" id="stock_gif" :class="{ 'gly-spin' : inventory.status == '...' }"></span>
+										</button>
+									</span>
+									
+								</div>
+
 							</div>
 
 						</div>
 
-						<div class="form-group col-sm-7">
+						<table class="table table-hover table-condensed form-bg table-w" id="stock_table">
 
-							<div class="pull-right">
+							<colgroup>
+								<col width="13%">
+								<col width="17%">
+								<col width="15%">
+								<col width="15%">
+								<col width="15%">
+								<col width="25%">
+							</colgroup>
+							<thead>
+								<tr>
+									<th>Size</th>
+									<th>{{inventory.locale}}</th>
+									<th class="text-right pointer" :class="{ strike : !inventory.avail.set }" @click="inventory.avail.set = !inventory.avail.set">{{inventory.avail.total}}</th>
+									<th class="text-right pointer" :class="{ strike : !inventory.stock.set }" @click="inventory.stock.set = !inventory.stock.set">{{inventory.stock.total}}</th>
+									<th class="text-right">Δ</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="stock_body">
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
 
-								<label for="cart_buttons">Cart</label>
-								<span class="badge btn-bg beluga-fg pull-right pointer" id="cart_status" onclick="resetCart();"></span>
+						</table>
 
+					</div>
+
+
+					<div class="col-lg-4 col-sm-12">
+
+						<h4><span class="label beluga-bg">adidas.{{config.locale.domain}}</span></h4>
+
+						<div class="row">
+
+							<div class="form-group col-sm-5">
+
+								<label for="account_buttons">Account</label>
+								
 								<div class="btn-group btn-group-sm input-group" role="group">
-									<button class="btn btn-default" name="cart_buttons" onclick="goToADC('show');">Show</button>
-									<button class="btn btn-default" name="cart_buttons" onclick="goToADC('paypal');">PayPal</button>
-									<button class="btn btn-default" name="cart_buttons" onclick="goToADC('checkout');">Checkout</button>
+									<a class="btn btn-default" name="account_buttons" :href="adcLink('login')" target="_blank">Login</a>
+									<a class="btn btn-default" name="account_buttons" :href="adcLink('logout')" target="_blank">Logout</a>
+								</div>
+
+							</div>
+
+							<div class="form-group col-sm-7">
+
+								<div class="pull-right">
+
+									<label for="cart_buttons">Cart</label>
+
+									<span class="badge btn-bg beluga-fg pull-right pointer" v-if="cart.adding">{{cart.text}}</span>
+
+									<span class="badge btn-bg beluga-fg pull-right pointer" v-if="!cart.adding && cookiesAccess" :class="{'solar-bg' : cart.items && cart.userCount}" @click="resetCart">
+										<span class="glyphicon glyphicon-shopping-cart"></span> {{cart.items}}
+									</span>
+
+									<div class="btn-group btn-group-sm input-group" role="group">
+										<a class="btn btn-default" name="cart_buttons" :href="adcLink('show')" target="_blank">Show</a>
+										<a class="btn btn-default" name="cart_buttons" :href="adcLink('paypal')" target="_blank">PayPal</a>
+										<a class="btn btn-default" name="cart_buttons" :href="adcLink('checkout')" target="_blank">Checkout</a>
+									</div>
+
 								</div>
 
 							</div>
 
 						</div>
 
+						<my-iframe></my-iframe>
+
 					</div>
 
-					<iframe class="form-control" id="cart_frame" name="cart_frame"></iframe>
-
 				</div>
+
+
+				<footer class="footer solar-bg">
+
+					&copy; 2017 &mdash; v2.8 &mdash; <a href="https://twitter.com/InstaCopV2" target="_blank">InstaCop on Twitter</a> &mdash; <a href="https://twitter.com/bqdxo" target="_blank">@bq</a> &mdash; Bookmarklets:
+
+					<a href="
+
+						javascript: (function () {
+
+							var instaURL = prompt('Enter InstaCop URL:', 'w.www.adidas.de');
+							var queryString = '/?';
+							try {queryString += '&pid=' + document.getElementsByName('masterPid')[0].value;} catch(err) {}
+							try {queryString += '&sitekey=' + document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey');} catch(err) {}
+							if (window.OCAPI_KEY != undefined) queryString += '&clientID=' + window.OCAPI_KEY;
+							try {
+							    window.captchaResponse();
+							    queryString += '&captchaDup=' +  document.getElementsByClassName('captcha-duplicate')[0].name;
+							} catch(err) {}
+							window.open('http://' + instaURL + queryString);
+
+						})();
+
+						">InstaLaunch</a>,
+
+					<a href="
+
+						javascript: (function () {
+
+							decodeURIComponent(document.cookie).split(';').forEach( item => {
+								let name = item.split('=')[0].split(' ').join('');
+								if (name.includes('dwanon')) {
+									let value = item.split('=')[1].split(' ').join('');
+									prompt(name, value);
+								}
+							});
+
+						})();
+
+						">InstaCart</a> &mdash; Utils:
+
+					<a :href="instaLink">InstaLink</a>,
+
+					<a href="javascript: prompt('This is your UserAgent:', navigator.userAgent); void(0);">UserAgent</a>,
+
+					<a href="javascript: $.get('https://ipinfo.io', function(response) { alert(response.ip + ' (' + response.country + ')'); }, 'jsonp'); void(0);">IP</a>
+
+				</footer>
 
 			</div>
 
-
-			<footer class="footer solar-bg">
-
-				&copy; 2017 &mdash; v2.6.2 &mdash; <a href="http://twitter.com/InstaCopV2" target="_blank">InstaCop on Twitter</a> &mdash; <a href="http://twitter.com/bqdxo" target="_blank">@bq</a> &mdash; @bapeyeezy &mdash; Bookmarklets:
-
-				<a href="javascript:prompt('Copy this!',document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey'));void(0);">SiteKey</a>,
-
-				<a href="javascript:prompt('Copy this!',window.OCAPI_KEY);void(0);">ClientID</a>,
-
-				<a href="javascript:try{window.captchaResponse()}catch(err){};prompt('Copy this!',document.getElementsByClassName('captcha-duplicate')[0].name);void(0);">x-PrdRt</a>,
-
-				<a href="
-
-					javascript: (function () {
-
-						var adcTLD = prompt('Enter InstaCop Locale', '.de');
-						var queryString = '';
-						queryString += '&sitekey=' + document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey');
-						if (window.OCAPI_KEY != undefined) {
-							queryString += '&clientID=' + window.OCAPI_KEY;
-						}
-						try {
-						    window.captchaResponse();
-						    queryString += '&xpr=' +  document.getElementsByClassName('captcha-duplicate')[0].name;
-						} catch(err) {}
-						window.open('http://w.www.adidas' + adcTLD + '/?' + queryString);
-
-					})();
-
-					">InstaLaunch</a>,
-
-				<a href="
-
-					javascript: (function () {
-
-						var data = prompt('Paste request data:').split('&');
-
-						var sitekey = data[0];
-						var link = 'https://www.adidas.' + data[1] + '/on/demandware.store/Sites-adidas-' + data[2] + '-Site/' + data[3] + '/Cart-MiniAddProduct';
-						var pid = data[4] + '_' + data[5];
-						var mpid = data[4];
-						var xpr = data[6];
-
-
-						var script1 = document.createElement('script');
-						var script2 = document.createElement('script');
-
-						var view = document.createElement('div');
-						var div = document.createElement('div');
-						var iframe = document.createElement('iframe');
-						var form = document.createElement('form');
-
-						var input1 = document.createElement('input');
-						var input2 = document.createElement('input');
-						var input3 = document.createElement('input');
-						var input4 = document.createElement('input');
-						var input5 = document.createElement('input');
-						var input6 = document.createElement('input');
-						var input7 = document.createElement('input');
-						var input8 = document.createElement('input');
-
-
-						script1.src = 'https://www.google.com/recaptcha/api.js';
-						document.body.appendChild(script1);
-
-						script2.text = 'function captchaCallback() { document.getElementById(\'captchaToken\').value = grecaptcha.getResponse(); document.getElementById(\'xprToken\').value = grecaptcha.getResponse(); document.getElementById(\'atcForm\').submit(); grecaptcha.reset(); }';
-						document.body.appendChild(script2);
-
-						div.className = 'g-recaptcha';
-						div.setAttribute('data-sitekey', sitekey);
-						div.setAttribute('data-callback', 'captchaCallback');
-
-						iframe.name = 'frame';
-						iframe.style.width = '500px';
-						iframe.style.height = '500px';
-						iframe.style.backgroundColor = '#f9f9f9';
-
-						form.name = 'addProductForm';
-						form.id = 'atcForm';
-						form.method = 'post';
-						form.action = link;
-						form.target = 'frame';
-
-						view.appendChild(div);
-						view.appendChild(form);
-						view.appendChild(iframe);
-
-						if (document.getElementsByTagName('header')[0] != null) {
-							document.getElementsByTagName('header')[0].insertAdjacentElement('afterend' ,view);
-						} else {
-							document.body.appendChild(view);
-						}
-
-						input1.name = 'layer';
-						input1.value = 'Add To Bag overlay';
-						form.appendChild(input1);
-
-						input2.name = 'pid';
-						input2.value = pid;
-						form.appendChild(input2);
-
-						input3.name = 'Quantity';
-						input3.value = '1';
-						form.appendChild(input3);
-
-						input4.name = 'g-recaptcha-response';
-						input4.id = 'captchaToken';
-						input4.value = '';
-						form.appendChild(input4);
-
-						input5.name = xpr;
-						input5.id = 'xprToken';
-						input5.value = '';
-						if (xpr == '') {input5.disabled = true;}
-						form.appendChild(input5);
-
-						input6.name = 'masterPid';
-						input6.value = mpid;
-						form.appendChild(input6);
-
-						input7.name = 'sessionSelectedStoreID';
-						input7.value = 'null';
-						form.appendChild(input7);
-
-						input8.name = 'ajax';
-						input8.value = 'true';
-						form.appendChild(input8);
-
-					})();
-
-					">SplashATC</a> &mdash; Utils:
-
-				<a href="javascript:prompt('Copy this!', location.host + location.pathname + '?sitekey=' + $('#site_key').val() + '&locale=' + $('#user_locale option:selected').val() + '&pid=' + $('#pid_style').val() + '&size=' + $('#pid_size').val() + '&clientid=' + $('#client_id').val() + '&xpr=' + $('#xpr_val').val());void(0);">InstaLink</a>,
-
-				<a href="javascript:prompt('Copy this!',navigator.userAgent);void(0);">UserAgent</a>,
-
-				<a href="javascript:$.get('http://ipinfo.io', function(response) {alert(response.ip + ' (' + response.country + ')');}, 'jsonp');void(0);">IP</a>
-
-			</footer>
-
 		</div>
 
+		<script src="instacop/jquery.min.js"></script>
+		<script src='instacop/js.cookie.js'></script>
+		<script src="instacop/json2html.js"></script>
 
-		<script>
+		<script src="instacop/inventory.js"></script>
+		<script src="instacop/minutes2.js"></script>
 
-			// ------- INITIALIZE ------------------------------------------------------------------------------------------------- //
-
-			var locDomain = '';
-			var locCountry = '';
-			var locLang = '';
-
-			var tokenArray = [];
-
-			var stockArray = [];
-			var stockCache = [];
-
-			var stockPid = '';
-			var stockPidCache = '';
-
-			var setAvail = true;
-			var setStock = true;
-
-			var sizeChartLocale = 'US';
-			var sizeChart = [
-				{szc:'530', size:'4', avail:'?', stock:'?', change:''},
-				{szc:'540', size:'4.5', avail:'?', stock:'?', change:''},
-				{szc:'550', size:'5', avail:'?', stock:'?', change:''},
-				{szc:'560', size:'5.5', avail:'?', stock:'?', change:''},
-				{szc:'570', size:'6', avail:'?', stock:'?', change:''},
-				{szc:'580', size:'6.5', avail:'?', stock:'?', change:''},
-				{szc:'590', size:'7', avail:'?', stock:'?', change:''},
-				{szc:'600', size:'7.5', avail:'?', stock:'?', change:''},
-				{szc:'610', size:'8', avail:'?', stock:'?', change:''},
-				{szc:'620', size:'8.5', avail:'?', stock:'?', change:''},
-				{szc:'630', size:'9', avail:'?', stock:'?', change:''},
-				{szc:'640', size:'9.5', avail:'?', stock:'?', change:''},
-				{szc:'650', size:'10', avail:'?', stock:'?', change:''},
-				{szc:'660', size:'10.5', avail:'?', stock:'?', change:''},
-				{szc:'670', size:'11', avail:'?', stock:'?', change:''},
-				{szc:'680', size:'11.5', avail:'?', stock:'?', change:''},
-				{szc:'690', size:'12', avail:'?', stock:'?', change:''},
-				{szc:'700', size:'12.5', avail:'?', stock:'?', change:''},
-				{szc:'710', size:'13', avail:'?', stock:'?', change:''},
-				{szc:'720', size:'13.5', avail:'?', stock:'?', change:''},
-				{szc:'730', size:'14', avail:'?', stock:'?', change:''}
-			];
-
-			$(document).ready(function() {
-
-				getCookie('locale', 'InstaCopLocale', '#user_locale', 'DE');
-				getCookie('pid', 'InstaCopPID', '#pid_style', 'CP9654');
-				getCookie('size', 'InstaCopSize', '#pid_size', '660');
-				getCookie('clientid', 'InstaCopClientID', '#client_id', '2904a24b-e4b4-4ef7-89a4-2ebd2d175dde');
-				getCookie('xpr', 'InstaCopXPR', '#xpr_val', 'AARMFK');
-
-				$('#user_locale').change();
-
-				loadPidImg();
-				resetCart();
-
-				buildStock(sizeChart);
-				$('#table_locale').html(sizeChartLocale);
-
-				$('#token_timer').countdown({
-					date: Date.now(),
-					render: function(data) {
-						$(this.el).html(this.leadingZeros(data.min, 1) + "m " + this.leadingZeros(data.sec, 2) + "s");
-					},
-					onEnd: function() {
-						clearTokens();
-					}
-				});
-
-				$('#hmac_status').countdown({
-					date: Date.now(),
-					render: function(data) {
-						$(this.el).html(this.leadingZeros(data.min, 1) + "m " + this.leadingZeros(data.sec, 2) + "s");
-					},
-					onEnd: function() {
-						checkHMAC();
-					}
-				});
-
-				// RELEASE
-				if (Notification.permission !== "granted") Notification.requestPermission();
-
-			});
-
-			$('#user_locale').change(function() {
-
-				locDomain = $('#user_locale option:selected').data('domain');
-				locCountry = $('#user_locale option:selected').val();
-				locLang = $('#user_locale option:selected').data('lang');
-
-				if ($('#default_check').prop('checked')) {
-					locLang = 'default';
-				}
-
-				Cookies.set('InstaCopLocale', locCountry, {
-					expires: 30,
-					path: '',
-					domain: document.domain
-				});
-
-				checkHMAC();
-
-			});
-
-			$('#default_check').change(function() {
-
-				if ($('#default_check').prop('checked')) {
-					locLang = 'default';
-				} else {
-					locLang = $('#user_locale option:selected').data('lang');
-				}
-
-			})
-
-			$('#pid_style').change(function() {
-				loadPidImg();
-				setCookie('InstaCopPID', '#pid_style');
-			})
-			$('#pid_style').keyup(function() {
-				$('#pid_style').change();
-			})
-
-			$('#pid_size').change(function() {
-				setCookie('InstaCopSize', '#pid_size');
-			})
-			$('#client_id').change(function() {
-				setCookie('InstaCopClientID', '#client_id');
-			})
-			$('#xpr_val').change(function() {
-				setCookie('InstaCopXPR', '#xpr_val');
-			})
-
-			$('#refresh_mode').click(function() {
-				if ($(this).data('mode') == 'off') {
-					$(this).data('mode', 'captcha');
-					$('#refresh_mode_glyph').removeClass('glyphicon-off');
-					$('#refresh_mode_glyph').addClass('glyphicon-repeat');
-					$('#auto_atc_auto').closest('.btn').focus();
-					$('#auto_atc_auto').closest('.btn').button('toggle');
-				} else if ($(this).data('mode') == 'captcha') {
-					$(this).data('mode', 'on');
-					$('#refresh_mode_glyph').removeClass('glyphicon-repeat');
-					$('#refresh_mode_glyph').addClass('glyphicon-time');
-					$('#stock_load').prop('disabled', true)
-					$('#auto_atc_off').closest('.btn').focus();
-					$('#auto_atc_off').closest('.btn').button('toggle');
-					loadStock()
-					$(this).button('toggle');
-				} else if ($(this).data('mode') == 'on') {
-					$(this).data('mode', 'off');
-					$('#refresh_mode_glyph').removeClass('glyphicon-time');
-					$('#refresh_mode_glyph').addClass('glyphicon-off');
-					$('#stock_load').prop('disabled', false)
-				}
-			})
-
-		</script>
+		<script src="instacop/vue.js"></script>
+		<script src="instacop/config.js"></script>
+		<script src="instacop/app.js"></script>
 
 	</body>
 
