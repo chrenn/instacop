@@ -58,16 +58,17 @@ h4 {
 	background-color: #717171;
 }
 
-.bape-green {
-	color: #e9eaec;
-	background-color: #53683e;
+.v2-bred {
+	font-size: 10px;
+	color: #ff4727;
+	background-color: #000000;
+	border: 1px solid #000000;
 }
-.bape-black {
-	color: #e9eaec;
-	background-color: #2a2b2d;
-}.bape-jacket {
-	color: #53683e;
-	background-color: #e9eaec;
+.v2-zebra {
+	font-size: 10px;
+	color: #000000;
+	background-color: #ffffff;
+	border: 1px solid #ff4727;
 }
 
 .steeple-bg {
@@ -128,6 +129,20 @@ a:hover {
 .pointer {
 	cursor: pointer;
 }
+.monitor-disabled {
+	pointer-events: none;
+}
+.input-group-sm>.form-control, .input-group-sm>.input-group-addon, .input-group-sm>.input-group-btn>.btn {
+	border-radius: 0px;
+}
+.btn-group-sm>.btn, .btn-sm {
+	border-radius: 0px;
+}
+.btn-group-justified .btn + .btn,
+.btn-group-justified .btn + .btn-group .btn,
+.btn-group-justified .btn-group + .btn-group .btn {
+	border-left:0
+}
 
 
 /* Stock checker table. */
@@ -142,7 +157,15 @@ thead, tbody, th, tr, td {
 th {
 	border-bottom: 2px solid #cccccc !important;
 }
-.table-size, .table-stock {
+.table-w {
+	width: 330px;
+	max-width: 330px;
+}
+.table-w-row {
+	width: 360px;
+	max-width: 360px;
+}
+.table-szc, .table-stock {
 	font-weight: bold;
 }
 .table-add {
@@ -155,8 +178,14 @@ th {
 }
 .tr-highlight {
 	background-color: rgba(255,71,39,0.15); /*solar-fg 10%*/
-}.tr-highlight:hover {
+}
+.tr-highlight:hover {
 	background-color: rgba(255,71,39,0.2) !important; /*solar-fg 20%*/
+}
+.strike {
+	opacity: 0.5;
+	text-decoration: line-through;
+	-webkit-text-decoration-color: #ff4727;
 }
 
 
@@ -171,7 +200,7 @@ th {
 #site_key {
 	font-size: 11px;
 }
-#hmac_page {
+#hmac_r_page {
 	font-size: 11px;
 }
 #splash_txt {
@@ -183,6 +212,23 @@ th {
 #cart_frame {
 	height: 574px;
 }
+
+
+/* Refresh time unit. */
+#refresh_sleep {
+     padding-right: 12px;
+     text-align: end;
+     width: 62px
+ }
+ #refresh_unit {
+ 	position: relative;
+ 	left: -24px;
+ 	top: 4px;
+ 	z-index: 1000;
+ 	font-family: monospace;
+ 	font-size: 12px;
+ 	color: #555; /*form-control*/
+ }
 
 
 /* Product Image. */

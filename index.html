@@ -1,12 +1,5 @@
 <!--**************************************************************************************
 
-instructions:
-- edit host file via 'sudo nano /private/etc/hosts' and route 127.0.0.1 to x.adidas.com
-- unzip the folder to /Library/WebServer/Documents/
-- enable php via 'sudo nano /etc/apache2/httpd.conf'
-- start apache server via 'sudo apachectl start' and go to x.adidas.com
-- update sitekey at runtime: x.adidas.com/?sitekey=xxxxx
-
 (c) 2017 twitter.com/InstaCopV2 twitter.com/bqdxo
 
 ***************************************************************************************-->
@@ -19,27 +12,23 @@ instructions:
 
 		<meta charset="utf-8">
 
-		<!--meta name="referrer" content="no-referrer"-->
+		<meta name="referrer" content="no-referrer">
+
+		<link rel="mask-icon" href="instacop/mask.svg" color="#ff4727">
 
 		<title>InstaCop V2</title>
 
-		<!-- jQuery, reCAPTCHA, Bootstrap, js.cookie, jq.countdown, json2html, instacop -->
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
 		<script src='https://www.google.com/recaptcha/api.js'></script>
 
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.js'></script>
-
+		<script src="instacop/jquery.min.js"></script>
+		<script src="instacop/bootstrap/js/bootstrap.min.js"></script>
+		<script src='instacop/js.cookie.js'></script>
+		<script src="instacop/jquery.timer.js"></script>
 		<script src="instacop/jquery.countdown.js"></script>
-
 		<script src="instacop/json2html.js"></script>
 		<script src="instacop/jquery.json2html.js"></script>
 
-		<script src="instacop/instacop.js"></script>
+		<link rel="stylesheet" href="instacop/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="instacop/instacop.css">
 
 	</head>
@@ -71,7 +60,7 @@ instructions:
 
 		<div class="container">
 
-			<header class="header"><h2>InstaCop <span class="solar-fg">V2</span></h2></header>
+			<header class="header"><h2><span class="pointer" onclick="location.reload();">InstaCop <span class="solar-fg">V2</span></span></h2></header>
 
 			<div class="row main">
 
@@ -131,11 +120,16 @@ instructions:
 
 							<label for="pid_style">Product</label>
 
+							<div class="pull-right">
+								<span class="badge pointer v2-bred invisible" onclick="$('#pid_style').val('CP9652').change();">V2</span>
+								<span class="badge pointer v2-zebra" onclick="$('#pid_style').val('CP9654').change();">V2</span>
+							</div>
+
 							<div class="input-group">
 
 								<input class="form-control" id="pid_style" type="text" placeholder="XX0000" value=" ">
 								<span class="input-group-btn">
-									<button class="form-control btn btn-default" id="pid_img" onclick="$('#pid_style').change();">-</button>
+									<button class="form-control btn btn-default" id="pid_img" onclick="$('#pid_style').change(); openPID();">-</button>
 								</span>
 
 							</div>
@@ -181,6 +175,18 @@ instructions:
 
 					</div>
 
+					<div class="row captcha-w-row">
+
+						<div class="form-group col-sm-12">
+
+							<label for="client_id">Client ID</label>
+
+							<input class="form-control" id="client_id" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" value=" ">
+
+						</div>
+
+					</div>
+
 					<div class="spacer"></div>
 
 					<h4><span class="label beluga-bg">Captcha</span></h4>
@@ -198,7 +204,7 @@ instructions:
 
 					</div>
 
-					<div class="g-recaptcha" id="g_captcha" data-sitekey="" data-callback="addToken"></div>
+					<div class="g-recaptcha" id="g_captcha" data-sitekey="" data-callback="captchaCallback"></div>
 
 					<script> //thank you @bapeyeezy!
 
@@ -206,7 +212,7 @@ instructions:
 
 							var defaultKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
 
-							var siteKey = location.search.substring(1).split('&')[0].split('=')[1];
+							var siteKey = getUrlParam('sitekey');
 
 							if ((siteKey == null) || (siteKey == '')) {
 								siteKey = defaultKey;
@@ -225,18 +231,60 @@ instructions:
 					<div class="spacer"></div>
 					<div class="spacer-sm"></div>
 
-					<h4><span class="label beluga-bg">Splash</span></h4>
+					<h4><span class="label beluga-bg">Tools</span></h4>
+
+					<div class="row captcha-w-row">
+
+						<div class="form-group col-sm-6">
+
+							<label>Splash</label>
+
+							<div class="input-group">
+
+								<div class="btn-group">
+									<button class="btn btn-default" onclick="generateSplash();">ATC</button>
+									<button class="btn btn-default" onclick="openSplash();">Open</button>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="form-group col-sm-6">
+
+							<label>HMAC</label>
+
+							<div class="pull-right">
+								<span class="badge btn-bg beluga-fg invisible" id="hmac_status"></span>
+							</div>
+							
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group">
+									<button class="btn btn-default" id="hmac_edit" onclick="setHMAC(prompt('HMAC value:', getHMAC()));">Edit</button>
+								</div>
+								<div class="btn-group">
+									<button class="btn btn-default" id="hmac_check" onclick="checkHMAC();">Check</button>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
 
 					<div class="form-group captcha-w">
 
+						<label for="hmac_r_page">HMAC Retrieval (EU only)</label>
+						<span class="badge btn-bg beluga-fg pointer pull-right" id="hmac_r_status" onclick="prompt('HMAC Link',getHMACLink());"></span>
+
 						<div class="input-group">
 
-							<input class="form-control" id="splash_txt" type="text" placeholder="SplashATC bookmarklet.">
+							<input class="form-control" id="hmac_r_page" type="text" placeholder="http://www.adidas.com/yeezy" data-hmaclink="" value="www.adidas.com/de/apps/yeezy/">
 
-							<div class="input-group-btn">
-								<button class="btn btn-default" onclick="generateSplash();">Data</button>
-								<button class="btn btn-default" onclick="openSplash();">Open</a>
-							</div>
+							<span class="input-group-btn">
+								<button class="btn btn-default" onclick="injectHMAC();">
+									<span class="glyphicon glyphicon-cloud-download" id="hmac_r_gif"></span>
+								</button>
+							</span>
 
 						</div>
 
@@ -249,45 +297,85 @@ instructions:
 
 					<h4><span class="label beluga-bg">Inventory ATC</span></h4>
 
-					<div class="form-group captcha-w">
+					<div class="row table-w-row">
 
-						<label for="client_id">Client ID</label>
-						<span class="badge btn-bg beluga-fg pull-right" id="stock_status"></span>
+						<div class="form-group col-sm-6">
 
-						<div class="input-group">
+							<label for="auto_atc">Mode</label>
 
-							<input class="form-control" id="client_id" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" value=" ">
+							<div class="input-group" id="auto_atc">
 
-							<span class="input-group-btn">
-								<button class="btn btn-default" onclick="loadStock();">
-									<span class="glyphicon glyphicon-refresh" id="stock_gif"></span>
-								</button>>
-							</span>
+								<div class="btn-group btn-group-sm" data-toggle="buttons">
+
+									<label class="btn btn-default active">
+										<input type="radio" name="auto_atc_options" id="auto_atc_off" checked="true">Off
+									</label>
+									<label class="btn btn-default">
+										<input type="radio" name="auto_atc_options" id="auto_atc_auto">Auto
+									</label>
+									<!--RELEASE-->
+									<!--label class="btn btn-default disabled monitor-disabled"-->
+									<label class="btn btn-default" onclick="enableNotifications();">
+										<input type="radio" name="auto_atc_options" id="auto_atc_restock">Monitor
+									</label>
+
+								</div>
+								
+							</div>
+
+						</div>
+
+						<div class="form-group col-sm-6">
+
+							<label for="refresh_s">Refresh</label>
+							<span class="badge btn-bg beluga-fg pull-right" id="stock_status"></span>
+
+							<div class="input-group input-group-sm" id="test">
+
+								<span class="input-group-btn" style="padding-right:5px"> 
+									<button type="button" class="btn btn-default" id="refresh_mode" data-toggle="button" data-mode="off">
+										<span class="glyphicon glyphicon-off" id="refresh_mode_glyph"></span>
+									</button>
+								</span>
+
+								<input class="form-control" id="refresh_sleep" type="number" min="1" placeholder="" value="10">
+								<span id="refresh_unit">s</span>
+
+								<span class="input-group-btn" style="padding-left:5px"> 
+									<button class="btn btn-default" id="stock_load" onclick="loadStock();">
+										<span class="glyphicon glyphicon-refresh" id="stock_gif"></span>
+									</button>
+								</span>
+								
+							</div>
 
 						</div>
 
 					</div>
 
-					<table class="table table-hover table-condensed form-bg captcha-w">
+					<table class="table table-hover table-condensed form-bg table-w" id="table_full">
 
 						<colgroup>
+							<col width="13%">
+							<col width="17%">
+							<col width="15%">
+							<col width="15%">
 							<col width="15%">
 							<col width="25%">
-							<col width="15%">
-							<col width="15%">
-							<col width="30%">
 						</colgroup>
 						<thead>
 							<tr>
 								<th>Size</th>
-								<th id="table_location"></th>
-								<th class="text-right">Stock</th>
-								<th class="text-right" id="table_total"></th>
+								<th id="table_locale"></th>
+								<th class="text-right pointer" id="table_total_avail" onclick="toggleAvail();">Avail.</th>
+								<th class="text-right pointer" id="table_total_stock" onclick="toggleStock();">Stock</th>
+								<th class="text-right">Δ</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody id="stock_table">
 							<tr>
+								<td></td>
 								<td></td>
 								<td></td>
 								<td></td>
@@ -307,26 +395,28 @@ instructions:
 
 					<div class="row">
 
-						<div class="form-group col-sm-6">
+						<div class="form-group col-sm-5">
 
-							<label for="cart_buttons">Cart</label>
-
-							<div class="btn-group input-group" role="group">
-								<button class="btn btn-default" name="cart_buttons" onclick="goToADC('show');">Show</button>
-								<button class="btn btn-default" name="cart_buttons" onclick="goToADC('paypal');">PayPal</button>
+							<label for="account_buttons">Account</label>
+							
+							<div class="btn-group btn-group-sm input-group" role="group">
+								<button class="btn btn-default" name="account_buttons" onclick="goToADC('login');">Login</button>
+								<button class="btn btn-default" name="account_buttons" onclick="goToADC('logout');">Logout</button>
 							</div>
 
 						</div>
 
-						<div class="form-group col-sm-6">
+						<div class="form-group col-sm-7">
 
 							<div class="pull-right">
 
-								<label for="client_timer">Account</label>
-								
-								<div class="btn-group input-group" role="group">
-									<button class="btn btn-default" name="cart_buttons" onclick="goToADC('login');">Login</button>
-									<button class="btn btn-default" name="cart_buttons" onclick="goToADC('logout');">Logout</button>
+								<label for="cart_buttons">Cart</label>
+								<span class="badge btn-bg beluga-fg pull-right pointer" id="cart_status" onclick="resetCart();"></span>
+
+								<div class="btn-group btn-group-sm input-group" role="group">
+									<button class="btn btn-default" name="cart_buttons" onclick="goToADC('show');">Show</button>
+									<button class="btn btn-default" name="cart_buttons" onclick="goToADC('paypal');">PayPal</button>
+									<button class="btn btn-default" name="cart_buttons" onclick="goToADC('checkout');">Checkout</button>
 								</div>
 
 							</div>
@@ -344,11 +434,33 @@ instructions:
 
 			<footer class="footer solar-bg">
 
-				&copy; 2017 &mdash; v2.5.1 &mdash; <a href="http://twitter.com/InstaCopV2" target="_blank">InstaCop on Twitter</a> &mdash; <a href="http://twitter.com/bqdxo" target="_blank">@bq</a> &mdash; @bapeyeezy &mdash; Bookmarklets:
+				&copy; 2017 &mdash; v2.6.2 &mdash; <a href="http://twitter.com/InstaCopV2" target="_blank">InstaCop on Twitter</a> &mdash; <a href="http://twitter.com/bqdxo" target="_blank">@bq</a> &mdash; @bapeyeezy &mdash; Bookmarklets:
 
-				<a href="javascript:prompt('Copy this!',document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey'));void(0);">SiteKey</a>, 
+				<a href="javascript:prompt('Copy this!',document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey'));void(0);">SiteKey</a>,
 
 				<a href="javascript:prompt('Copy this!',window.OCAPI_KEY);void(0);">ClientID</a>,
+
+				<a href="javascript:try{window.captchaResponse()}catch(err){};prompt('Copy this!',document.getElementsByClassName('captcha-duplicate')[0].name);void(0);">x-PrdRt</a>,
+
+				<a href="
+
+					javascript: (function () {
+
+						var adcTLD = prompt('Enter InstaCop Locale', '.de');
+						var queryString = '';
+						queryString += '&sitekey=' + document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey');
+						if (window.OCAPI_KEY != undefined) {
+							queryString += '&clientID=' + window.OCAPI_KEY;
+						}
+						try {
+						    window.captchaResponse();
+						    queryString += '&xpr=' +  document.getElementsByClassName('captcha-duplicate')[0].name;
+						} catch(err) {}
+						window.open('http://w.www.adidas' + adcTLD + '/?' + queryString);
+
+					})();
+
+					">InstaLaunch</a>,
 
 				<a href="
 
@@ -449,7 +561,13 @@ instructions:
 
 					})();
 
-					">SplashATC</a>
+					">SplashATC</a> &mdash; Utils:
+
+				<a href="javascript:prompt('Copy this!', location.host + location.pathname + '?sitekey=' + $('#site_key').val() + '&locale=' + $('#user_locale option:selected').val() + '&pid=' + $('#pid_style').val() + '&size=' + $('#pid_size').val() + '&clientid=' + $('#client_id').val() + '&xpr=' + $('#xpr_val').val());void(0);">InstaLink</a>,
+
+				<a href="javascript:prompt('Copy this!',navigator.userAgent);void(0);">UserAgent</a>,
+
+				<a href="javascript:$.get('http://ipinfo.io', function(response) {alert(response.ip + ' (' + response.country + ')');}, 'jsonp');void(0);">IP</a>
 
 			</footer>
 
@@ -466,61 +584,55 @@ instructions:
 
 			var tokenArray = [];
 
-			var clientStock = [];
-			var clientCache = [];
+			var stockArray = [];
+			var stockCache = [];
+
+			var stockPid = '';
+			var stockPidCache = '';
+
+			var setAvail = true;
+			var setStock = true;
 
 			var sizeChartLocale = 'US';
 			var sizeChart = [
-				{szc:'530', size:'4', stock:'?', change:''},
-				{szc:'540', size:'4.5', stock:'?', change:''},
-				{szc:'550', size:'5', stock:'?', change:''},
-				{szc:'560', size:'5.5', stock:'?', change:''},
-				{szc:'570', size:'6', stock:'?', change:''},
-				{szc:'580', size:'6.5', stock:'?', change:''},
-				{szc:'590', size:'7', stock:'?', change:''},
-				{szc:'600', size:'7.5', stock:'?', change:''},
-				{szc:'610', size:'8', stock:'?', change:''},
-				{szc:'620', size:'8.5', stock:'?', change:''},
-				{szc:'630', size:'9', stock:'?', change:''},
-				{szc:'640', size:'9.5', stock:'?', change:''},
-				{szc:'650', size:'10', stock:'?', change:''},
-				{szc:'660', size:'10.5', stock:'?', change:''},
-				{szc:'670', size:'11', stock:'?', change:''},
-				{szc:'680', size:'11.5', stock:'?', change:''},
-				{szc:'690', size:'12', stock:'?', change:''},
-				{szc:'700', size:'12.5', stock:'?', change:''},
-				{szc:'710', size:'13', stock:'?', change:''},
-				{szc:'720', size:'13.5', stock:'?', change:''},
-				{szc:'730', size:'14', stock:'?', change:''}
+				{szc:'530', size:'4', avail:'?', stock:'?', change:''},
+				{szc:'540', size:'4.5', avail:'?', stock:'?', change:''},
+				{szc:'550', size:'5', avail:'?', stock:'?', change:''},
+				{szc:'560', size:'5.5', avail:'?', stock:'?', change:''},
+				{szc:'570', size:'6', avail:'?', stock:'?', change:''},
+				{szc:'580', size:'6.5', avail:'?', stock:'?', change:''},
+				{szc:'590', size:'7', avail:'?', stock:'?', change:''},
+				{szc:'600', size:'7.5', avail:'?', stock:'?', change:''},
+				{szc:'610', size:'8', avail:'?', stock:'?', change:''},
+				{szc:'620', size:'8.5', avail:'?', stock:'?', change:''},
+				{szc:'630', size:'9', avail:'?', stock:'?', change:''},
+				{szc:'640', size:'9.5', avail:'?', stock:'?', change:''},
+				{szc:'650', size:'10', avail:'?', stock:'?', change:''},
+				{szc:'660', size:'10.5', avail:'?', stock:'?', change:''},
+				{szc:'670', size:'11', avail:'?', stock:'?', change:''},
+				{szc:'680', size:'11.5', avail:'?', stock:'?', change:''},
+				{szc:'690', size:'12', avail:'?', stock:'?', change:''},
+				{szc:'700', size:'12.5', avail:'?', stock:'?', change:''},
+				{szc:'710', size:'13', avail:'?', stock:'?', change:''},
+				{szc:'720', size:'13.5', avail:'?', stock:'?', change:''},
+				{szc:'730', size:'14', avail:'?', stock:'?', change:''}
 			];
 
 			$(document).ready(function() {
 
-				if (Cookies.get('InstaCopLocale') != null) {
-					$('#user_locale').val(Cookies.get('InstaCopLocale'));
-				}
+				getCookie('locale', 'InstaCopLocale', '#user_locale', 'DE');
+				getCookie('pid', 'InstaCopPID', '#pid_style', 'CP9654');
+				getCookie('size', 'InstaCopSize', '#pid_size', '660');
+				getCookie('clientid', 'InstaCopClientID', '#client_id', '2904a24b-e4b4-4ef7-89a4-2ebd2d175dde');
+				getCookie('xpr', 'InstaCopXPR', '#xpr_val', 'AARMFK');
 
-				locDomain = $('#user_locale option:selected').data('domain');
-				locCountry = $('#user_locale option:selected').val();
-				locLang = $('#user_locale option:selected').data('lang');
-
-
-				$('#pid_style').val('BY1604');
-				$('#pid_size').val('660');
-				$('#client_id').val('2904a24b-e4b4-4ef7-89a4-2ebd2d175dde');
-				$('#xpr_val').val('DhnjhrCA');
-				$('#hmac_page').val('http://www.adidas.com/ca/apps/yeezy/');
-
-
-				/*if (document.domain == '127.0.0.1') {
-					$('#client_timer').prop('disabled', true);
-				}*/
-
-
-				buildStock(sizeChart);
-				$('#table_location').html(sizeChartLocale);
+				$('#user_locale').change();
 
 				loadPidImg();
+				resetCart();
+
+				buildStock(sizeChart);
+				$('#table_locale').html(sizeChartLocale);
 
 				$('#token_timer').countdown({
 					date: Date.now(),
@@ -530,8 +642,20 @@ instructions:
 					onEnd: function() {
 						clearTokens();
 					}
-
 				});
+
+				$('#hmac_status').countdown({
+					date: Date.now(),
+					render: function(data) {
+						$(this.el).html(this.leadingZeros(data.min, 1) + "m " + this.leadingZeros(data.sec, 2) + "s");
+					},
+					onEnd: function() {
+						checkHMAC();
+					}
+				});
+
+				// RELEASE
+				if (Notification.permission !== "granted") Notification.requestPermission();
 
 			});
 
@@ -541,7 +665,7 @@ instructions:
 				locCountry = $('#user_locale option:selected').val();
 				locLang = $('#user_locale option:selected').data('lang');
 
-				if ($('#default_check').is(':checked')) {
+				if ($('#default_check').prop('checked')) {
 					locLang = 'default';
 				}
 
@@ -551,11 +675,13 @@ instructions:
 					domain: document.domain
 				});
 
+				checkHMAC();
+
 			});
 
 			$('#default_check').change(function() {
 
-				if ($('#default_check').is(':checked')) {
+				if ($('#default_check').prop('checked')) {
 					locLang = 'default';
 				} else {
 					locLang = $('#user_locale option:selected').data('lang');
@@ -565,9 +691,44 @@ instructions:
 
 			$('#pid_style').change(function() {
 				loadPidImg();
+				setCookie('InstaCopPID', '#pid_style');
 			})
 			$('#pid_style').keyup(function() {
-				loadPidImg();
+				$('#pid_style').change();
+			})
+
+			$('#pid_size').change(function() {
+				setCookie('InstaCopSize', '#pid_size');
+			})
+			$('#client_id').change(function() {
+				setCookie('InstaCopClientID', '#client_id');
+			})
+			$('#xpr_val').change(function() {
+				setCookie('InstaCopXPR', '#xpr_val');
+			})
+
+			$('#refresh_mode').click(function() {
+				if ($(this).data('mode') == 'off') {
+					$(this).data('mode', 'captcha');
+					$('#refresh_mode_glyph').removeClass('glyphicon-off');
+					$('#refresh_mode_glyph').addClass('glyphicon-repeat');
+					$('#auto_atc_auto').closest('.btn').focus();
+					$('#auto_atc_auto').closest('.btn').button('toggle');
+				} else if ($(this).data('mode') == 'captcha') {
+					$(this).data('mode', 'on');
+					$('#refresh_mode_glyph').removeClass('glyphicon-repeat');
+					$('#refresh_mode_glyph').addClass('glyphicon-time');
+					$('#stock_load').prop('disabled', true)
+					$('#auto_atc_off').closest('.btn').focus();
+					$('#auto_atc_off').closest('.btn').button('toggle');
+					loadStock()
+					$(this).button('toggle');
+				} else if ($(this).data('mode') == 'on') {
+					$(this).data('mode', 'off');
+					$('#refresh_mode_glyph').removeClass('glyphicon-time');
+					$('#refresh_mode_glyph').addClass('glyphicon-off');
+					$('#stock_load').prop('disabled', false)
+				}
 			})
 
 		</script>
