@@ -1,0 +1,236 @@
+/* InstaCop V2 (c) 2017 twitter.com/InstaCopV2 twitter.com/bqdxo */
+
+/* Space out content. */
+body {
+	padding-top: 0px;
+	padding-bottom: 5px;
+}
+.main {
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+.header {
+	padding-bottom: 5px;
+	border-bottom: 1px solid;
+}
+.footer {
+	margin-top: 0px;
+	padding: 10px;
+}
+h4 {
+	padding-bottom: 10px;
+}
+.spacer {
+	height: 10px;
+}
+.spacer-sm {
+	height: 6px;
+}
+.spacer-n {
+	margin-top: -4px;
+}
+
+
+/* Apply Google reCAPTCHA width. */
+.captcha-w {
+	width: 302px;
+	max-width: 302px;
+}
+.captcha-w-row {
+	width: 332px;
+	max-width: 332px;
+}
+
+
+/* V2 colors. */
+.solar-fg {
+	color: #ff4727 !important;
+}
+.solar-bg {
+	color: #ffffff !important;
+	background-color: #ff4727 !important;
+}
+.beluga-fg {
+	color: #717171;
+}
+.beluga-bg {
+	color: #ffffff;
+	background-color: #717171;
+}
+
+.bape-green {
+	color: #e9eaec;
+	background-color: #53683e;
+}
+.bape-black {
+	color: #e9eaec;
+	background-color: #2a2b2d;
+}.bape-jacket {
+	color: #53683e;
+	background-color: #e9eaec;
+}
+
+.steeple-bg {
+	background-color: #f1f1f1;
+}
+.form-bg {
+	background-color: #f9f9f9;
+}
+.btn-bg {
+	background-color: #ffffff;
+}
+
+
+/* HTML color configuration. */
+::selection {
+	background-color: rgba(255,71,39,0.7); /*solar-fg 70%*/
+}
+a {
+	color: #ffffff;
+}
+a:hover {
+	color: #000000;
+}
+
+
+/* Bootstrap & HTML form control configuration. */
+.form-control {
+	font-family: monospace;
+	border-radius: 0px;
+	background-color: #f9f9f9; /*form-bg*/
+}
+.form-control:focus {
+	border-color: #ff4727; /*solar-fg*/
+	box-shadow: none;
+}
+.btn {
+	border-radius: 0px;
+}
+.input-group-addon {
+	border-radius: 0px;
+	background-color: #ffffff;
+}
+.label {
+	border-radius: 0px;
+	font-size: 90%;
+}
+.badge {
+	cursor: default;
+}
+.input-select {
+	cursor: pointer;
+	-webkit-appearance: button;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+}
+.pointer {
+	cursor: pointer;
+}
+
+
+/* Stock checker table. */
+table {
+	table-layout: fixed;
+	font-size: 11px;
+	border: 1px solid #cccccc; /*form-control-border*/
+}
+thead, tbody, th, tr, td {
+	border-top: 1px solid #cccccc !important;
+}
+th {
+	border-bottom: 2px solid #cccccc !important;
+}
+.table-size, .table-stock {
+	font-weight: bold;
+}
+.table-add {
+	cursor: pointer;
+	color: #ffffff;
+	background-color: #717171; /*beluga-bg*/
+}
+.table-add:hover {
+	background-color: #ff4727; /*solar-bg*/
+}
+.tr-highlight {
+	background-color: rgba(255,71,39,0.15); /*solar-fg 10%*/
+}.tr-highlight:hover {
+	background-color: rgba(255,71,39,0.2) !important; /*solar-fg 20%*/
+}
+
+
+/* IDs. */
+#user_locale {
+	font-family: sans-serif;
+	font-size: 13px;
+}
+#xpr_val {
+	font-size: 11px;
+}
+#site_key {
+	font-size: 11px;
+}
+#hmac_page {
+	font-size: 11px;
+}
+#splash_txt {
+	font-size: 11px;
+}
+#client_id {
+	font-size: 11px;
+}
+#cart_frame {
+	height: 574px;
+}
+
+
+/* Product Image. */
+#pid_img {
+	width: 34px;
+	background-size: contain;
+	background-position: bottom;
+}
+
+
+/* Spinning Glyphicon. */
+.gly-spin {
+	-webkit-animation: spin 1s infinite linear;
+	-moz-animation: spin 1s infinite linear;
+	-o-animation: spin 1s infinite linear;
+	animation: spin 1s infinite linear;
+}
+@-moz-keyframes spin {
+	0% {
+		-moz-transform: rotate(0deg);
+	}
+	100% {
+		-moz-transform: rotate(359deg);
+	}
+}
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+	}
+}
+@-o-keyframes spin {
+	0% {
+		-o-transform: rotate(0deg);
+	}
+	100% {
+		-o-transform: rotate(359deg);
+	}
+}
+@keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}

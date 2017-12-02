@@ -27,7 +27,7 @@ define('CSAJAX_FILTERS', false);
  * If set to false, $valid_requests should hold the whole URL ( without the parameters ) i.e. http://example.com/this/is/long/url/
  * Recommended value: false (for security reasons - do not forget that anyone can access your proxy)
  */
-define('CSAJAX_FILTER_DOMAIN', true);
+define('CSAJAX_FILTER_DOMAIN', false);
 
 /**
  * Set debugging to true to receive additional messages - really helpful on development

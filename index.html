@@ -2,26 +2,12 @@
 
 instructions:
 - edit host file via 'sudo nano /private/etc/hosts' and route 127.0.0.1 to x.adidas.com
-- copy this file to /Library/WebServer/Documents/
+- unzip the folder to /Library/WebServer/Documents/
+- enable php via 'sudo nano /etc/apache2/httpd.conf'
 - start apache server via 'sudo apachectl start' and go to x.adidas.com
-- update sitekey temporarily like this: x.adidas.com/?sitekey=xxxxx
+- update sitekey at runtime: x.adidas.com/?sitekey=xxxxx
 
-list of client-ids:
-- 2904a24b-e4b4-4ef7-89a4-2ebd2d175dde
-- 78ac1367-992d-40e4-ba76-e592836b53ca
-- e6897ae5-0535-4963-9497-dfb83a498282
-
-list of sitekeys:
-- 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI (Google Test Key)
-- 6LenDyETAAAAAEe8538c2k0w7h7ZlzoJlOafSrZP (750 GG WW)
-- 6LcuOygTAAAAAHPnPyYFgRgl9tFRiMGjyaMMpk-y (350 Infants WW)
-- 6Lc9EyoTAAAAABWz8VUqQ-0_N9mZ9-y9ZXCS1Rf6 (350 Cleats US)
-- 6LeOnCkTAAAAAK72JqRneJQ2V7GvQvvgzsVr-6kR (350v2 Solar EU)
-- 6LdNnykTAAAAAMeh4_jgbXqo7pgFZCeCByiivMFw (350v2 Solar US)
-- 6Lfq3AcUAAAAAF6QuCqnN8uq5Kx39HuRijRfo0Jk (750 Choc EU)
-- 6Lft3AcUAAAAAAInZMDx7hZl7iLZqn0xBuLBRXYZ (750 Choc US)
-
-(c) @bq 2016
+(c) 2017 twitter.com/InstaCopV2 twitter.com/bqdxo
 
 ***************************************************************************************-->
 
@@ -35,13 +21,13 @@ list of sitekeys:
 
 		<!--meta name="referrer" content="no-referrer"-->
 
-
 		<title>InstaCop V2</title>
 
-
-		<!-- jQuery, Bootstrap, js.cookie, jq.countdown, json2html, reCAPTCHA -->
+		<!-- jQuery, reCAPTCHA, Bootstrap, js.cookie, jq.countdown, json2html, instacop -->
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+		<script src='https://www.google.com/recaptcha/api.js'></script>
 
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -53,229 +39,8 @@ list of sitekeys:
 		<script src="instacop/json2html.js"></script>
 		<script src="instacop/jquery.json2html.js"></script>
 
-		<script src='https://www.google.com/recaptcha/api.js'></script>
-
-
-		<style>
-
-			/* Space out content. */
-			body {
-				padding-top: 0px;
-				padding-bottom: 5px;
-			}
-			.main {
-				padding-top: 10px;
-				padding-bottom: 15px;
-			}
-			.header {
-				padding-bottom: 5px;
-				border-bottom: 1px solid;
-			}
-			.footer {
-				margin-top: 0px;
-				padding: 10px;
-			}
-			h4 {
-				padding-bottom: 10px;
-			}
-			.spacer {
-				height: 10px;
-			}
-			.spacer-sm {
-				height: 6px;
-			}
-			.spacer-n {
-				margin-top: -4px;
-			}
-
-			/* Apply Google reCAPTCHA width. */
-			.captcha-w {
-				width: 302px;
-				max-width: 302px;
-			}
-			.captcha-w-row {
-				width: 332px;
-				max-width: 332px;
-			}
-
-			/* V2 colors. */
-			.solar-fg {
-				color: #ff4727 !important;
-			}
-			.solar-bg {
-				color: #ffffff !important;
-				background-color: #ff4727 !important;
-			}
-			.beluga-fg {
-				color: #717171;
-			}
-			.beluga-bg {
-				color: #ffffff;
-				background-color: #717171;
-			}
-
-			.v2-red {
-				color: #ffffff;
-				background-color: #ff4850;
-			}
-			.v2-copper {
-				color: #ffffff;
-				background-color: #e9bb9b;
-			}
-			.v2-green {
-				color: #ffffff;
-				background-color: #abbf72;
-			}
-
-			.steeple-bg {
-				background-color: #f1f1f1;
-			}
-			.form-bg {
-				background-color: #f9f9f9;
-			}
-			.btn-bg {
-				background-color: #ffffff;
-			}
-
-			/* HTML color configuration. */
-			::selection {
-				background-color: rgba(255,71,39,0.7); /*solar-fg 70%*/
-			}
-			a {
-				color: #ffffff;
-			}
-			a:hover {
-				color: #000000;
-			}
-
-			/* Bootstrap & HTML form control configuration. */
-			.form-control {
-				font-family: monospace;
-				border-radius: 0px;
-				background-color: #f9f9f9; /*form-bg*/
-			}
-			.form-control:focus {
-				border-color: #ff4727; /*solar-fg*/
-				box-shadow: none;
-			}
-			.btn {
-				border-radius: 0px;
-			}
-			.input-group-addon {
-				border-radius: 0px;
-				background-color: #ffffff;
-			}
-			.label {
-				border-radius: 0px;
-				font-size: 90%;
-			}
-			.badge {
-				cursor: default;
-			}
-			.input-select {
-				cursor: pointer;
-				-webkit-appearance: button;
-				-moz-appearance: none;
-				-ms-appearance: none;
-				-o-appearance: none;
-				appearance: none;
-			}
-			.pointer {
-				cursor: pointer;
-			}
-
-
-			/* Stock checker table. */
-			table {
-				table-layout: fixed;
-				font-size: 11px;
-				border: 1px solid #cccccc; /*form-control-border*/
-			}
-			thead, tbody, th, tr, td {
-				border-top: 1px solid #cccccc !important;
-			}
-			th {
-				border-bottom: 2px solid #cccccc !important;
-			}
-			.table-size, .table-stock {
-				font-weight: bold;
-			}
-			.table-add {
-				cursor: pointer;
-				color: #ffffff;
-				background-color: #717171; /*beluga-bg*/
-			}
-			.table-add:hover {
-				background-color: #ff4727; /*solar-bg*/
-			}
-			.tr-highlight {
-				background-color: rgba(255,71,39,0.1); /*solar-fg 10%*/
-			}.tr-highlight:hover {
-				background-color: rgba(255,71,39,0.2) !important; /*solar-fg 20%*/
-			}
-
-			/* IDs. */
-			#user_locale {
-				font-family: sans-serif;
-				font-size: 13px;
-			}
-			#site_key {
-				font-size: 11px;
-			}
-			#client_id {
-				font-size: 11px;
-			}
-			#splash_txt {
-				resize: none;
-				height: 170px;
-			}
-			#cart_frame {
-				height: 574px;
-			}
-
-			/* Spinning Glyphicon. */
-			.gly-spin {
-				-webkit-animation: spin 1s infinite linear;
-				-moz-animation: spin 1s infinite linear;
-				-o-animation: spin 1s infinite linear;
-				animation: spin 1s infinite linear;
-			}
-			@-moz-keyframes spin {
-				0% {
-					-moz-transform: rotate(0deg);
-				}
-				100% {
-					-moz-transform: rotate(359deg);
-				}
-			}
-			@-webkit-keyframes spin {
-				0% {
-					-webkit-transform: rotate(0deg);
-				}
-				100% {
-					-webkit-transform: rotate(359deg);
-				}
-			}
-			@-o-keyframes spin {
-				0% {
-					-o-transform: rotate(0deg);
-				}
-				100% {
-					-o-transform: rotate(359deg);
-				}
-			}
-			@keyframes spin {
-				0% {
-					-webkit-transform: rotate(0deg);
-					transform: rotate(0deg);
-				}
-				100% {
-					-webkit-transform: rotate(359deg);
-					transform: rotate(359deg);
-				}
-			}
-
-		</style>
+		<script src="instacop/instacop.js"></script>
+		<link rel="stylesheet" href="instacop/instacop.css">
 
 	</head>
 
@@ -297,6 +62,12 @@ list of sitekeys:
 
 		</form>
 
+		<form action="" method="post" target="cart_frame" hidden="true" id="post_form_serialized" name="addProductForm"></form>
+
+		<form action="" method="post" target="hmac_frame" hidden="true" id="hmac_form"></form>
+
+		<iframe src="" hidden="true" id="hmac_frame" name="hmac_frame"></iframe>
+
 
 		<div class="container">
 
@@ -313,36 +84,46 @@ list of sitekeys:
 						<div class="form-group col-sm-6">
 
 							<label for="user_locale">Locale &nbsp;<span class="caret"></span></label>
-							<select class="form-control input-select" id="user_locale">
+							<div class="pull-right">Default</div>
 
-								<optgroup label="Oceania">
-									<option   data-domain="com.au"   value="AU"   data-lang="en_AU"   >Australia</option>
-									<option   data-domain="co.nz"    value="NZ"   data-lang="en_NZ"   >New Zealand</option>
-								</optgroup>
-								<optgroup label="Europe">
-									<option   data-domain="at"       value="AT"   data-lang="de_AT"   >Austria</option>
-									<option   data-domain="be"       value="BE"   data-lang="fr_BE"   >Belgium</option>
-									<option   data-domain="cz"       value="CZ"   data-lang="cs_CZ"   >Czech Republic</option>
-									<option   data-domain="dk"       value="DK"   data-lang="da_DK"   >Denmark</option>
-									<option   data-domain="fi"       value="FI"   data-lang="fi_FI"   >Finland</option>
-									<option   data-domain="fr"       value="FR"   data-lang="fr_FR"   >France</option>
-									<option   data-domain="de"       value="DE"   data-lang="de_DE"   >Germany</option>
-									<option   data-domain="ie"       value="IE"   data-lang="en_IE"   >Ireland</option>
-									<option   data-domain="it"       value="IT"   data-lang="it_IT"   >Italy</option>
-									<option   data-domain="nl"       value="NL"   data-lang="nl_NL"   >Netherlands</option>
-									<option   data-domain="pl"       value="PL"   data-lang="pl_PL"   >Poland</option>
-									<option   data-domain="es"       value="ES"   data-lang="es_ES"   >Spain</option>
-									<option   data-domain="se"       value="SE"   data-lang="sv_SE"   >Sweden</option>
-									<option   data-domain="co.uk"    value="GB"   data-lang="en_GB"   >United Kingdom</option>
-								</optgroup>
-								<optgroup label="America">
-									<option   data-domain="com"      value="US"   data-lang="en_US"   >United States</option>
-									<option   data-domain="ca"       value="CA"   data-lang="en_CA"   >Canada</option>
-									<option   data-domain="mx"       value="MX"   data-lang="es_MX"   >Mexico</option>
-									<option   data-domain="com.br"   value="BR"   data-lang="pt_BR"   >Brazil</option>
-								</optgroup>
+							<div class="input-group">
 
-							</select>
+								<select class="form-control input-select" id="user_locale">
+
+									<optgroup label="Oceania">
+										<option   data-domain="com.au"   value="AU"   data-lang="en_AU"   >Australia</option>
+										<option   data-domain="co.nz"    value="NZ"   data-lang="en_NZ"   >New Zealand</option>
+									</optgroup>
+									<optgroup label="Europe">
+										<option   data-domain="at"       value="AT"   data-lang="de_AT"   >Austria</option>
+										<option   data-domain="be"       value="BE"   data-lang="fr_BE"   >Belgium</option>
+										<option   data-domain="cz"       value="CZ"   data-lang="cs_CZ"   >Czech Republic</option>
+										<option   data-domain="dk"       value="DK"   data-lang="da_DK"   >Denmark</option>
+										<option   data-domain="fi"       value="FI"   data-lang="fi_FI"   >Finland</option>
+										<option   data-domain="fr"       value="FR"   data-lang="fr_FR"   >France</option>
+										<option   data-domain="de"       value="DE"   data-lang="de_DE"   >Germany</option>
+										<option   data-domain="ie"       value="IE"   data-lang="en_IE"   >Ireland</option>
+										<option   data-domain="it"       value="IT"   data-lang="it_IT"   >Italy</option>
+										<option   data-domain="nl"       value="NL"   data-lang="nl_NL"   >Netherlands</option>
+										<option   data-domain="pl"       value="PL"   data-lang="pl_PL"   >Poland</option>
+										<option   data-domain="es"       value="ES"   data-lang="es_ES"   >Spain</option>
+										<option   data-domain="se"       value="SE"   data-lang="sv_SE"   >Sweden</option>
+										<option   data-domain="co.uk"    value="GB"   data-lang="en_GB"   >United Kingdom</option>
+									</optgroup>
+									<optgroup label="America">
+										<option   data-domain="com"      value="US"   data-lang="en_US"   >United States</option>
+										<option   data-domain="ca"       value="CA"   data-lang="en_CA"   >Canada</option>
+										<option   data-domain="mx"       value="MX"   data-lang="es_MX"   >Mexico</option>
+										<option   data-domain="com.br"   value="BR"   data-lang="pt_BR"   >Brazil</option>
+									</optgroup>
+
+								</select>
+
+								<span class="input-group-addon"> 
+									<input type="checkbox" id="default_check" value="">
+								</span>
+
+							</div>
 
 						</div>
 
@@ -350,13 +131,14 @@ list of sitekeys:
 
 							<label for="pid_style">Product</label>
 
-							<div class="pull-right">
-								<span class="badge pointer v2-red" onclick="$('#pid_style').val('BY9612');">R</span>
-								<span class="badge pointer v2-copper" onclick="$('#pid_style').val('BY1605');">C</span>
-								<span class="badge pointer v2-green" onclick="$('#pid_style').val('BY9611');">G</span>
-							</div>
+							<div class="input-group">
 
-							<input class="form-control" id="pid_style" type="text" placeholder="XX0000" value=" ">
+								<input class="form-control" id="pid_style" type="text" placeholder="XX0000" value=" ">
+								<span class="input-group-btn">
+									<button class="form-control btn btn-default" id="pid_img" onclick="$('#pid_style').change();">-</button>
+								</span>
+
+							</div>
 
 						</div>
 
@@ -367,13 +149,14 @@ list of sitekeys:
 						<div class="form-group col-sm-6">
 
 							<label for="xpr_val">x-PrdRt</label>
+							<div class="pull-right">Serialize</div>
 
 							<div class="input-group">
 
-								<input class="form-control" id="xpr_val" type="text" placeholder="x-PrdRt" value=" ">
+								<input class="form-control" id="xpr_val" type="text" placeholder="XxXXX0xxX" value=" ">
 
-								<span class="input-group-addon">
-									<input type="checkbox" id="xpr_check" value="" checked="checked">
+								<span class="input-group-addon"> 
+									<input type="checkbox" id="serialize_check" value="">
 								</span>
 								
 							</div>
@@ -389,9 +172,7 @@ list of sitekeys:
 								<input class="form-control" id="pid_size" type="text" placeholder="000" value=" ">
 
 								<span class="input-group-btn">
-									<button class="btn btn-default" id="size_add" onclick="addToCart($('#pid_size').val());">
-										<span class="glyphicon glyphicon-chevron-right"></span>
-									</button>
+									<button class="btn btn-default" id="size_add" onclick="addToCart($('#pid_size').val());">Add</button>
 								</span>
 								
 							</div>
@@ -444,20 +225,20 @@ list of sitekeys:
 					<div class="spacer"></div>
 					<div class="spacer-sm"></div>
 
-					<h4><span class="label beluga-bg">Splash ATC</span></h4>
+					<h4><span class="label beluga-bg">Splash</span></h4>
 
 					<div class="form-group captcha-w">
 
-						<div class="btn-group" role="group">
-							<button class="btn btn-default" onclick="generateSplash();">Get Data</button>
-							<button class="btn btn-default" onclick="selectSplash();">Select</button>
+						<div class="input-group">
+
+							<input class="form-control" id="splash_txt" type="text" placeholder="SplashATC bookmarklet.">
+
+							<div class="input-group-btn">
+								<button class="btn btn-default" onclick="generateSplash();">Data</button>
+								<button class="btn btn-default" onclick="openSplash();">Open</a>
+							</div>
+
 						</div>
-
-						<a href="http://www.adidas.com/yeezy" target="_blank" class="btn btn-default pull-right">Open</a>
-
-						<div class="spacer"></div>
-
-						<textarea class="form-control" id="splash_txt"></textarea>
 
 					</div>
 
@@ -522,32 +303,32 @@ list of sitekeys:
 
 				<div class="col-lg-4 col-sm-12">
 
-					<h4><span class="label beluga-bg">adidas Cart</span></h4>
+					<h4><span class="label beluga-bg">adidas.com</span></h4>
 
 					<div class="row">
 
-						<div class="form-group col-sm-8">
+						<div class="form-group col-sm-6">
 
 							<label for="cart_buttons">Cart</label>
 
 							<div class="btn-group input-group" role="group">
-								<button class="btn btn-default" name="cart_buttons" onclick="goToCart('show');">Show</button>
-								<button class="btn btn-default" name="cart_buttons" onclick="goToCart('checkout');">Checkout</button>
-								<button class="btn btn-default" name="cart_buttons" onclick="goToCart('paypal');">PayPal</button>
+								<button class="btn btn-default" name="cart_buttons" onclick="goToADC('show');">Show</button>
+								<button class="btn btn-default" name="cart_buttons" onclick="goToADC('paypal');">PayPal</button>
 							</div>
 
 						</div>
 
-						<div class="form-group col-sm-4">
+						<div class="form-group col-sm-6">
 
-							<label for="client_timer">Client Timer</label>
+							<div class="pull-right">
 
-							<div class="btn-group btn-group-justified" role="group" aria-label="...">
-								<div class="btn-group" role="group">
-									<button class="btn btn-default" id="client_timer" onclick="setTimer();">
-										<span class="glyphicon glyphicon-time"></span>&nbsp; Reset
-									</button>	
+								<label for="client_timer">Account</label>
+								
+								<div class="btn-group input-group" role="group">
+									<button class="btn btn-default" name="cart_buttons" onclick="goToADC('login');">Login</button>
+									<button class="btn btn-default" name="cart_buttons" onclick="goToADC('logout');">Logout</button>
 								</div>
+
 							</div>
 
 						</div>
@@ -563,7 +344,7 @@ list of sitekeys:
 
 			<footer class="footer solar-bg">
 
-				&copy; 2016 &mdash; <a href="http://twitter.com/bqdxo" target="_blank">@bq</a> &mdash; @bapeyeezy &mdash; v2.3 &mdash; Bookmarklets:
+				&copy; 2017 &mdash; v2.5.1 &mdash; <a href="http://twitter.com/InstaCopV2" target="_blank">InstaCop on Twitter</a> &mdash; <a href="http://twitter.com/bqdxo" target="_blank">@bq</a> &mdash; @bapeyeezy &mdash; Bookmarklets:
 
 				<a href="javascript:prompt('Copy this!',document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey'));void(0);">SiteKey</a>, 
 
@@ -724,20 +505,22 @@ list of sitekeys:
 				locLang = $('#user_locale option:selected').data('lang');
 
 
-				$('#pid_style').val('BY9612');
+				$('#pid_style').val('BY1604');
 				$('#pid_size').val('660');
 				$('#client_id').val('2904a24b-e4b4-4ef7-89a4-2ebd2d175dde');
-				$('#xpr_val').val('HSQi2Rzh');
+				$('#xpr_val').val('DhnjhrCA');
+				$('#hmac_page').val('http://www.adidas.com/ca/apps/yeezy/');
 
 
-				if (document.domain == '127.0.0.1') {
+				/*if (document.domain == '127.0.0.1') {
 					$('#client_timer').prop('disabled', true);
-				}
+				}*/
 
 
 				buildStock(sizeChart);
 				$('#table_location').html(sizeChartLocale);
 
+				loadPidImg();
 
 				$('#token_timer').countdown({
 					date: Date.now(),
@@ -758,6 +541,10 @@ list of sitekeys:
 				locCountry = $('#user_locale option:selected').val();
 				locLang = $('#user_locale option:selected').data('lang');
 
+				if ($('#default_check').is(':checked')) {
+					locLang = 'default';
+				}
+
 				Cookies.set('InstaCopLocale', locCountry, {
 					expires: 30,
 					path: '',
@@ -766,308 +553,22 @@ list of sitekeys:
 
 			});
 
+			$('#default_check').change(function() {
 
-			// ------- BACKDOOR --------------------------------------------------------------------------------------------------- //
-
-			function addToCart(pidSize) {
-
-				var pidStyle = $('#pid_style').val();
-				var captchaToken = getToken();
-				var xprVal = $('#xpr_val').val()
-
-				$('#post_xpr').prop('disabled', !($('#xpr_check').is(':checked')));
-
-				$('#post_form').attr('action', 'https://www.adidas.' + locDomain + '/on/demandware.store/Sites-adidas-' + locCountry + '-Site/' + locLang + '/Cart-MiniAddProduct');
-
-				$('#post_pid').val(pidStyle + '_' + pidSize);
-				$('#post_token').val(captchaToken);
-				$('#post_mpid').val(pidStyle);
-				$('#post_xpr').attr('name', xprVal);
-				$('#post_xpr').val(captchaToken);
-
-				$('#post_form').submit();
-
-			}
-
-			function generateSplash() {
-
-				var siteKey = $('#site_key').val();
-				var pidStyle = $('#pid_style').val();
-				var pidSize = $('#pid_size').val();
-				var xprVal = $('#xpr_check').is(':checked') ? $('#xpr_val').val() : '';
-
-				var data = siteKey + '&' + locDomain + '&' + locCountry + '&' + locLang + '&' + pidStyle + '&' + pidSize + '&' + xprVal;
-
-				$('#splash_txt').val(data);
-
-				selectSplash();
-
-			}
-
-			function selectSplash() {
-
-				$('#splash_txt').select();
-
-			}
-
-
-			// ------- CART ------------------------------------------------------------------------------------------------------- //
-
-			function goToCart(value) {
-
-				var cartLink = 'https://www.adidas.' + locDomain + '/on/demandware.store/Sites-adidas-' + locCountry + '-Site/' + locLang;
-
-				switch (value) {
-					case 'show':
-						cartLink += '/Cart-Show'; break;
-					case 'checkout':
-						cartLink += '/COSummary-Start'; break;
-					case 'paypal':
-						cartLink += '/CODelivery-RedirectToPaypal'; break;
-				}
-
-				window.open(cartLink, '_blank');
-
-			}
-
-			function setTimer() {
-
-				Cookies.set('clientReservationTimeStart', Date.now(), {
-					path: '',
-					domain: 'adidas.' + locDomain
-				});
-
-			}
-
-
-			// ------- STOCK ------------------------------------------------------------------------------------------------------ //
-
-			function loadStock() {
-
-				var pidStyle = $('#pid_style').val();
-				var clientID = $('#client_id').val();
-				var clientStore = 'store';
-				var stockRefresh = $('#stock_status');
-
-				$('#stock_gif').addClass('gly-spin');
-				$('#stock_status').html("...");
-
-				clientCache = clientStock;
-				clientStock = [];
-
-				switch (locCountry) {case 'US': case 'CA': case 'MX': clientStore = 'us'};
-
-				var clientMasterURL = 'http://production-' + clientStore + '-adidasgroup.demandware.net/s/adidas-' + locCountry + '/dw/shop/v15_6/products/' + pidStyle + '?client_id=' + clientID + '&expand=variations,availability&callback=?';
-
-				function clientSizeURL(size) {
-					return 'http://production-' + clientStore + '-adidasgroup.demandware.net/s/adidas-' + locCountry + '/dw/shop/v15_6/products/' + pidStyle + '_' + size + '?client_id=' + clientID + '&expand=availability&callback=?';
-				}
-
-				$.getJSON(clientMasterURL, function(data1) {
-
-					$.each(data1.variation_attributes[0].values, function(index, data2) {
-
-						clientStock.push( {
-							szc : data2.value,
-							size : data2.name,
-							stock : index,
-							change : index
-						});
-
-						$.getJSON(clientSizeURL(data2.value), function(data3) {
-
-							clientStock[index].stock = data3.inventory.ats;
-
-							try {
-
-								var diff = data3.inventory.ats - clientCache[index].stock;
-								diff = (diff>0 ? '+' : '') + diff;
-								clientStock[index].change = diff;
-
-							} catch(err) {
-
-								clientStock[index].change = '0';
-
-							}
-
-						})
-
-							.done(function() {
-
-								buildStock(clientStock);
-
-							});
-
-					});
-
-					$('#table_location').html(locCountry);
-					$('#table_total').html(data1.inventory.ats);
-					$('#stock_gif').removeClass('gly-spin');
-					$('#stock_status').html("Client ID");
-
-				})
-
-					.fail(function() {
-
-						$('#stock_status').html("...");
-
-						var variantURL = 'https://www.adidas.' + locDomain + '/on/demandware.store/Sites-adidas-' + locCountry + '-Site/' + locLang + '/Product-GetVariants?pid=' + pidStyle;
-
-						var variantTotal = 0;
-
-						$.getJSON('instacop/proxy.php?csurl=' + variantURL, function(data4) {
-
-							$.each(data4.variations.variants, function(index, data5) {
-
-								clientStock.push( {
-									szc : data5.id.split('_')[1],
-									size : data5.attributes.size,
-									stock : data5.ATS,
-									change: index
-								});
-
-								variantTotal += data5.ATS;
-
-								try {
-
-									var diff = data5.ATS - clientCache[index].stock;
-									diff = (diff>0 ? '+' : '') + diff;
-									clientStock[index].change = diff;
-
-								} catch(err) {
-
-									clientStock[index].change = '0';
-
-								}
-
-							});
-						})
-
-							.done(function() {
-
-								$('#table_location').html(locCountry);
-								$('#table_total').html(variantTotal);
-								$('#stock_gif').removeClass('gly-spin');
-								$('#stock_status').html("GetVariant");
-
-								buildStock(clientStock);
-
-							})
-
-							.fail(function() {
-
-								$('#table_location').html(sizeChartLocale);
-								$('#table_total').html('');
-								$('#stock_gif').removeClass('gly-spin');
-								$('#stock_status').html("¯\\_(ツ)_/¯");
-
-								buildStock(sizeChart);
-
-							})
-
-					})
-
-			}
-
-			function buildStock(stock) {
-
-				var transform = {"tag":"table", "children":[
-					{"tag":"tbody","children":[
-						{"tag":"tr","children":[
-							{"tag":"td","class":"table-size","html":"${szc}"},
-							{"tag":"td","html":"${size}"},
-							{"tag":"td","class":"table-stock text-right","html":"${stock}"},
-							{"tag":"td","class":"table-change text-right","html":"${change}"},
-							{"tag":"td","children":[
-								{"tag":"a","class":"label table-add pull-right","id":"${szc}","align":"center","html":"Add"}
-							]}
-						]}
-					]}
-				]};
-
-				$('#stock_table').html(json2html.transform(stock,transform));
-
-				$('.table-add').click(function() {
-					addToCart(this.id);
-				});
-
-				$('.table-stock').each(function() {
-					if($(this).html() != '0' && $(this).html() != '?') {
-						$(this).addClass('solar-fg');
-					};
-				});
-
-				$('.table-change').each(function() {
-					if($(this).html().substring(0, 1) == '+') {
-						$(this).parent().addClass('tr-highlight');
-					};
-				});
-
-			}
-
-
-			// ------- TOKENS ----------------------------------------------------------------------------------------------------- //
-
-			function addToken() {
-
-				tokenArray.push({
-					token: grecaptcha.getResponse(),
-					expires: Date.now() + 119*1000 // 2 min - 1 sec.
-				});
-
-				clearTokens();
-				
-				setTimeout(function(){
-					grecaptcha.reset();
-				}, 800);
-
-			}
-
-			function getToken() {
-
-				clearTokens();
-
-				if (tokenArray.length > 0) {
-
-					var captchaResponse = tokenArray.shift().token;
-					clearTokens();
-					return captchaResponse;
-
+				if ($('#default_check').is(':checked')) {
+					locLang = 'default';
 				} else {
-
-					return '';
-
+					locLang = $('#user_locale option:selected').data('lang');
 				}
 
-			}
+			})
 
-			function clearTokens() {
-
-				while (tokenArray.length > 0 && Date.now() > tokenArray[0].expires) {
-
-					tokenArray.shift();
-
-				}
-
-				if (tokenArray.length > 0) {
-
-					$('#token_status').html('Tokens: ' + tokenArray.length);
-					$('#token_status').addClass('solar-bg');
-
-					$('#token_timer').data('countdown').update(tokenArray[0].expires).start();
-					$('#token_timer').removeClass('invisible');
-
-				} else {
-
-					$('#token_status').html('Tokens: 0');
-					$('#token_status').removeClass('solar-bg');
-
-					$('#token_timer').addClass('invisible');
-					$('#token_timer').data('countdown').update(Date.now()).stop();
-
-				} 
-
-			}
+			$('#pid_style').change(function() {
+				loadPidImg();
+			})
+			$('#pid_style').keyup(function() {
+				loadPidImg();
+			})
 
 		</script>
 
