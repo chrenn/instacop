@@ -1,4 +1,4 @@
-<!--***********************************************************************************
+<!--**************************************************************************************
 
 instructions:
 - edit host file via 'sudo nano /private/etc/hosts' and route 127.0.0.1 to x.adidas.com
@@ -6,132 +6,385 @@ instructions:
 - start apache server via 'sudo apachectl start' and go to x.adidas.com
 - update sitekey temporarily like this: x.adidas.com/?sitekey=xxxxx
 
+list of client-ids:
+- d958ef63-4644-4a9d-9007-03cf30262f61 (banned)
+- c1f3632f-6d3a-43f4-9987-9de920731dcb (banned)
+- 75e396c6-5589-425b-be03-774c21a74702 (banned)
+- 3ab2afb8-e119-4381-9bda-a9352912ca39 (banned)
+- 49cc202a-d092-4178-96c3-a8734570e055 (banned)
+- 2904a24b-e4b4-4ef7-89a4-2ebd2d175dde
+
 list of sitekeys:
-- 6LenDyETAAAAAEe8538c2k0w7h7ZlzoJlOafSrZP
-- 6LcuOygTAAAAAHPnPyYFgRgl9tFRiMGjyaMMpk-y
+- 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI (Google Test Key)
+- 6LenDyETAAAAAEe8538c2k0w7h7ZlzoJlOafSrZP (750 Gum WW)
+- 6LcuOygTAAAAAHPnPyYFgRgl9tFRiMGjyaMMpk-y (350 Infants WW)
+- 6Lc9EyoTAAAAABWz8VUqQ-0_N9mZ9-y9ZXCS1Rf6 (350 Cleats US)
+- 6LfmqykTAAAAAPkpAt5TNBSeZl81VlbRl7pZpM9m (350v2 Solar AU)
+- 6LeOnCkTAAAAAK72JqRneJQ2V7GvQvvgzsVr-6kR (350v2 Solar EU)
+- 6LdNnykTAAAAAMeh4_jgbXqo7pgFZCeCByiivMFw (350v2 Solar US)
 
 (c) @bqdxo 2016
 
-************************************************************************************-->
+***************************************************************************************-->
 
 <!DOCTYPE html>
+
 <html>
 
 	<head>
 
-		<title>localhost</title>
+		<meta charset="utf-8">
+		<!--meta name="referrer" content="no-referrer"-->
 
-		<script src='https://www.google.com/recaptcha/api.js'></script>
 
+		<title>InstaCop V2</title>
+
+
+		<!-- jQuery, Bootstrap, js.cookie, jq.countdown, json2html, reCAPTCHA -->
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.js'></script>
+
+		<script src="instacop/jquery.countdown.js"></script>
+
+		<script src="instacop/json2html.js"></script>
+		<script src="instacop/jquery.json2html.js"></script>
+
+		<script src='https://www.google.com/recaptcha/api.js?'></script>
+
 
 		<style>
 
 			/* Space out content. */
 			body {
-				padding-top: 10px;
-				padding-bottom: 10px;
+				padding-top: 5px;
+				padding-bottom: 5px;
 			}
 			.main {
-				padding-top: 20px;
-				padding-bottom: 20px;
+				padding-top: 10px;
+				padding-bottom: 15px;
 			}
-
-			/* Custom page header and footer. */
 			.header {
-				padding-bottom: 10px;
-				border-bottom: 1px solid #e5e5e5;
+				padding-bottom: 5px;
+				border-bottom: 1px solid;
 			}
 			.footer {
-				color: #777;
-				padding-top: 20px;
-				border-top: 1px solid #e5e5e5;
+				margin-top: 0px;
+				padding: 10px;
+			}
+			h4 {
+				padding-bottom: 10px;
+			}
+			.spacer {
+				height: 10px;
+			}
+			.spacer-sm {
+				height: 6px;
+			}
+			.spacer-n {
+				margin-top: -4px;
 			}
 
 			/* Apply Google reCAPTCHA width. */
-			.captcha {
+			.captcha-w {
 				width: 302px;
+				max-width: 302px;
+			}
+			.captcha-w-row {
+				width: 332px;
+				max-width: 332px;
 			}
 
-			/* Monospace text input. */
+			/* V2 colors. */
+			.solar-fg {
+				color: #ff4727 !important;
+			}
+			.solar-bg {
+				color: #ffffff !important;
+				background-color: #ff4727 !important;
+			}
+			.beluga-fg {
+				color: #717171;
+			}
+			.beluga-bg {
+				color: #ffffff;
+				background-color: #717171;
+			}
+			.steeple-bg {
+				background-color: #f1f1f1;
+			}
+			.form-bg {
+				background-color: #f9f9f9;
+			}
+			.btn-bg {
+				background-color: #ffffff;
+			}
+
+			/* HTML color configuration. */
+			::selection {
+				background-color: rgba(255,71,39,0.7); /*solar-fg 70%*/
+			}
+			a {
+				color: #ffffff;
+			}
+			a:hover {
+				color: #000000;
+			}
+
+			/* Bootstrap & HTML form control configuration. */
 			.form-control {
 				font-family: monospace;
+				border-radius: 0em;
+				background-color: #f9f9f9; /*form-bg*/
+			}
+			.form-control:focus {
+				border-color: #ff4727; /*solar-fg*/
+				box-shadow: none;
+			}
+			.btn {
+				border-radius: 0em;
+			}
+			.label {
+				border-radius: 0em;
+				font-size: 90%;
+			}
+			.badge {
+				cursor: default;
+			}
+			.input-select {
+				cursor: pointer;
+				-webkit-appearance: button;
+				-moz-appearance: none;
+				-ms-appearance: none;
+				-o-appearance: none;
+				appearance: none;
+			}
+
+			/* Stock checker table. */
+			table {
+				table-layout: fixed;
+				font-size: 11px;
+				border: 1px solid #cccccc; /*form-control-border*/
+			}
+			thead, tbody, th, tr, td {
+				border-top: 1px solid #cccccc !important;
+			}
+			th {
+				border-bottom: 2px solid #cccccc !important;
+			}
+			.table-size, .table-stock {
+				font-weight: bold;
+			}
+			.table-add {
+				cursor: pointer;
+				color: #ffffff;
+				background-color: #717171; /*beluga-bg*/
+			}
+			.table-add:hover {
+				background-color: #ff4727; /*solar-bg*/
+			}
+
+			/* IDs. */
+			#user_locale {
+				font-family: sans-serif;
+				font-size: 13px;
+			}
+			#token_status {
+				cursor: pointer;
+			}
+			#site_key {
+				font-size: 11px;
+			}
+			#client_id {
+				font-size: 11px;
+			}
+			#manual_txt {
+				font-size: 11px;
+				resize: none;
+				height: 231px;
+			}
+			#cart_frame {
+				height: 574px;
+			}
+
+			/* Spinning Glyphicon. */
+			.gly-spin {
+				-webkit-animation: spin 1s infinite linear;
+				-moz-animation: spin 1s infinite linear;
+				-o-animation: spin 1s infinite linear;
+				animation: spin 1s infinite linear;
+			}
+			@-moz-keyframes spin {
+				0% {
+					-moz-transform: rotate(0deg);
+				}
+				100% {
+					-moz-transform: rotate(359deg);
+				}
+			}
+			@-webkit-keyframes spin {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				100% {
+					-webkit-transform: rotate(359deg);
+				}
+			}
+			@-o-keyframes spin {
+				0% {
+					-o-transform: rotate(0deg);
+				}
+				100% {
+					-o-transform: rotate(359deg);
+				}
+			}
+			@keyframes spin {
+				0% {
+					-webkit-transform: rotate(0deg);
+					transform: rotate(0deg);
+				}
+				100% {
+					-webkit-transform: rotate(359deg);
+					transform: rotate(359deg);
+				}
 			}
 
 		</style>
 
 	</head>
 
-	<body>
+	<body class="beluga-fg steeple-bg">
 
 		<div class="container">
 
-			<div class="header">
-				<h3>InstaCop</h3>
-			</div>
+			<header class="header"><h3>
+
+				<span class="glyphicon glyphicon-tint"></span>
+				&nbsp;InstaCop <span class="solar-fg">V403</span>
+
+			</h3></header>
 
 			<div class="row main">
 
-				<div class="col-sm-4">
+				<!--**************************************************************************************************************-->
+				<!--**************************************************************************************************************-->
 
-					<div class="row captcha" style="width:332px">
-						<div class="form-group col-sm-4">
-							<label for="lx">Domain</label>
-							<input class="form-control" id="lx" type="text" value="de" placeholder="xx">
+				<div class="col-lg-4 col-sm-6">
+
+					<h4><span class="label beluga-bg">Settings</span></h4>
+
+					<div class="row captcha-w-row">
+
+						<div class="form-group col-sm-6">
+
+							<label for="user_locale">Locale &nbsp;<span class="caret"></span></label>
+							<select class="form-control input-select" id="user_locale">
+
+								<optgroup label="Oceania">
+									<option   data-domain="com.au"   value="AU"   data-lang="en_AU"   >Australia</option>
+									<option   data-domain="co.nz"    value="NZ"   data-lang="en_NZ"   >New Zealand</option>
+								</optgroup>
+								<optgroup label="Europe">
+									<option   data-domain="at"       value="AT"   data-lang="de_AT"   >Austria</option>
+									<option   data-domain="be"       value="BE"   data-lang="fr_BE"   >Belgium</option>
+									<option   data-domain="cz"       value="CZ"   data-lang="cs_CZ"   >Czech Republic</option>
+									<option   data-domain="dk"       value="DK"   data-lang="da_DK"   >Denmark</option>
+									<option   data-domain="fi"       value="FI"   data-lang="fi_FI"   >Finland</option>
+									<option   data-domain="fr"       value="FR"   data-lang="fr_FR"   >France</option>
+									<option   data-domain="de"       value="DE"   data-lang="de_DE"   >Germany</option>
+									<option   data-domain="ie"       value="IE"   data-lang="en_IE"   >Ireland</option>
+									<option   data-domain="it"       value="IT"   data-lang="it_IT"   >Italy</option>
+									<option   data-domain="nl"       value="NL"   data-lang="nl_NL"   >Netherlands</option>
+									<option   data-domain="pl"       value="PL"   data-lang="pl_PL"   >Poland</option>
+									<option   data-domain="es"       value="ES"   data-lang="es_ES"   >Spain</option>
+									<option   data-domain="se"       value="SE"   data-lang="sv_SE"   >Sweden</option>
+									<option   data-domain="co.uk"    value="GB"   data-lang="en_GB"   >United Kingdom</option>
+								</optgroup>
+								<optgroup label="America">
+									<option   data-domain="com"      value="US"   data-lang="en_US"   >United States</option>
+									<option   data-domain="ca"       value="CA"   data-lang="en_CA"   >Canada</option>
+									<option   data-domain="mx"       value="MX"   data-lang="es_MX"   >Mexico</option>
+									<option   data-domain="com.br"   value="BR"   data-lang="pt_BR"   >Brazil</option>
+								</optgroup>
+
+							</select>
+
 						</div>
-						<div class="form-group col-sm-4">
-							<label for="ly">Country</label>
-							<input class="form-control" id="ly" type="text" value="DE" placeholder="XX">
+
+						<div class="form-group col-sm-6">
+
+							<label for="pid_style">Product</label>
+							<input class="form-control" id="pid_style" type="text" placeholder="XX0000">
+
 						</div>
-						<div class="form-group col-sm-4">
-							<label for="lz">Code</label>
-							<input class="form-control" id="lz" type="text" value="de_DE" placeholder="xx_XX">
+
+					</div>
+
+					<div class="row captcha-w-row">
+						
+						<div class="form-group col-sm-6">
+
+							<label class="control-label">Backdoor</label>
+
+							<div class="spacer-n">
+
+								<label class="radio-inline">
+									<input id="form_type_input" name="form_type" type="radio" checked="checked">Input
+								</label>
+								<label class="radio-inline">
+									<input id="form_type_action" name="form_type" type="radio">Action
+								</label>
+
+								<label class="checkbox-inline">
+									<input id="xpr_check" type="checkbox">Include 'x-PrdRt'
+								</label>
+
+							</div>
+
 						</div>
+
+						<div class="form-group col-sm-6">
+
+							<label for="pid_size">Size</label>
+							<input class="form-control" id="pid_size" type="text" placeholder="000">
+
+						</div>
+
 					</div>
 
-					<br>
+					<div class="form-group captcha-w">
 
-					<div class="form-group captcha">
-						<label for="pid">Product</label>
-						<input class="form-control" id="pid" type="text" value="BB1826" placeholder="XX0000">
+						<label for="site_key">Sitekey</label>
+
+						<div class="pull-right">
+							<span class="badge btn-bg beluga-fg invisible" id="token_timer"></span>
+							<span class="badge btn-bg beluga-fg" id="token_status" onclick="prompt('Copy this!',getToken());">Tokens: 0</span>
+						</div>
+
+						<input class="form-control steeple-bg" id="site_key" type="text" readonly="true">
+
 					</div>
 
-					<div class="form-group captcha">
-						<label for="szc">Size</label>
-						<input class="form-control" id="szc" type="text" value="660" placeholder="000">
-					</div>
+					<div class="g-recaptcha" id="g_captcha" data-sitekey="" data-callback="addToken"></div>
 
-					<div class="form-group captcha">
-						<label for="cart">Cart</label>
-						<input class="form-control" id="cart" type="text" value="dwfrm_cart_d0uiueowxzjz" placeholder="xxxxx_cart_xxxxxxxxxxxx">
-					</div>
-
-					<br>
-
-					<div class="form-group captcha">
-						<label for="sitekeyvalue">Sitekey</label>
-						<input class="form-control" id="sitekeyvalue" type="text" readonly="true" style="font-size:11px; background:#f9f9f9">
-					</div>
-
-					<div id="captcha" class="g-recaptcha" data-sitekey=""></div>
-
-					<script>
+					<script> //thank you @bapeyeezy!
 
 						function addSiteKey() {
 
-							var parameters = location.search.substring(1).split("&");
-							var sitekey = parameters[0].split("=");
+							var defaultKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
 
-							//test if sitekey is null or blank, if so assign it default value
+							var siteKey = location.search.substring(1).split('&')[0].split('=')[1];
 
-							var key = sitekey[1];
-
-							if ((key == null) || (key == '')) {
-								key = "6LcuOygTAAAAAHPnPyYFgRgl9tFRiMGjyaMMpk-y";
+							if ((siteKey == null) || (siteKey == '')) {
+								siteKey = defaultKey;
 							}
 
-							document.getElementById('captcha').setAttribute("data-sitekey", key);
-							document.getElementById("sitekeyvalue").value = key;
+							document.getElementById('g_captcha').setAttribute('data-sitekey', siteKey);
+							document.getElementById('site_key').value = siteKey;
 
 						}
 
@@ -139,69 +392,677 @@ list of sitekeys:
 
 					</script>
 
-					<br>
-					<br>
+					<div class="spacer"></div>
+					<div class="spacer"></div>
 
-					<form class="captcha" name="co-formcontinueshopping" action="" method="post" id="">
+					<h4><span class="label beluga-bg">Manual ATC</span></h4>
+
+					<div class="form-group captcha-w">
 
 						<div class="btn-group" role="group">
-
-							<button type="button" class="btn btn-default" onclick="createBD()">Generate</button>
-
-							<button type="submit" class="btn btn-default" id="atc" disabled=true>Add to Cart</button>
-
+							<button class="btn btn-default" onclick="generateManual();">Generate</button>
+							<button class="btn btn-default" onclick="selectManual();">Select</button>
 						</div>
 
-						<button class="btn btn-default" onclick="showCart()" style="float:right">Show Cart</a>
+						<button class="btn btn-default pull-right" id="manual_btn" onclick="addToCart('manual');" disabled="true">Add to Cart</button>
 
+						<div class="spacer"></div>
+
+						<textarea class="form-control" id="manual_txt"></textarea>
+
+					</div>
+
+					<form action="" method="post" target="cart_frame" hidden="true" id="post_form_input" name="addProductForm">
+						<input name="layer" value="Add To Bag overlay">
+						<input name="pid" value="" id="post_pid">
+						<input name="Quantity" value="1">
+						<input name="g-recaptcha-response" value="" id="post_token">
+						<input name="x-PrdRt" value="" id="post_xpr">
+						<input name="masterPid" value="" id="post_mpid">
+						<input name="ajax" value="true">
+						<input type="submit" id="post_form_input_btn"></input>
+					</form>
+
+					<form action="" method="post" target="cart_frame" hidden="true" id="post_form_action" name="addProductForm">
+						<input type="submit" id="post_form_action_btn"></input>
 					</form>
 
 				</div>
 
-				<div class="col-sm-8">
+				<!--**************************************************************************************************************-->
+				<!--**************************************************************************************************************-->
 
-					<div class="form-group">
-						<label for="txt">Backdoor Link</label>
-						<textarea class="form-control" id="txt" style="resize:none; font-size:14px; height:537px"></textarea>
+				<div class="col-lg-4 col-sm-6">
+
+					<h4><span class="label beluga-bg">Inventory ATC</span></h4>
+
+					<div class="form-group captcha-w">
+
+						<label for="client_id">Client ID</label>
+						<span class="badge btn-bg beluga-fg pull-right" id="stock_status"></span>
+
+						<div class="input-group">
+
+							<input class="form-control" id="client_id" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+
+							<span class="input-group-btn">
+								<button class="btn btn-default" onclick="loadStock();">
+									<span class="glyphicon glyphicon-refresh" id="stock_gif"></span>
+								</button>>
+							</span>
+
+						</div>
+
 					</div>
+
+					<table class="table table-hover table-condensed form-bg captcha-w">
+
+						<colgroup>
+							<col width="15%">
+							<col width="30%">
+							<col width="15%">
+							<col width="25%">
+							<col width="15%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th>Size</th>
+								<th id="table_location"></th>
+								<th>Stock</th>
+								<th id="table_total"></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody id="stock_table">
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</tbody>
+
+					</table>
+
+				</div>
+
+				<!--**************************************************************************************************************-->
+				<!--**************************************************************************************************************-->
+
+				<div class="col-lg-4 col-sm-12">
+
+					<h4><span class="label beluga-bg">adidas Cart</span></h4>
+
+					<div class="row">
+
+						<div class="form-group col-sm-8">
+
+							<label for="cart_buttons">Cart</label>
+
+							<div class="btn-group input-group" role="group">
+								<button class="btn btn-default" name="cart_buttons" onclick="goToCart('show');">Show</button>
+								<button class="btn btn-default" name="cart_buttons" onclick="goToCart('checkout');">Checkout</button>
+								<button class="btn btn-default" name="cart_buttons" onclick="goToCart('paypal');">PayPal</button>
+							</div>
+
+						</div>
+
+						<div class="form-group col-sm-4">
+
+							<label for="client_timer">Client Timer</label>
+
+							<div class="btn-group btn-group-justified" role="group" aria-label="...">
+								<div class="btn-group" role="group">
+									<button class="btn btn-default" id="client_timer" onclick="setTimer();">
+										<span class="glyphicon glyphicon-time"></span>&nbsp; Reset
+									</button>	
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<iframe class="form-control" id="cart_frame" name="cart_frame"></iframe>
 
 				</div>
 
 			</div>
 
+			<footer class="footer solar-bg">
 
-			<footer class="footer">
-				<p>&copy; 2016 Reign #gatekeepers | @bq @bapeyeezy | Backdoor & Captcha Generator v1.2</p>
+				&copy; 2016 &mdash; <a href="http://twitter.com/bqdxo" target="_blank">@bq</a> &mdash; @bapeyeezy &mdash; v2.1 &mdash; Bookmarklets:
+
+				<a href="javascript:prompt('Copy this!',document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey'));void(0);">SiteKey</a>,
+
+				<a href="javascript:(function(){%20%20var%20clientId=/(?:[%22]+clientId[%22]+[:\s]+[%22]+)([a-zA-Z0-9-]+)/.exec(document.documentElement.innerHTML);%20%20alert(clientId[1]);})();">ClientID (EU)</a>, 
+
+				<a href="javascript:(function(){var clientId=/clientId=[A-Za-z0-9\-]+/.exec(document.documentElement.innerHTML);prompt('Copy this!,clientId[0]);})();">ClientID (US)</a>, 
+
+				<a href="javascript:document.getElementsByClassName('co-formcontinueshopping')[0].action=prompt('Enter BD Link:');void(0);">InjectBD</a>, 
+
+				<a href="
+
+					javascript: (function () {
+
+						var link = prompt('Paste BD Link:');;
+
+						var form = document.createElement('form');
+						var input = document.createElement('input');
+						var submit = document.createElement('input');
+
+						form.name = 'addProductForm';
+						form.method = 'post';
+						form.action = link;
+
+						input.value = link;
+						input.disabled = true;
+						input.style = 'width:1000px;font-size:10px;color:#000';
+						form.appendChild(input);
+
+						submit.type = 'submit';
+						submit.value = 'ADD TO BAG';
+						form.appendChild(submit);
+
+						if(document.getElementById('header') != null) {
+							document.getElementById('header').appendChild(form);
+						} else if (document.getElementsByTagName('header')[0] != null) {
+							document.getElementsByTagName('header')[0].appendChild(form);
+						} else {
+							document.body.appendChild(form);
+						}
+						
+					})();
+
+					">AddToBag</a>,
+
+				<a href="
+
+					javascript: (function () {
+
+						var link = 'http://www.adidas.de/on/demandware.store/Sites-adidas-DE-Site/de_DE/Cart-MiniAddProduct';
+						var size = prompt('Paste Size Code:');
+						var token = prompt('Paste Token:');
+
+						var form = document.createElement('form');
+						var input1 = document.createElement('input');
+						var input2 = document.createElement('input');
+						var input3 = document.createElement('input');
+						var input4 = document.createElement('input');
+						var input5 = document.createElement('input');
+						var input6 = document.createElement('input');
+						var input7 = document.createElement('input');
+
+						form.name = 'addProductForm';
+						form.method = 'post';
+						form.action = link;
+
+						input1.type = 'hidden';
+						input1.name = 'layer';
+						input1.value = 'Add To Bag overlay';
+						form.appendChild(input1);
+
+						input2.name = 'pid';
+						input2.value = 'BY2456_' + size;
+						form.appendChild(input2);
+
+						input3.type = 'hidden';
+						input3.name = 'Quantity';
+						input3.value = '1';
+						form.appendChild(input3);
+
+						input4.name = 'g-recaptcha-response';
+						input4.value = token;
+						form.appendChild(input4);
+
+						input5.type = 'hidden';
+						input5.name = 'masterPid';
+						input5.value = 'BY2456';
+						form.appendChild(input5);
+
+						input6.type = 'hidden';
+						input6.name = 'ajax';
+						input6.value = 'true';
+						form.appendChild(input6);
+
+						input7.type = 'submit';
+						input7.value = 'ADD TO BAG';
+						form.appendChild(input7);
+
+						if(document.getElementById('header') != null) {
+							document.getElementById('header').appendChild(form);
+						} else if (document.getElementsByTagName('header')[0] != null) {
+							document.getElementsByTagName('header')[0].appendChild(form);
+						} else {
+							document.body.appendChild(form);
+						}
+						
+					})();
+
+					">AddToBag (DE)</a>
+
 			</footer>
 
 		</div>
 
 		<script>
 
-			function createBD() {
+			// ------- INITIALIZE ------------------------------------------------------------------------------------------------- //
 
-				var bdLink = 'https://www.adidas.' + document.getElementById('lx').value + '/on/demandware.store/Sites-adidas-' + document.getElementById('ly').value + '-Site/' + document.getElementById('lz').value + '/Cart-MiniAddProduct?layer=Add+To+Bag+overlay&pid=' + document.getElementById('pid').value + '_' + document.getElementById('szc').value + '&Quantity=1&ajax=true&g-recaptcha-response=' + grecaptcha.getResponse();
+			var locDomain = '';
+			var locCountry = '';
+			var locLang = '';
 
-				var bdTxt = document.getElementById('txt');
-				var bdForm = document.forms['co-formcontinueshopping'];
-				var atcButton = document.getElementById('atc');
+			var tokenArray = [];
 
-				bdTxt.innerHTML = bdLink;
-				bdTxt.focus();
-				bdTxt.select();
+			var clientStock = [];
+			var clientCache = [];
 
-				bdForm.action = bdLink;
-				bdForm.id = document.getElementById('cart').value;
+			var sizeChartDefault = 'US';
+			var sizeChart = [
+				{szc:'530', size:'4', stock:'?', change:''},
+				{szc:'540', size:'4.5', stock:'?', change:''},
+				{szc:'550', size:'5', stock:'?', change:''},
+				{szc:'560', size:'5.5', stock:'?', change:''},
+				{szc:'570', size:'6', stock:'?', change:''},
+				{szc:'580', size:'6.5', stock:'?', change:''},
+				{szc:'590', size:'7', stock:'?', change:''},
+				{szc:'600', size:'7.5', stock:'?', change:''},
+				{szc:'610', size:'8', stock:'?', change:''},
+				{szc:'620', size:'8.5', stock:'?', change:''},
+				{szc:'630', size:'9', stock:'?', change:''},
+				{szc:'640', size:'9.5', stock:'?', change:''},
+				{szc:'650', size:'10', stock:'?', change:''},
+				{szc:'660', size:'10.5', stock:'?', change:''},
+				{szc:'670', size:'11', stock:'?', change:''},
+				{szc:'680', size:'11.5', stock:'?', change:''},
+				{szc:'690', size:'12', stock:'?', change:''},
+				{szc:'700', size:'12.5', stock:'?', change:''},
+				{szc:'710', size:'13', stock:'?', change:''},
+				{szc:'720', size:'13.5', stock:'?', change:''},
+				{szc:'730', size:'14', stock:'?', change:''}
+			];
 
-				atcButton.disabled = false;
+			$(document).ready(function() {
+
+				if (Cookies.get('InstaCopLocale') != null) {
+					$('#user_locale').val(Cookies.get('InstaCopLocale'));
+				}
+
+				locDomain = $('#user_locale option:selected').data('domain');
+				locCountry = $('#user_locale option:selected').val();
+				locLang = $('#user_locale option:selected').data('lang');
+
+
+				$('#pid_style').val('BY2456');
+				$('#pid_size').val('660');
+				$('#client_id').val('2904a24b-e4b4-4ef7-89a4-2ebd2d175dde');
+
+
+				if (document.domain == '127.0.0.1') {
+					$('#client_timer').prop('disabled', true);
+				}
+
+
+				buildStock(sizeChart);
+				$('#table_location').html(sizeChartDefault);
+
+
+				$('#token_timer').countdown({
+					date: Date.now(),
+					render: function(data) {
+						$(this.el).html(this.leadingZeros(data.min, 1) + "m " + this.leadingZeros(data.sec, 2) + "s");
+					},
+					onEnd: function() {
+						clearTokens();
+					}
+
+				});
+
+			});
+
+			$('#user_locale').change(function() {
+
+				locDomain = $('#user_locale option:selected').data('domain');
+				locCountry = $('#user_locale option:selected').val();
+				locLang = $('#user_locale option:selected').data('lang');
+
+				Cookies.set('InstaCopLocale', locCountry, {
+					expires: 30,
+					path: '',
+					domain: document.domain
+				});
+
+			});
+
+
+			// ------- BACKDOOR --------------------------------------------------------------------------------------------------- //
+
+			function buildBD(pidSize) {
+
+				var pidStyle = $('#pid_style').val();
+
+				var captchaToken = getToken();
+
+				$('#post_xpr').prop('disabled', true);
+				var xprKey = '';
+
+				if ($('#xpr_check').is(":checked")) {
+					$('#post_xpr').prop('disabled', false);
+					xprKey += '&x-PrdRt=' + captchaToken;
+				}
+
+				var bdLink = 'https://www.adidas.' + locDomain + '/on/demandware.store/Sites-adidas-' + locCountry + '-Site/' + locLang + '/Cart-MiniAddProduct' + '?layer=Add+To+Bag+overlay' + '&pid=' + pidStyle + '_' + pidSize + '&Quantity=1' + '&g-recaptcha-response=' + captchaToken + xprKey + '&masterPid=' + pidStyle + '&ajax=true';
+
+
+				$('#post_form_input').attr('action', 'https://www.adidas.' + locDomain + '/on/demandware.store/Sites-adidas-' + locCountry + '-Site/' + locLang + '/Cart-MiniAddProduct');
+				$('#post_pid').val(pidStyle + '_' + pidSize);
+				$('#post_token').val(captchaToken);
+				$('#post_mpid').val(pidStyle);
+				$('#post_xpr').val(captchaToken);
+
+				
+				$('#post_form_action').attr('action', bdLink);
+
+
+				return bdLink;
 
 			}
 
-			function showCart() {
+			function generateManual() {
 
-				var cartLink = 'https://www.adidas.' + document.getElementById('lx').value + '/on/demandware.store/Sites-adidas-' + document.getElementById('ly').value + '-Site/' + document.getElementById('lz').value + '/Cart-Show';
+				$('#manual_txt').val(buildBD($('#pid_size').val()));
 
-				window.open(cartLink);
+				selectManual();
+
+				$('#manual_btn').prop('disabled', false);
+				$('#manual_btn').addClass('solar-fg');
+
+			}
+
+			function selectManual() {
+
+				$('#manual_txt').select();
+
+			}
+
+			function addToCart(mode) {
+
+				if (mode == 'manual') {
+
+					$('#post_form_action').attr('action', $('#manual_txt').val());
+
+				} else {
+
+					var link = buildBD(mode);
+					$('#manual_txt').val(link);
+
+				}
+
+				if ($('#form_type_input').is(":checked")) {
+
+					$('#post_form_input').submit();
+
+				}
+				else if ($('#form_type_action').is(":checked")) {
+					
+					$('#post_form_action').submit();
+
+				}
+
+			}
+
+
+			// ------- CART ------------------------------------------------------------------------------------------------------- //
+
+			function goToCart(value) {
+
+				var cartLink = 'https://www.adidas.' + locDomain + '/on/demandware.store/Sites-adidas-' + locCountry + '-Site/' + locLang;
+
+				switch (value) {
+					case 'show':
+						cartLink += '/Cart-Show'; break;
+					case 'checkout':
+						cartLink += '/COSummary-Start'; break;
+					case 'paypal':
+						cartLink += '/CODelivery-RedirectToPaypal'; break;
+				}
+
+				window.open(cartLink, '_blank');
+
+			}
+
+			function setTimer() {
+
+				Cookies.set('clientReservationTimeStart', Date.now(), {
+					path: '',
+					domain: 'adidas.' + locDomain
+				});
+
+			}
+
+
+			// ------- STOCK ------------------------------------------------------------------------------------------------------ //
+
+			function loadStock() {
+
+				var pidStyle = $('#pid_style').val();
+				var clientID = $('#client_id').val();
+				var clientStore = 'store';
+				var stockRefresh = $('#stock_status');
+
+				$('#stock_gif').addClass('gly-spin');
+				$('#stock_status').html("...");
+
+				clientCache = clientStock;
+				clientStock = [];
+
+				switch (locCountry) {case 'US': case 'CA': case 'MX': clientStore = 'us'};
+
+				var clientMasterURL = 'http://production-' + clientStore + '-adidasgroup.demandware.net/s/adidas-' + locCountry + '/dw/shop/v15_6/products/' + pidStyle + '?client_id=' + clientID + '&expand=variations,availability&callback=?';
+
+				function clientSizeURL(size) {
+					return 'http://production-' + clientStore + '-adidasgroup.demandware.net/s/adidas-' + locCountry + '/dw/shop/v15_6/products/' + pidStyle + '_' + size + '?client_id=' + clientID + '&expand=availability&callback=?';
+				}
+
+				$.getJSON(clientMasterURL, function(data1) {
+
+					$.each(data1.variation_attributes[0].values, function(index, data2) {
+
+						clientStock.push( {
+							szc : data2.value,
+							size : data2.name,
+							stock : index,
+							change : index
+						});
+
+						$.getJSON(clientSizeURL(data2.value), function(data3) {
+
+							clientStock[index].stock = data3.inventory.ats;
+
+							try {
+
+								var diff = data3.inventory.ats - clientCache[index].stock;
+								diff = (diff>0?'+':'') + diff;
+								clientStock[index].change = diff;
+
+							} catch(err) {
+
+								clientStock[index].change = '0';
+
+							}
+
+						})
+
+							.done(function() {
+
+								buildStock(clientStock);
+
+							});
+
+					});
+
+					$('#table_location').html(locCountry);
+					$('#table_total').html(data1.inventory.ats);
+					$('#stock_gif').removeClass('gly-spin');
+					$('#stock_status').html("Client ID");
+
+				})
+
+					.fail(function() {
+
+						$('#stock_status').html("...");
+
+						var variantURL = 'https://www.adidas.' + locDomain + '/on/demandware.store/Sites-adidas-' + locCountry + '-Site/' + locLang + '/Product-GetVariants?pid=' + pidStyle;
+
+						var variantTotal = 0;
+
+						$.getJSON('instacop/proxy.php?csurl=' + variantURL, function(data4) {
+
+							$.each(data4.variations.variants, function(index, data5) {
+
+								clientStock.push( {
+									szc : data5.id.split('_')[1],
+									size : data5.attributes.size,
+									stock : data5.ATS,
+									change: index
+								});
+
+								variantTotal += data5.ATS;
+
+								try {
+
+									var diff = data5.ATS - clientCache[index].stock;
+									diff = (diff>0?'+':'') + diff;
+									clientStock[index].change = diff;
+
+								} catch(err) {
+
+									clientStock[index].change = '0';
+
+								}
+
+							});
+						})
+
+							.done(function() {
+
+								$('#table_location').html(locCountry);
+								$('#table_total').html(variantTotal);
+								$('#stock_gif').removeClass('gly-spin');
+								$('#stock_status').html("GetVariant");
+
+								buildStock(clientStock);
+
+							})
+
+							.fail(function() {
+
+								$('#table_location').html(sizeChartDefault);
+								$('#table_total').html('');
+								$('#stock_gif').removeClass('gly-spin');
+								$('#stock_status').html("¯\\_(ツ)_/¯");
+
+								buildStock(sizeChart);
+
+							})
+
+					})
+
+			}
+
+			function buildStock(stock) {
+
+				var transform = {"tag":"table", "children":[
+					{"tag":"tbody","children":[
+						{"tag":"tr","children":[
+							{"tag":"td","class":"table-size","html":"${szc}"},
+							{"tag":"td","html":"${size}"},
+							{"tag":"td","class":"table-stock","html":"${stock}"},
+							{"tag":"td","class":"table-change","html":"${change}"},
+							{"tag":"td","children":[
+								{"tag":"a","class":"label table-add pull-right","id":"${szc}","align":"center","html":"Add"}
+							]}
+						]}
+					]}
+				]};
+
+				$('#stock_table').html(json2html.transform(stock,transform));
+
+				$('.table-add').click(function() {
+					addToCart(this.id);
+				});
+
+				$('.table-stock').each(function() {
+					if($(this).html() != '0' && $(this).html() != '?') {
+						$(this).addClass('solar-fg');
+					};
+				});
+
+			}
+
+
+			// ------- TOKENS ----------------------------------------------------------------------------------------------------- //
+
+			function addToken() {
+
+				tokenArray.push({
+					token: grecaptcha.getResponse(),
+					expires: Date.now() + 119*1000 //2min
+				});
+
+				clearTokens();
+				
+				setTimeout(function(){
+					grecaptcha.reset();
+				}, 800);
+
+			}
+
+			function getToken() {
+
+				clearTokens();
+
+				if (tokenArray.length > 0) {
+
+					var captchaResponse = tokenArray.shift().token;
+					clearTokens();
+					return captchaResponse;
+
+				} else {
+
+					return '';
+
+				}
+
+			}
+
+			function clearTokens() {
+
+				while (tokenArray.length > 0 && Date.now() > tokenArray[0].expires) {
+
+					tokenArray.shift();
+
+				}
+
+				if (tokenArray.length > 0) {
+
+					$('#token_status').html('Tokens: ' + tokenArray.length);
+					$('#token_status').addClass('solar-bg');
+
+					$('#token_timer').data('countdown').update(tokenArray[0].expires).start();
+					$('#token_timer').removeClass('invisible');
+
+				} else {
+
+					$('#token_status').html('Tokens: 0');
+					$('#token_status').removeClass('solar-bg');
+
+					$('#token_timer').addClass('invisible');
+					$('#token_timer').data('countdown').update(Date.now()).stop();
+
+				} 
 
 			}
 
