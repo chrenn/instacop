@@ -1,0 +1,212 @@
+<!--***********************************************************************************
+
+instructions:
+- edit host file via 'sudo nano /private/etc/hosts' and route 127.0.0.1 to x.adidas.com
+- copy this file to /Library/WebServer/Documents/
+- start apache server via 'sudo apachectl start' and go to x.adidas.com
+- update sitekey temporarily like this: x.adidas.com/?sitekey=xxxxx
+
+list of sitekeys:
+- 6LenDyETAAAAAEe8538c2k0w7h7ZlzoJlOafSrZP
+- 6LcuOygTAAAAAHPnPyYFgRgl9tFRiMGjyaMMpk-y
+
+(c) @bqdxo 2016
+
+************************************************************************************-->
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<title>localhost</title>
+
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<style>
+
+			/* Space out content. */
+			body {
+				padding-top: 10px;
+				padding-bottom: 10px;
+			}
+			.main {
+				padding-top: 20px;
+				padding-bottom: 20px;
+			}
+
+			/* Custom page header and footer. */
+			.header {
+				padding-bottom: 10px;
+				border-bottom: 1px solid #e5e5e5;
+			}
+			.footer {
+				color: #777;
+				padding-top: 20px;
+				border-top: 1px solid #e5e5e5;
+			}
+
+			/* Apply Google reCAPTCHA width. */
+			.captcha {
+				width: 302px;
+			}
+
+			/* Monospace text input. */
+			.form-control {
+				font-family: monospace;
+			}
+
+		</style>
+
+	</head>
+
+	<body>
+
+		<div class="container">
+
+			<div class="header">
+				<h3>InstaCop</h3>
+			</div>
+
+			<div class="row main">
+
+				<div class="col-sm-4">
+
+					<div class="row captcha" style="width:332px">
+						<div class="form-group col-sm-4">
+							<label for="lx">Domain</label>
+							<input class="form-control" id="lx" type="text" value="de" placeholder="xx">
+						</div>
+						<div class="form-group col-sm-4">
+							<label for="ly">Country</label>
+							<input class="form-control" id="ly" type="text" value="DE" placeholder="XX">
+						</div>
+						<div class="form-group col-sm-4">
+							<label for="lz">Code</label>
+							<input class="form-control" id="lz" type="text" value="de_DE" placeholder="xx_XX">
+						</div>
+					</div>
+
+					<br>
+
+					<div class="form-group captcha">
+						<label for="pid">Product</label>
+						<input class="form-control" id="pid" type="text" value="BB1826" placeholder="XX0000">
+					</div>
+
+					<div class="form-group captcha">
+						<label for="szc">Size</label>
+						<input class="form-control" id="szc" type="text" value="660" placeholder="000">
+					</div>
+
+					<div class="form-group captcha">
+						<label for="cart">Cart</label>
+						<input class="form-control" id="cart" type="text" value="dwfrm_cart_d0uiueowxzjz" placeholder="xxxxx_cart_xxxxxxxxxxxx">
+					</div>
+
+					<br>
+
+					<div class="form-group captcha">
+						<label for="sitekeyvalue">Sitekey</label>
+						<input class="form-control" id="sitekeyvalue" type="text" readonly="true" style="font-size:11px; background:#f9f9f9">
+					</div>
+
+					<div id="captcha" class="g-recaptcha" data-sitekey=""></div>
+
+					<script>
+
+						function addSiteKey() {
+
+							var parameters = location.search.substring(1).split("&");
+							var sitekey = parameters[0].split("=");
+
+							//test if sitekey is null or blank, if so assign it default value
+
+							var key = sitekey[1];
+
+							if ((key == null) || (key == '')) {
+								key = "6LcuOygTAAAAAHPnPyYFgRgl9tFRiMGjyaMMpk-y";
+							}
+
+							document.getElementById('captcha').setAttribute("data-sitekey", key);
+							document.getElementById("sitekeyvalue").value = key;
+
+						}
+
+						addSiteKey();
+
+					</script>
+
+					<br>
+					<br>
+
+					<form class="captcha" name="co-formcontinueshopping" action="" method="post" id="">
+
+						<div class="btn-group" role="group">
+
+							<button type="button" class="btn btn-default" onclick="createBD()">Generate</button>
+
+							<button type="submit" class="btn btn-default" id="atc" disabled=true>Add to Cart</button>
+
+						</div>
+
+						<button class="btn btn-default" onclick="showCart()" style="float:right">Show Cart</a>
+
+					</form>
+
+				</div>
+
+				<div class="col-sm-8">
+
+					<div class="form-group">
+						<label for="txt">Backdoor Link</label>
+						<textarea class="form-control" id="txt" style="resize:none; font-size:14px; height:537px"></textarea>
+					</div>
+
+				</div>
+
+			</div>
+
+
+			<footer class="footer">
+				<p>&copy; 2016 Reign #gatekeepers | @bq @bapeyeezy | Backdoor & Captcha Generator v1.2</p>
+			</footer>
+
+		</div>
+
+		<script>
+
+			function createBD() {
+
+				var bdLink = 'https://www.adidas.' + document.getElementById('lx').value + '/on/demandware.store/Sites-adidas-' + document.getElementById('ly').value + '-Site/' + document.getElementById('lz').value + '/Cart-MiniAddProduct?layer=Add+To+Bag+overlay&pid=' + document.getElementById('pid').value + '_' + document.getElementById('szc').value + '&Quantity=1&ajax=true&g-recaptcha-response=' + grecaptcha.getResponse();
+
+				var bdTxt = document.getElementById('txt');
+				var bdForm = document.forms['co-formcontinueshopping'];
+				var atcButton = document.getElementById('atc');
+
+				bdTxt.innerHTML = bdLink;
+				bdTxt.focus();
+				bdTxt.select();
+
+				bdForm.action = bdLink;
+				bdForm.id = document.getElementById('cart').value;
+
+				atcButton.disabled = false;
+
+			}
+
+			function showCart() {
+
+				var cartLink = 'https://www.adidas.' + document.getElementById('lx').value + '/on/demandware.store/Sites-adidas-' + document.getElementById('ly').value + '-Site/' + document.getElementById('lz').value + '/Cart-Show';
+
+				window.open(cartLink);
+
+			}
+
+		</script>
+
+	</body>
+
+</html>
