@@ -8,7 +8,7 @@
 
 		<meta charset="utf-8">
 
-		<meta name="referrer" content="no-referrer">
+		<!--meta name="referrer" content="no-referrer"-->
 
 		<link rel="mask-icon" href="instacop/img/favicon.svg" color="#b91109">
 		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
@@ -54,7 +54,7 @@
 
 			<div class="container">
 
-				<div class="header-logo has-pointer" :class="{ 'red-fill': auth }" @click="editPW"></div>
+				<a class="header-logo has-pointer red-fill" style="display:block;" :href="instaLink"></a>
 
 				<div class="columns main" v-cloak>
 
@@ -492,7 +492,7 @@
 							
 							<div>
 
-								Version <span class="is-bold">2.8.0</span>
+								Version <span class="is-bold">2.8.2</span>
 
 							</div>
 
@@ -541,11 +541,11 @@
 
 								Utils:
 
-								<a :href="instaLink" title="Drag this link to another browser window in order to launch InstaCop with all current parameters.">ConfigLink</a>,
-
 								<a href="javascript: prompt('This is your UserAgent:', navigator.userAgent); void(0);">UserAgent</a>,
 
-								<a :href="splashLink" target="_blank">YeezySplash</a>
+								<a :href="splashLink" target="_blank">YeezySplash</a>,
+
+								<a href="https://www.reddit.com/r/adidasatc/" target="_blank">r/adidasatc</a>
 
 							</div>
 
@@ -555,7 +555,7 @@
 
 								<a href="https://github.com/bequadro/instacop" target="_blank">Github</a>,
 
-								<a href="https://paypal.me/InstaCop" target="_blank">Donate ♥</a>
+								<a href="https://paypal.me/InstaCop" target="_blank">Donate</a>
 
 							</div>
 
@@ -563,7 +563,7 @@
 
 								<div>
 
-									&copy; 2017 @<a href="https://twitter.com/bqdxo" target="_blank">bequadro</a>
+									&copy; 2017 @<a href="https://twitter.com/b_q_____" target="_blank">bequadro</a>
 
 								</div>
 

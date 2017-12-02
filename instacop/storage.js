@@ -16,9 +16,8 @@
 		tucap: '',
 		acap: '',
 		captchaDup: 'x-PrdRt',
-		clientID: 'c1f3632f-6d3a-43f4-9987-9de920731dcb',
+		clientID: '',
 		hmac: 'gceeqs',
-		pw: ''
 
 	};
 
@@ -37,6 +36,9 @@
 			});
 
 			this.saveConfig(config);
+
+			//Strip all URL parameters.
+			history.replaceState({}, "", location.pathname);
 
 			return config
 		},

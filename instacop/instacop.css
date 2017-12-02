@@ -33,6 +33,7 @@ body {
 
 /* SVG Logos. */
 .header-logo {
+	display: block; /* make <a/> behave like <div/> */
 	background-color: white;
 	-webkit-mask: url(img/logo.svg) 50% / contain no-repeat; /* h-center */
 	height: 70px;

@@ -19,19 +19,22 @@ window.URLs = {
 
 	//Version v16_9 fetches both pairs ready to cart ('Avail.') and current stock incl. cart holds ('Stock'). Needs a valid ClientID.
 	dwClient(sizes) {
-		return app.inventory.avail.set ? 'https://production' + this.dwStore() + 'adidasgroup.demandware.net/s/adidas-' + app.config.locale.id + '/dw/shop/v16_9/products/(' + sizes + ')?client_id=' + app.config.clientID + '&expand=variations,availability&callback=?' : '';
+		return app.inventory.avail.set ? 'https://www.adidas.' + app.config.locale.domain + '/s/adidas-' + app.config.locale.id + '/dw/shop/v17_6/products/(' + sizes + ')?client_id=' + app.config.clientID + '&expand=variations,availability&callback=?' : '';
 	},
 
-	//Fallbacks using the ADC Demandware API:
+	//Fallback using the new ADC API.
+	apiAvail(pid) {
+		return app.inventory.stock.set ? 'https://www.adidas.' + app.config.locale.domain + '/api/products/' + pid  + '/availability' : '';
+	},
 
 	//Fetches sizes and stock availability (not those ready to cart anymore...).
 	getAvail(pid) {
-		return app.inventory.stock.set ? this.proxy + app.adcBase + 'Product-GetAvailableSizes?pid=' + pid : '';
+		return this.proxy + app.adcBase + 'Product-GetAvailableSizes?pid=' + pid;
 	},
 
 	//Crawls stock numbers from the HTML size picker. Only displays available sizes.
 	getHTML(pid) {
-		return app.inventory.stock.set ? this.proxy + app.adcBase + 'Product-Show?pid=%20' + pid : '';
+		return this.proxy + app.adcBase + 'Product-Show?pid=' + pid;
 	},
 
 	//Fetches stock numbers (not in real time, but sometimes available before product is loaded on other methods).
@@ -215,10 +218,11 @@ window.Inventory = {
 		this.main.locale = app.config.locale.id;
 		this.main.style = app.config.style;
 
-		let client = {success: false, total: 0, ats: 0};
-		let html = {success: false, total: 0};
-		let avail = {success: false, total: 0};
-		let variant = {success: false, total: 0};
+		let client = { success: false, total: 0, ats: 0 };
+		let api = { success: false, total: 0 };
+		let html = { success: false, total: 0 };
+		let avail = { success: false, total: 0 };
+		let variant = { success: false, total: 0 };
 
 		let self = this;
 
@@ -311,91 +315,90 @@ window.Inventory = {
 
 			} catch (err) {
 
-				console.log(err);
+				try { //1st fallback: new ADC API.
 
-				try { //1st fallback: getAvailSizes + scrape HTML.
+					let apiAvail = await $.getJSON(URLs.apiAvail(self.main.style));
 
-					//Start both requests simultaneously.
-					let _getAvail = $.getJSON(URLs.getAvail(self.main.style));
-					let _getHTML = $.get(URLs.getHTML(self.main.style));
-
-					//Await both promises.
-					let getAvail = await _getAvail;
-					let getHTML = await _getHTML;
-
-					//Create sizes and 0/1 availability from getAvail.
-					getAvail.sizes.forEach(item => {
-
-						let inStock = item.status == 'IN_STOCK' ? 1 : 0;
+					apiAvail.variation_list.forEach(item => {
 
 						self.update({
 							code: item.sku.split('_')[1],
-							size: item.literalSize,
-							stock: inStock,
+							size: item.size,
+							stock: item.availability
 						});
 
-						avail.success = true;
-						avail.total += inStock;
+						api.success = true;
+						api.total += item.availability;
 
 					});
 
-					//Parse HTML to size picker stock numbers array and update inventory array.
-					[...$('.size-select', getHTML).children()].forEach(item => {
+					if (api.success) {
 
-						if (item.value != 'empty') { try {
-
-							let stock = item.dataset.maxavailable == 'null' ? 0 : parseInt(item.dataset.maxavailable);
-
-							self.update({
-								code: item.value.split('_')[1],
-								size: item.innerHTML.trim(),
-								stock: stock,
-							});
-
-							html.success = true;
-							html.total += stock;
-
-						} catch (err) {} }
-
-					});
-
-					if (html.success || avail.success) {
-
-						app.inventory.status = 'HTML';
-						app.inventory.stock.total = html.total || avail.total;
+						app.inventory.status = 'API';
+						app.inventory.stock.total = api.total;
 
 						if (app.inventory.atc.mode == "Monitor" && app.inventory.stock.total) app.notify(app.inventory.stock.total);
 
 						self.build();
 
 					} else throw new Error();
-
+					
 				} catch (err) {
 
-					try { //2nd fallback: getVariant.
+					try { //2nd fallback: getAvailSizes + scrape HTML.
 
-						let getVariant = await $.getJSON(URLs.getVariant(self.main.style));
+						//Start both requests simultaneously.
+						let _getAvail = $.getJSON(URLs.getAvail(self.main.style));
+						let _getHTML = $.get(URLs.getHTML(self.main.style));
 
-						//Update inventory array.
-						getVariant.variations.variants.forEach(item => {
+						//Await both promises.
+						let getAvail = await _getAvail;
+						let getHTML = await _getHTML;
+
+						//Create sizes and 0/1 availability from getAvail.
+						getAvail.sizes.forEach(item => {
+
+							let inStock = item.status == 'IN_STOCK' ? 1 : 0;
 
 							self.update({
-								code: item.id.split('_')[1],
-								size: item.attributes.size,
-								stock: item.ATS,
+								code: item.sku.split('_')[1],
+								size: item.literalSize,
+								stock: inStock,
 							});
 
-							variant.success = true;
-							variant.total += item.ATS;
+							avail.success = true;
+							avail.total += inStock;
 
 						});
 
-						if (variant.success) {
+						//Parse HTML to size picker stock numbers array and update inventory array.
+						[...$('.size-select', getHTML).children()].forEach(item => {
 
-							app.inventory.status = 'Variant';
-							app.inventory.stock.total = variant.total;
+							if (item.value != 'empty') {
+								try {
 
-							if (app.inventory.atc.mode == "Monitor" && variant.total) app.notify(variant.total);
+									let stock = item.dataset.maxavailable == 'null' ? 0 : parseInt(item.dataset.maxavailable);
+
+									self.update({
+										code: item.value.split('_')[1],
+										size: item.innerHTML.trim(),
+										stock: stock,
+									});
+
+									html.success = true;
+									html.total += stock;
+
+								} catch (err) { }
+							}
+
+						});
+
+						if (html.success || avail.success) {
+
+							app.inventory.status = html.success ? 'HTML' : 'Sizes';
+							app.inventory.stock.total = html.total || avail.total;
+
+							if (app.inventory.atc.mode == "Monitor" && app.inventory.stock.total) app.notify(app.inventory.stock.total);
 
 							self.build();
 
@@ -403,9 +406,42 @@ window.Inventory = {
 
 					} catch (err) {
 
-						//Reset inventory.
-						app.inventory.status = "¯\\_(ツ)_/¯";
-						self.reset();
+						try { //3rd fallback: getVariant.
+
+							let getVariant = await $.getJSON(URLs.getVariant(self.main.style));
+
+							//Update inventory array.
+							getVariant.variations.variants.forEach(item => {
+
+								self.update({
+									code: item.id.split('_')[1],
+									size: item.attributes.size,
+									stock: item.ATS,
+								});
+
+								variant.success = true;
+								variant.total += item.ATS;
+
+							});
+
+							if (variant.success) {
+
+								app.inventory.status = 'Variant';
+								app.inventory.stock.total = variant.total;
+
+								if (app.inventory.atc.mode == "Monitor" && variant.total) app.notify(variant.total);
+
+								self.build();
+
+							} else throw new Error();
+
+						} catch (err) {
+
+							//Reset inventory.
+							app.inventory.status = "¯\\_(ツ)_/¯";
+							self.reset();
+
+						}
 
 					}
 

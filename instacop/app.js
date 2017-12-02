@@ -18,6 +18,8 @@ window.app = new Vue({
 
 		tokens: Storage.fetchTokens(),
 
+		pidImg: '',
+
 		sitekey: {
 			loading: false,
 		},
@@ -41,7 +43,8 @@ window.app = new Vue({
 			items: 0,
 			userCount: false,
 			adding: false,
-			text: ''
+			text: '',
+			newAPI: false
 		},
 
 		inventory: {
@@ -70,18 +73,12 @@ window.app = new Vue({
 
 	computed: {
 
-		//Parse password and grant access to ATC.
-		auth() {
-			return this.config.pw.charCodeAt(4) - 97 == (new Date()).getMonth() && this.config.pw.length == 7 && this.config.pw.slice(0 ,2) == String.fromCharCode(118, 50);
-		},
-
 		//Share basic config as URL.
 		instaLink() {
 			let href = location.href + '?';
-			Object.keys(this.config).forEach(item => {
-				//Exclude locale.
+			for (let item in this.config) {
 				if (item != 'locale') href += '&' + item + '=' + this.config[item];
-			});
+			}
 			return href;
 		},
 
@@ -101,16 +98,10 @@ window.app = new Vue({
 			return 'https://www.adidas.com/' + this.config.locale.id.toLowerCase() + '/apps/yeezy/';
 		},
 
-		//Direct link to product page. '%20' skips queue, no HMAC tho :(
+		//Direct link to product page.
 		pidLink() {
-			return this.adcBase + 'Product-Show?pid=%20'+ this.config.style;
+			return this.adcBase + 'Product-Show?pid='+ this.config.style;
 		},
-
-		//Full resolution picture for most shoes on adidas.com. Subject to change.
-		pidImg() {
-			//PID is 6 chars long.
-			return this.config.style.length == 6 ? 'http://demandware.edgesuite.net/sits_pod20-adidas/dw/image/v2/aaqx_prd/on/demandware.static/-/Sites-adidas-products/en_US/dw1dddcb8f/zoom/' +  this.config.style + '_01_standard.jpg?sw=200&sh=200&sm=fit' : '';
-		}
 
 	},
 
@@ -120,6 +111,8 @@ window.app = new Vue({
 			deep: true,
 			handler: Storage.saveConfig
 		},
+
+		'config.style': function() { this.loadImg() }, 
 
 		'config.locale': function() { this.checkHMAC() },
 
@@ -154,24 +147,60 @@ window.app = new Vue({
 		},
 
 		//Fill and submit the HTML POST form, that sends the ATC request to the iFrame.
-		addToCart(size) {
+		async addToCart(size) {
 
 			//Get captcha token.
 			let token = this.getToken();
 
-			//Add ClientID as reuqest parameter if specified.
-			document.getElementById("post_form").action = this.adcBase + 'Cart-MiniAddProduct' + (this.config.clientID ? '?clientId=' + this.config.clientID : '');
+			if (!this.cart.newAPI) {
 
-			//Add POST parameters.
-			document.getElementById("post_pid").value = this.config.style + '_' + size;
-			document.getElementById("post_token").value = token;
-			document.getElementById("post_mpid").value = this.config.style;
+				//Add ClientID as reuqest parameter if specified.
+				document.getElementById("post_form").action = this.adcBase + 'Cart-MiniAddProduct' + (this.config.clientID ? '?clientId=' + this.config.clientID : '');
 
-			document.getElementById("post_dup").name = this.config.captchaDup;
-			document.getElementById("post_dup").value = token;
+				//Add POST parameters.
+				document.getElementById("post_pid").value = this.config.style.trim() + '_' + size;
+				document.getElementById("post_token").value = token;
+				document.getElementById("post_mpid").value = this.config.style.trim();
 
-			//Submit request (if authenticated).
-			if (this.auth) document.getElementById("post_form").submit();
+				document.getElementById("post_dup").name = this.config.captchaDup;
+				document.getElementById("post_dup").value = token;
+
+				//Submit request.
+				document.getElementById("post_form").submit();
+
+			} else {
+
+				try {
+
+					let res = await $.ajax({
+						type: "POST",
+						url: "https://www.adidas.de/api/cart_items",
+						data: JSON.stringify({
+							product_id: this.config.style.trim(),
+							quantity: 1,
+							product_variation_sku: this.config.style.trim() + '_' + size,
+							size: "44",
+							recipe: null,
+							invalidFields: [],
+							isValidating: false,
+							clientCaptchaResponse: this.getToken()
+						}),
+						contentType: "application/json",
+						dataType: "json"
+					});
+
+					document.getElementById("cart_frame").src = 'data:text/html,' + JSON.stringify(res.products.product_sku || []);
+					console.log(res);
+					
+				} catch (err) {
+					
+					document.getElementById("cart_frame").src = 'data:text/html,' + JSON.stringify(err.responseJSON || err);
+					console.log(err);
+
+				}
+
+			}
+
 
 			//Update UI and check cart.
 			this.cart.text = '... ' + this.config.style + '_' + size;
@@ -195,6 +224,31 @@ window.app = new Vue({
 
 			this.updateCart();
 			document.getElementById("cart_frame").src = 'about:blank';
+
+		},
+
+		async loadImg() {
+
+			let apiLink = 'https://www.adidas.' + this.config.locale.domain + '/api/products/' + this.config.style.trim();
+
+			if (this.config.style.trim().length == 6) {
+
+				try {
+				
+					let product = await $.getJSON(apiLink);
+					this.pidImg = product.view_list[0].image_url + '?sw=200&sh=200&sm=fit';
+					
+				} catch (err) {
+
+					this.pidImg = 'http://demandware.edgesuite.net/sits_pod20-adidas/dw/image/v2/aaqx_prd/on/demandware.static/-/Sites-adidas-products/en_US/dw1dddcb8f/zoom/' +  this.config.style.trim() + '_01_standard.jpg?sw=200&sh=200&sm=fit';
+					
+				}
+
+			} else {
+				
+				this.pidImg = '';
+
+			}
 
 		},
 
@@ -289,7 +343,7 @@ window.app = new Vue({
 
 			if (this.cookiesAccess) {
 
-				this.hmac.cookie = Cookies.get(this.config.hmac);
+				this.hmac.cookie = this.config.hmac ? Cookies.get(this.config.hmac) : '';
 
 				if (this.hmac.cookie) {
 
@@ -662,14 +716,6 @@ window.app = new Vue({
 
 		},
 
-		//Password prommpt.
-		editPW() {
-
-			let input = prompt('Enter password:', '');
-			if (input !== null) this.config.pw = input;
-
-		}
-
 	},
 
 	mounted() {
@@ -690,11 +736,11 @@ window.app = new Vue({
 		this.checkHMAC();
 		window.setInterval(this.monitorHMAC, 2000);
 
+		//Load product image.
+		this.loadImg();
+
 		//Check and reset cart.
 		this.resetCart();
-
-		//Strip all URL parameters.
-		history.replaceState({}, "", location.pathname);
 
 	}
 
@@ -706,7 +752,6 @@ function captchaCallback() {
 
 	app.addToken(grecaptcha.getResponse(), Date.now() + 119500); //almost 2 minutes.
 
-	if (app.inventory.refresh.mode == "Captcha") app.loadInventory();
 			
 	setTimeout(function() {
 		grecaptcha.reset();
