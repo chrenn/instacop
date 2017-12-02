@@ -1,6 +1,0 @@
-changelog v2.7.1:
-
--> updated to newest demandware stock checking version
--> clientID is now main stock checking method (both avail. & stock) and required for auto mode
--> stock checking fallbacks simplified: HTML scraping and getVariant
--> HMAC cookie name editable

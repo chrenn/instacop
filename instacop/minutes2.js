@@ -1,4 +1,4 @@
-// (c) 2017 twitter.com/InstaCopV2 twitter.com/bqdxo //
+// (c) 2017 github.com/bequadro //
 
 (function (exports) {
 

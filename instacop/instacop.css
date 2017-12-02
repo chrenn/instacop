@@ -1,235 +1,293 @@
-/* (c) 2017 twitter.com/InstaCopV2 twitter.com/bqdxo */
-
-/* Space out content. */
-.main {
-	padding-top: 10px;
-	padding-bottom: 15px;
+/* Fullscreen, fixed and no-overscroll background picture. */
+html { 
+	background: url(img/background.jpg) no-repeat center center fixed;
+	background-color: white;
+	background-size: cover;
+	height: 100%;
+	overflow: hidden;
 }
-.header {
-	padding-bottom: 5px;
-	border-bottom: 1px solid;
-}
-.footer {
-	margin-top: 0px;
-	padding: 10px;
-}
-h4 {
-	padding-bottom: 10px;
-}
-.spacer {
-	height: 10px;
-}
-.spacer-sm {
-	height: 6px;
-}
-.spacer-n {
-	margin-top: -4px;
+body {
+	height: 100%;
+	overflow: auto;
+	line-height: 1.4rem; /* reduce bulma spacing */
 }
 
+[v-cloak] { display: none !important }
 
-/* Apply Google reCAPTCHA width. */
-.captcha-w {
-	width: 302px;
-	max-width: 302px;
+
+/* Borderless, full-width reCAPTCHA frame. */
+.g-recaptcha-wrap {
+	display: flex;
+	align-items: center; /* center cropped iframe */
+	height: 70px;
+	background: #f9f9f9; /* iframe color */
 }
-.captcha-w-row {
-	width: 332px;
-	max-width: 332px;
+.g-recaptcha {
+	position: relative;
+	overflow: hidden;
+}
+.g-recaptcha > * {
+	margin: -14px -88px -15px -1px; /* crop logo and regulatory text */
 }
 
 
-/* V2 colors. */
-.solar-fg {
-	color: #ff4727 !important;
+/* SVG Logos. */
+.header-logo {
+	background-color: white;
+	-webkit-mask: url(img/logo.svg) 50% / contain no-repeat; /* h-center */
+	height: 70px;
+	width: 130px; /* full-width + space for hovering */
+	margin: 6px auto; /* h-center */
+	transition: background-color 0.5s ease;
+	animation: flicker 3s linear;
 }
-.solar-bg {
-	color: #ffffff !important;
-	background-color: #ff4727 !important;
-}
-.beluga-fg {
-	color: #717171;
-}
-.beluga-bg {
-	color: #ffffff;
-	background-color: #717171;
+.header-logo:hover {
+	background-color: white;
 }
 
-.v2-bred {
-	font-size: 10px;
-	color: #ff4727;
-	background-color: #000000;
-	border: 1px solid #000000;
+.bq-logo {
+	display: inline-block;
+	background-color: white;
+	-webkit-mask: url(img/bq.svg) 100% / contain no-repeat; /* h-right */
+	height: auto;  /* full */
+	width: 28px;
+	margin: -6px 0;  /* expand top and bottom. */
 }
-.v2-zebra {
-	font-size: 10px;
-	color: #000000;
-	background-color: #ffffff;
-	border: 1px solid #ff4727;
-}
-.v2-cream {
-	font-size: 10px;
-	color: #e2dddc;
-	background-color: #ffffff;;
-	border: 1px solid #e2dddc;
-}
-.v2-green {
-	font-size: 10px;
-	color: #8c8a6b;
-	background-color: #c8bfb0;;
-	border: 1px solid #8c8a6b;
-}
-
-.steeple-bg {
-	background-color: #f1f1f1;
-}
-.form-bg {
-	background-color: #f9f9f9;
-}
-.btn-bg {
-	background-color: #ffffff;
+.bq-logo:hover {
+	animation: pulse 1.5s ease infinite;
 }
 
 
-/* HTML color configuration. */
-::selection {
-	background-color: rgba(255,71,39,0.7); /*solar-fg 70%*/
+/* Colors. */
+.black {
+	color: #363636;
 }
-a {
-	color: #ffffff;
+.red {
+	color: rgb(185, 17, 9);
 }
-a:hover {
-	color: #000000;
+.red-fill {
+	color: white;
+	background-color: rgb(185, 17, 9);
 }
 
 
-/* Bootstrap & HTML form control configuration. */
-.form-control {
-	font-family: monospace;
-	border-radius: 0px;
-	background-color: #f9f9f9; /*form-bg*/
-}
-.form-control:focus {
-	border-color: #ff4727; /*solar-fg*/
-	box-shadow: none;
-}
-.btn {
-	border-radius: 0px;
-}
-.input-group-addon {
-	border-radius: 0px;
-	background-color: #ffffff;
-}
-.label {
-	border-radius: 0px;
-	font-size: 90%;
-}
-.badge {
+/* Cursor & Select. */
+.title, .label, .tag {
 	cursor: default;
+	-webkit-user-select: none;
+	user-select: none;
 }
-.input-select {
-	cursor: pointer;
-	-webkit-appearance: button;
-	-moz-appearance: none;
-	-ms-appearance: none;
-	-o-appearance: none;
-	appearance: none;
-}
-.pointer {
+
+
+/* Helper classes. */
+.has-pointer {
 	cursor: pointer;
 }
-.font-bold {
+.is-hidden {
+	display: none;
+}
+.is-bold {
 	font-weight: bold;
 }
-.monitor-disabled {
-	pointer-events: none;
+.is-flex {
+	display: flex;
 }
-.input-group-sm>.form-control, .input-group-sm>.input-group-addon, .input-group-sm>.input-group-btn>.btn {
-	border-radius: 0px;
+.flex-default {
+	flex: 1;
 }
-.btn-group-sm>.btn, .btn-sm {
-	border-radius: 0px;
+.has-text-right {
+	text-align: right !important; /* fix Bulma class */
 }
-.btn-group-justified .btn + .btn,
-.btn-group-justified .btn + .btn-group .btn,
-.btn-group-justified .btn-group + .btn-group .btn {
-	border-left:0
-}
-
-
-/* Stock checker table. */
-table {
-	table-layout: fixed;
-	font-size: 11px;
-	border: 1px solid #cccccc; /*form-control-border*/
-}
-thead, tbody, th, tr, td {
-	border-top: 1px solid #cccccc !important;
-}
-th {
-	border-bottom: 2px solid #cccccc !important;
-}
-
-/*tr td:nth-child(6) {
-	opacity: 0;
-	transition: opacity .1s ease;
-}
-tr:hover td:nth-child(6) {
-	opacity: 1;
-}*/
-
-.table-w {
-	width: 330px;
-	max-width: 330px;
-}
-.table-w-row {
-	width: 360px;
-	max-width: 360px;
-}
-.table-add {
-	cursor: pointer;
-	color: #ffffff;
-	background-color: #717171; /*beluga-bg*/
-}
-.table-add:hover {
-	background-color: #ff4727; /*solar-bg*/
-}
-.tr-highlight {
-	background-color: rgba(113, 113, 113, 0.15); /*beluga-bg 10%*/
-}
-.tr-highlight:hover {
-	background-color: rgba(113, 113, 113, 0.2) !important; /*beluga-bg 20%*/
-}
-.strike {
+.has-strike {
 	opacity: 0.5;
 	text-decoration: line-through;
-	-webkit-text-decoration-color: #ff4727;
+	-webkit-text-decoration-color: rgb(185, 17, 9);
 }
 
 
-/* IDs. */
-#user_locale {
-	font-family: sans-serif;
-	font-size: 13px;
-}
-#cart_frame {
-	height: 574px;
+#app > * > * {
+	z-index: 1;
+	position: relative;
 }
 
+/* Main content spacing. */
+.main {
+	background-color: white;
+	padding-bottom: 30px;
+	animation: slideUp 1s ease;
+	z-index: 0 !important;
+}
+.main > div:nth-child(1) {
+	padding-right: 40px;
+}
+.main > div:nth-child(2) {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+.main > div:nth-child(3) {
+	padding-left: 40px;
+}
+h1.title {
+	 font-size: 1.8rem;
+}
+
+/* Footer (+links). */
+.end {
+	margin-bottom: 20px !important;
+	padding: 5px 5px;
+}
+.end a {
+	color: white;
+	border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+.end a:hover {
+	border-bottom-color: rgba(255, 255, 255, 1);
+}
 
 
-/* Product Image. */
-#pid_img {
-	width: 34px;
-	background-size: contain;
+/* Overwrite Bulma table config. */
+.table {
+	line-height: 1.2rem;
+	font-size: 0.85rem;
+	margin-bottom: 0;
+}
+.table thead th {
+	color: #363636;
+}
+td {
+	color: #7a7a7a;
+}
+
+
+/* Re-style Bulma elements: controls. */
+
+.control > * {
+	font-size: 0.85rem;
+}
+.control > .input {
+	font-family: "SF Mono", "Consolas", "Lucida Sans Typewriter", "Lucida Console", "Fira Code", "Droid Sans Mono", "Source Code Pro", monospace;
+	text-overflow: ellipsis;
+}
+.control > button {
+	font-weight: bold;
+}
+
+.select {
+	width: 100%;
+}
+.select::after, .select:hover::after {
+	border-color: #363636;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #dbdbdb;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color: #dbdbdb;
+}
+
+.control * {
+	border: 0 !important;
+	border-radius: 0px !important;
+	border-bottom: 2px solid #dbdbdb !important; /* table border color */
+	box-shadow: none !important;
+	outline: 0 !important;
+}
+.control *:hover {
+	border-bottom-color: #363636 !important;
+}
+.control *:focus, .control *:active, .is-active, .button:hover {
+	border-bottom-color: rgb(185, 17, 9) !important;
+}
+.input[readonly] {
+	border-bottom-color: #dbdbdb !important;
+	cursor: e-resize;
+}
+.button[disabled] {
+	border-bottom-color: #dbdbdb !important;
+}
+.blue-ul {
+	border-bottom-color: #00d1b2 !important;
+}
+
+.control.ctrl-small {
+	display: flex;
+	/*align-items: flex-end;*/
+}
+.control.ctrl-small > *{
+	font-size: 0.7rem;
+	height: auto;
+	/*margin-top: auto;*/
+}
+
+
+/* Re-style Bulma elements: title and label tags */
+.title {
+	font-weight: bold;
+	margin-bottom: 1rem !important;
+}
+.label {
+	display: flex;
+    justify-content: space-between;
+}
+.label > * {
+	display: flex;
+	align-items: center;
+}
+.tag {
+	font-size: 0.75rem;
+	height: 1.8em;
+}
+
+
+/* Product image. */
+.pid-wrap {
+	display: flex;
+	width: 58px; /* almost square */
+	margin-left: 0.75rem; /* matches is-grouped field */
+}
+.pid-img {
+	flex: 1;
+	height: unset;
+	background-size: cover;
 	background-position: bottom;
 }
 
-
-/* Spinning Glyphicon. */
-@keyframes rotating {
-	0%   { transform: rotate(0deg);   }
-	100% { transform: rotate(359deg); }
+.label-inactive {
+	color: #dbdbdb;
 }
-.gly-spin {
-	animation: rotating 0.8s linear infinite;
+
+/* ATC response iFrame. */
+.cart-frame {
+	min-height: 590px; /* init table height + buffer */
+	width: 100%;
+	background-color: #f9f9f9;
+}
+
+
+/* Opacity animations. */
+@keyframes zero {
+	  0% { opacity:  1; }
+	100% { opacity:  1; }
+}
+@keyframes fadeIn {
+	  0% { opacity:  0; }
+	100% { opacity:  1; }
+}
+@keyframes flicker {
+	  0% { opacity:  0; }
+	 30% { opacity:  0; }
+	 31% { opacity: .5; }
+	 35% { opacity:  0; }
+	 45% { opacity:  1; }
+}
+@keyframes pulse {
+	  0% { opacity:  1; }
+	 50% { opacity:  0; }
+	100% { opacity:  1; }
+}
+@keyframes slideUp {
+	  0% { transform: translateY(30px); opacity: 0; }
+	 30% { transform: translateY(30px); opacity: 0; }
+	100% { transform: translateY( 0px); opacity: 1; }
 }

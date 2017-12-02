@@ -24,7 +24,7 @@ window.URLs = {
 
 	//Fallbacks using the ADC Demandware API:
 
-	//Fetches sizes and stock availability (not ready to cart anymore...).
+	//Fetches sizes and stock availability (not those ready to cart anymore...).
 	getAvail(pid) {
 		return app.inventory.stock.set ? this.proxy + app.adcBase + 'Product-GetAvailableSizes?pid=' + pid : '';
 	},
@@ -59,34 +59,31 @@ window.Inventory = {
 	},
 
 	init: {
-
 		locale: 'US',
 		style: '',
-
 		inv: [
-			{code:'530', size:'4',   avail:'?', stock:'?', change:''},
-			{code:'540', size:'4.5', avail:'?', stock:'?', change:''},
-			{code:'550', size:'5',   avail:'?', stock:'?', change:''},
-			{code:'560', size:'5.5', avail:'?', stock:'?', change:''},
-			{code:'570', size:'6',   avail:'?', stock:'?', change:''},
-			{code:'580', size:'6.5', avail:'?', stock:'?', change:''},
-			{code:'590', size:'7',   avail:'?', stock:'?', change:''},
-			{code:'600', size:'7.5', avail:'?', stock:'?', change:''},
-			{code:'610', size:'8',   avail:'?', stock:'?', change:''},
-			{code:'620', size:'8.5', avail:'?', stock:'?', change:''},
-			{code:'630', size:'9',   avail:'?', stock:'?', change:''},
-			{code:'640', size:'9.5', avail:'?', stock:'?', change:''},
-			{code:'650', size:'10',  avail:'?', stock:'?', change:''},
-			{code:'660', size:'10.5',avail:'?', stock:'?', change:''},
-			{code:'670', size:'11',  avail:'?', stock:'?', change:''},
-			{code:'680', size:'11.5',avail:'?', stock:'?', change:''},
-			{code:'690', size:'12',  avail:'?', stock:'?', change:''},
-			{code:'700', size:'12.5',avail:'?', stock:'?', change:''},
-			{code:'710', size:'13',  avail:'?', stock:'?', change:''},
-			{code:'720', size:'13.5',avail:'?', stock:'?', change:''},
-			{code:'730', size:'14',  avail:'?', stock:'?', change:''}
+			{code:'530', size:'4',   avail:'?', stock:'?'},
+			{code:'540', size:'4.5', avail:'?', stock:'?'},
+			{code:'550', size:'5',   avail:'?', stock:'?'},
+			{code:'560', size:'5.5', avail:'?', stock:'?'},
+			{code:'570', size:'6',   avail:'?', stock:'?'},
+			{code:'580', size:'6.5', avail:'?', stock:'?'},
+			{code:'590', size:'7',   avail:'?', stock:'?'},
+			{code:'600', size:'7.5', avail:'?', stock:'?'},
+			{code:'610', size:'8',   avail:'?', stock:'?'},
+			{code:'620', size:'8.5', avail:'?', stock:'?'},
+			{code:'630', size:'9',   avail:'?', stock:'?'},
+			{code:'640', size:'9.5', avail:'?', stock:'?'},
+			{code:'650', size:'10',  avail:'?', stock:'?'},
+			{code:'660', size:'10.5',avail:'?', stock:'?'},
+			{code:'670', size:'11',  avail:'?', stock:'?'},
+			{code:'680', size:'11.5',avail:'?', stock:'?'},
+			{code:'690', size:'12',  avail:'?', stock:'?'},
+			{code:'700', size:'12.5',avail:'?', stock:'?'},
+			{code:'710', size:'13',  avail:'?', stock:'?'},
+			{code:'720', size:'13.5',avail:'?', stock:'?'},
+			{code:'730', size:'14',  avail:'?', stock:'?'}
 		],
-
 	},
 
 	//Add or update sizes.
@@ -101,7 +98,6 @@ window.Inventory = {
 			this.main.inv[index].size = (data.size !== undefined) ? data.size : (this.main.inv[index].size || data.code);
 			this.main.inv[index].avail = (data.avail !== undefined) ? data.avail : (this.main.inv[index].avail || '?');
 			this.main.inv[index].stock = (data.stock !== undefined) ? data.stock : (this.main.inv[index].stock || '?');
-			this.main.inv[index].change = (data.change !== undefined) ? data.change : (this.main.inv[index].change || '');
 
 		} else {
 			
@@ -111,12 +107,11 @@ window.Inventory = {
 				size: (data.size !== undefined) ? data.size : data.code,
 				avail: (data.avail !== undefined) ? data.avail : '?',
 				stock: (data.stock !== undefined) ? data.stock : '?',
-				change: (data.change !== undefined) ? data.change : ''
 			});
 
 		}
 
-		//Sort array (pre-cautionairy).
+		//Sort array (precautionairy).
 		this.main.inv.sort((a, b) => parseInt(a.code) - parseInt(b.code));
 
 	},
@@ -125,14 +120,16 @@ window.Inventory = {
 	transform:
 	{"tag":"table", "children":[
 		{"tag":"tbody", "children":[
-			{"tag":"tr", "children":[
-				{"tag":"td", "class":"font-bold table-code", "id":"${code}", "html":"${code}"},
-				{"tag":"td", "html":"${size}"},
-				{"tag":"td", "class":function() {return (this.avail > 0 ? 'solar-fg ' : '') + 'text-right font-bold'}, "html":"${avail}"},
-				{"tag":"td", "class":function() {return (this.stock > 0 ? 'solar-fg ' : '') + 'text-right font-bold'}, "html":"${stock}"},
-				{"tag":"td", "class":function() {return (this.change > 0 ? 'solar-fg ' : '') + 'text-right'}, "html":"${change}"},
+			{"tag":"tr", "id":"${code}", "children":[
 				{"tag":"td", "children":[
-					{"tag":"a", "class":"label table-add pull-right", "align":"center", "id":"${code}", "html":"Add"}
+					{"tag":"span", "class":"table-code is-bold has-pointer black", "html":"${code}"}
+				]},
+				{"tag":"td", "html":"${size}"},
+				{"tag":"td", "class":function() {return (this.avail > 0 ? 'red ' : '') + 'has-text-right is-bold'}, "html":"${avail}"},
+				{"tag":"td", "class":function() {return (this.stock > 0 ? 'red ' : '') + 'has-text-right is-bold'}, "html":"${stock}"},
+				{"tag":"td", "class":function() {return (this.change > 0 ? 'red ' : '') + 'has-text-right'}, "html":"${change}"},
+				{"tag":"td", "class":"has-text-right", "children":[
+					{"tag":"span", "class":"table-add is-bold has-pointer black", "html":"Add"}
 				]}
 			]}
 		]}
@@ -155,14 +152,16 @@ window.Inventory = {
 
 				try {
 
-					if (stockItem.code == this.cache.inv[stockIndex].code) {
+					let cacheIndex = this.cache.inv.findIndex(cacheItem => cacheItem.code == stockItem.code);
 
-						let change = stockItem.stock - this.cache.inv[stockIndex].stock;
+					if (cacheIndex != -1) {
+
+						let change = stockItem.stock - this.cache.inv[cacheIndex].stock;
 						stockItem.change = !isNaN(change) ? (change > 0 ? '+' : '') + change : '';
 
 					}
 
-				} catch(err) {}
+				} catch (err) {}
 
 			});
 
@@ -172,27 +171,23 @@ window.Inventory = {
 		app.inventory.locale = this.main.locale;
 
 		//Transform inventory to HTML.
-		$('#stock_body').html(json2html.transform(inv, this.transform));
+		$('#inv_body').html(json2html.transform(inv, this.transform));
 
 		//Add ATC function to click event lister.
 		$('.table-add').click(function() {
-			app.addToCart(this.id);
+			app.addToCart(this.parentNode.parentNode.id);
 		});
 
 		$('.table-code').click(function() {
-			app.focusSize(this.innerHTML);
+			app.focusSize(this.parentNode.parentNode.id);
 		});
 
 		if (app.inventory.atc.focus) {
-			$('.table-code#' + app.inventory.atc.size).addClass('solar-fg');
+			$('.table-code').addClass('red');
 		}
 
 		//Adjust cart iFrame height.
-		if ($('#stock_table').css('height') > '574px') {
-			$('#cart_frame').css('height', $('#stock_table').css('height'));
-		} else {
-			$('#cart_frame').css('height', '574px');
-		}
+		$('#cart_frame').css('height', $('#inv_table').css('height'));
 
 	},
 
@@ -214,7 +209,7 @@ window.Inventory = {
 		app.inventory.avail.total = 'Avail.';
 		app.inventory.stock.total = 'Stock';
 
-		this.cache = this.main;
+		this.cache = Object.assign({}, this.main); //Clone.
 		this.main.inv = [];
 
 		this.main.locale = app.config.locale.id;
@@ -276,20 +271,34 @@ window.Inventory = {
 					app.inventory.avail.total = client.ats;
 
 					//Auto ATC.
-					if (app.inventory.atc.mode == "Auto") {
+					if (app.inventory.atc.mode.includes('Auto')) {
 
 						if (app.inventory.atc.focus) {
 
 							//Focus mode.
 							let index = self.main.inv.findIndex(item => item.code == app.inventory.atc.size && item.avail);
-							if (index > -1) app.addToCart(self.main.inv[index].code);
+							if (index != -1) app.addToCart(self.main.inv[index].code);
 
 						} else {
 
-							//Get size with highest available pairs. Prioritize larger sizes.
-							let max = 0; let maxCode = '';
-							self.main.inv.forEach(item => { if (item.avail >= max) { max = item.avail; maxCode = item.code } });
-							if (max && maxCode) app.addToCart(maxCode);
+							if (app.inventory.atc.mode == "AutoX") {
+
+								let max = 0; let maxCode = '';
+								self.main.inv.forEach(item => {
+									if ((parseInt(item.code) <= 560 || parseInt(item.code) >= 670) && item.avail > max && item.avail <= 5) {
+										max = item.avail; maxCode = item.code
+									}
+								});
+								if (max) app.addToCart(maxCode);
+
+							} else {
+
+								//Get size with highest available pairs. Prioritize larger sizes.
+								let max = 0; let maxCode = '';
+								self.main.inv.forEach(item => { if (item.avail >= max) { max = item.avail; maxCode = item.code } });
+								if (max) app.addToCart(maxCode);
+
+							}
 
 						}
 
@@ -300,7 +309,7 @@ window.Inventory = {
 
 				} else throw new Error(); //Go to catch.
 
-			} catch(err) {
+			} catch (err) {
 
 				console.log(err);
 
@@ -317,14 +326,16 @@ window.Inventory = {
 					//Create sizes and 0/1 availability from getAvail.
 					getAvail.sizes.forEach(item => {
 
+						let inStock = item.status == 'IN_STOCK' ? 1 : 0;
+
 						self.update({
 							code: item.sku.split('_')[1],
 							size: item.literalSize,
-							stock: item.status == 'IN_STOCK' ? 1 : 0,
+							stock: inStock,
 						});
 
 						avail.success = true;
-						avail.total += 1;
+						avail.total += inStock;
 
 					});
 
@@ -344,7 +355,7 @@ window.Inventory = {
 							html.success = true;
 							html.total += stock;
 
-						} catch(err) {} }
+						} catch (err) {} }
 
 					});
 
@@ -359,9 +370,7 @@ window.Inventory = {
 
 					} else throw new Error();
 
-				} catch(err) {
-
-					console.log(err);
+				} catch (err) {
 
 					try { //2nd fallback: getVariant.
 
@@ -392,9 +401,7 @@ window.Inventory = {
 
 						} else throw new Error();
 
-					} catch(err) {
-
-						console.log(err);
+					} catch (err) {
 
 						//Reset inventory.
 						app.inventory.status = "¯\\_(ツ)_/¯";

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="20mm"
+   height="20mm"
+   viewBox="0 0 20 20"
+   id="svg8184"
+   version="1.1"
+   inkscape:version="0.91+devel+osxmenu r12922"
+   sodipodi:docname="mask.svg"
+   inkscape:export-filename="/Library/WebServer/Documents/instacop/img/mask.png"
+   inkscape:export-xdpi="162.56"
+   inkscape:export-ydpi="162.56">
+  <defs
+     id="defs8186" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="9.4765099"
+     inkscape:cy="10.110961"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1260"
+     inkscape:window-height="787"
+     inkscape:window-x="0"
+     inkscape:window-y="22"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata8189">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-52.176956,-148.3936)">
+    <g
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:125%;font-family:'YEEZY TSTAR';-inkscape-font-specification:'YEEZY TSTAR';letter-spacing:0px;word-spacing:0px;fill:#b91109;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       aria-label="V2"
+       id="text8735"
+       transform="matrix(1.4948771,0,0,1.4948771,-42.971766,-67.421742)">
+      <path
+         d="m 68.414429,154.88095 2.377115,-7.45691 -2.077392,0 -1.431437,5.60173 -0.04134,0 -1.436605,-5.60173 -2.154907,0 2.377115,7.45691 2.387452,0 z"
+         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-family:'SF Pro Display';-inkscape-font-specification:'SF Pro Display Ultra-Bold';stroke-width:0.26458332px;fill:#b91109;fill-opacity:1"
+         id="path8740"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m 71.235962,149.71848 0,0.0362 1.736328,0 0,-0.0362 c 0,-0.61495 0.465088,-1.0542 1.105875,-1.0542 0.620117,0 1.023194,0.37723 1.023194,0.85266 0,0.46509 -0.227377,0.82682 -0.847494,1.4211 l -2.909383,2.67684 0,1.26607 5.684407,0 0,-1.45727 -3.219441,0 0,-0.0362 1.782837,-1.64331 c 0.599446,-0.57361 1.343587,-1.31258 1.343587,-2.28926 0,-1.30742 -1.100708,-2.21692 -2.795695,-2.21692 -1.741496,0 -2.904215,1.00769 -2.904215,2.48047 z"
+         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-family:'SF Pro Display';-inkscape-font-specification:'SF Pro Display Ultra-Bold';stroke-width:0.26458332px;fill:#b91109;fill-opacity:1"
+         id="path8742"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

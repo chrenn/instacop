@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js'></script>
+
+		<title>HMAC Test</title>
+
+	</head>
+
+	<body>
+
+		<h2>HMAC Test</h2>
+
+		<div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+
+		<script src='instacop/js.cookie.js'></script>
+
+		<script type="text/javascript">
+
+			Cookies.set('gceeqs', 'exp=' + Math.trunc(Date.now()/1000 + 600) + '~acl=%2f*~hmac=4aae991c20df14796049101ff6d', { domain: 'www.adidas.' + document.domain.split('.adidas.')[1]});
+
+		</script>
+
+	</body>
+
+</html>

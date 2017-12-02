@@ -10,20 +10,31 @@
 
 		<meta name="referrer" content="no-referrer">
 
-		<link rel="mask-icon" href="instacop/mask.svg" color="#ff4727">
+		<link rel="mask-icon" href="instacop/img/favicon.svg" color="#b91109">
 		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
-		<title>InstaCop V2</title>
+		<title>InstaCop</title>
+		
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js' defer></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js' defer></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/json2html/1.0.0/json2html.min.js' defer></script>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js' defer></script>
 
-		<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+		<script src="instacop/minutes2.js" defer></script>
+		<script src="instacop/storage.js" defer></script>
+		<script src="instacop/inventory.js" defer></script>
+		<script src="instacop/app.js" defer></script>
 
-		<link rel="stylesheet" href="instacop/bootstrap/css/bootstrap.min.css">
+		<script src='https://www.google.com/recaptcha/api.js' defer></script>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="instacop/instacop.css">
 
 	</head>
 
 
-	<body class="beluga-fg steeple-bg">
+	<body>
 
 		<div id="app">
 
@@ -41,184 +52,123 @@
 
 			</form>
 
-
 			<div class="container">
 
-				<header class="header"><h2>
-					<span class="pointer" onclick="location.reload();">InstaCop </span>
-					<span class="pointer" :class="{ 'solar-fg': auth }" @click="editPW">V2</span>
-				</h2></header>
+				<div class="header-logo has-pointer" :class="{ 'red-fill': auth }" @click="editPW"></div>
 
-				<div class="row main">
+				<div class="columns main" v-cloak>
 
-					<div class="col-lg-4 col-sm-6">
+					<div class="column is-4">
 
-						<h4><span class="label beluga-bg">Settings</span></h4>
+						<h1 class="title">Settings</h1>
 
-						<div class="row captcha-w-row">
+						<div class="columns">
 
-							<div class="form-group col-sm-6">
+							<div class="column is-5">
 
-								<label for="user_locale">Locale &nbsp;<span class="caret"></span></label>
+								<label class="label">Locale</label>
 
-								<select class="form-control input-select" id="user_locale" v-model="config.locale">
+								<div class="field">
+									
+									<div class="control">
+										
+										<span class="select">
 
-									<optgroup label="Oceania">
-										<option :value="{ id: 'AU', domain: 'com.au', lang: 'en' }">Australia</option>
-										<option :value="{ id: 'NZ', domain: 'co.nz', lang: 'en' }">New Zealand</option>
-									</optgroup>
-									<optgroup label="Europe">
-										<option :value="{ id: 'AT', domain: 'at', lang: 'de' }">Austria</option>
-										<option :value="{ id: 'BE', domain: 'be', lang: 'fr' }">Belgium</option>
-										<option :value="{ id: 'CZ', domain: 'cz', lang: 'cs' }">Czech Republic</option>
-										<option :value="{ id: 'DK', domain: 'dk', lang: 'da' }">Denmark</option>
-										<option :value="{ id: 'FI', domain: 'fi', lang: 'fi' }">Finland</option>
-										<option :value="{ id: 'FR', domain: 'fr', lang: 'fr' }">France</option>
-										<option :value="{ id: 'DE', domain: 'de', lang: 'de' }">Germany</option>
-										<option :value="{ id: 'IE', domain: 'ie', lang: 'en' }">Ireland</option>
-										<option :value="{ id: 'IT', domain: 'it', lang: 'it' }">Italy</option>
-										<option :value="{ id: 'NL', domain: 'nl', lang: 'nl' }">Netherlands</option>
-										<option :value="{ id: 'PL', domain: 'pl', lang: 'pl' }">Poland</option>
-										<option :value="{ id: 'RU', domain: 'ru', lang: 'ru' }">Russia</option>
-										<option :value="{ id: 'ES', domain: 'es', lang: 'es' }">Spain</option>
-										<option :value="{ id: 'SE', domain: 'se', lang: 'sv' }">Sweden</option>
-										<option :value="{ id: 'GB', domain: 'co.uk', lang: 'en' }">United Kingdom</option>
-									</optgroup>
-									<optgroup label="America">
-										<option :value="{ id: 'US', domain: 'com', lang: 'en' }">United States</option>
-										<option :value="{ id: 'CA', domain: 'ca', lang: 'en' }">Canada</option>
-										<option :value="{ id: 'MX', domain: 'mx', lang: 'es' }">Mexico</option>
-										<option :value="{ id: 'BR', domain: 'com.br', lang: 'pt' }">Brazil</option>
-									</optgroup>
+											<select v-model="config.locale">
 
-								</select>
+												<optgroup label="Oceania">
+													<option :value="{ id: 'AU', domain: 'com.au', lang: 'en' }">Australia</option>
+													<option :value="{ id: 'NZ', domain: 'co.nz', lang: 'en' }">New Zealand</option>
+												</optgroup>
+												<optgroup label="Europe">
+													<option :value="{ id: 'AT', domain: 'at', lang: 'de' }">Austria</option>
+													<option :value="{ id: 'BE', domain: 'be', lang: 'fr' }">Belgium</option>
+													<option :value="{ id: 'CZ', domain: 'cz', lang: 'cs' }">Czech Republic</option>
+													<option :value="{ id: 'DK', domain: 'dk', lang: 'da' }">Denmark</option>
+													<option :value="{ id: 'FI', domain: 'fi', lang: 'fi' }">Finland</option>
+													<option :value="{ id: 'FR', domain: 'fr', lang: 'fr' }">France</option>
+													<option :value="{ id: 'DE', domain: 'de', lang: 'de' }">Germany</option>
+													<option :value="{ id: 'IE', domain: 'ie', lang: 'en' }">Ireland</option>
+													<option :value="{ id: 'IT', domain: 'it', lang: 'it' }">Italy</option>
+													<option :value="{ id: 'NL', domain: 'nl', lang: 'nl' }">Netherlands</option>
+													<option :value="{ id: 'PL', domain: 'pl', lang: 'pl' }">Poland</option>
+													<option :value="{ id: 'RU', domain: 'ru', lang: 'ru' }">Russia</option>
+													<option :value="{ id: 'ES', domain: 'es', lang: 'es' }">Spain</option>
+													<option :value="{ id: 'SE', domain: 'se', lang: 'sv' }">Sweden</option>
+													<option :value="{ id: 'GB', domain: 'co.uk', lang: 'en' }">United Kingdom</option>
+												</optgroup>
+												<optgroup label="America">
+													<option :value="{ id: 'US', domain: 'com', lang: 'en' }">United States</option>
+													<option :value="{ id: 'CA', domain: 'ca', lang: 'en' }">Canada</option>
+													<option :value="{ id: 'MX', domain: 'mx', lang: 'es' }">Mexico</option>
+													<option :value="{ id: 'BR', domain: 'com.br', lang: 'pt' }">Brazil</option>
+												</optgroup>
 
-							</div>
-
-							<div class="form-group col-sm-6">
-
-								<label for="pid_style">Product</label>
-
-								<div class="pull-right">
-									<span class="badge pointer v2-green invisible" @click="config.style = 'DA9572';">V2</span>
-									<span class="badge pointer v2-zebra" @click="config.style = 'CP9654';">V2</span>
-								</div>
-
-								<div class="input-group">
-
-									<input class="form-control" type="text" spellcheck="false" placeholder="XX0000" v-model="config.style">
-									<span class="input-group-btn">
-										<a class="form-control btn btn-default" id="pid_img" target="_blank" :href="pidLink" :style="{ 'background-image': 'url(' + pidImg + ')' }">{{ pidImg ? "" : "-" }}</a>
-									</span>
+											</select>
+											
+										</span>
+										
+									</div>
 
 								</div>
 
 							</div>
 
-						</div>
+							<div class="column is-7 is-flex">
 
-						<div class="row captcha-w-row">
-							
-							<div class="form-group col-sm-6">
+								<div class="flex-default">
 
-								<label for="xpr_val">Duplicate</label>
+									<label class="label">Product</label>
 
-								<input class="form-control" type="text" spellcheck="false" placeholder="XXXXXX" v-model="config.captchaDup">
+									<div class="field has-addons">
 
-							</div>
+										<p class="control">
+											<input class="input" type="text" spellcheck="false" placeholder="XX0000" v-model="config.style">
+										</p>
 
-						</div>
+										<p class="control">
+											<button class="button" @click="setStyle" @contextmenu.prevent="presetStyle">{{config.preset.split(',')[0]}}</button>
+										</p>
 
-						<div class="row captcha-w-row">
+									</div>
 
-							<div class="form-group col-sm-12">
+								</div>
 
-								<label for="client_id">Client ID</label>
+								<p class="control pid-wrap">
 
-								<input class="form-control" type="text" spellcheck="false" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" style="font-size: 11px" v-model="config.clientID">
+									<a class="button pid-img" target="_blank" :href="pidLink" :style="{ 'background-image': 'url(' + pidImg + ')' }"></a>
 
-							</div>
-
-						</div>
-
-						<div class="spacer"></div>
-
-						<h4><span class="label beluga-bg">Captcha</span></h4>
-
-						<div class="form-group captcha-w">
-
-							<label for="site_key">Sitekey</label>
-
-							<div class="pull-right">
-								<span class="badge btn-bg beluga-fg" id="token_timer" :class="{ invisible : !tokens.length }"></span>
-								<span class="badge btn-bg beluga-fg pointer" :class="{ 'solar-bg' : tokens.length }" @click="popToken">Tokens: {{tokens.length}}</span>
-							</div>
-
-							<div class="input-group">
-
-								<input class="form-control steeple-bg" type="text" spellcheck="false" readonly="true" style="font-size: 9px" v-model="config.sitekey">
-
-								<span class="input-group-btn">
-									<button class="btn btn-default" @click="fetchSitekey">
-										<span class="glyphicon glyphicon-download" :class="{ 'gly-spin' : sitekey.loading }"></span>
-									</button>
-									<button class="btn btn-default" @click="editSitekey">
-										<span class="glyphicon glyphicon-cog"></span>
-									</button>
-								</span>
+								</p>
 
 							</div>
 
 						</div>
 
-						<div class="form-group captcha-w">
+						<div class="columns">
 
-							<label for="site_key">2Captcha</label>
+							<div class="column is-5">
 
-							<div class="pull-right">
-								<span class="badge btn-bg solar-bg" v-if="tucap.error">{{tucap.error}}</span>
-								<span class="badge btn-bg beluga-fg pointer" v-if="!tucap.error" @click="popToken">Requests: {{tucap.requests}}</span>
-							</div>
+								<label class="label">Duplicate</label>
 
-							<div class="input-group">
+								<div class="field">
 
-								<input class="form-control steeple-bg" type="text" spellcheck="false" style="font-size: 9px" v-model="config.tucap">
+									<p class="control">
+										<input class="input" type="text" spellcheck="false" placeholder="XXXXXX" v-model="config.captchaDup">
+									</p>
 
-								<span class="input-group-btn">
-									<button class="btn btn-default" @click="requestTucap">
-										<span class="glyphicon glyphicon-plus-sign" :class="{ 'gly-spin' : tucap.requests }"></span>
-									</button>
-								</span>
+								</div>
 
 							</div>
 
-						</div>
+							<div class="column is-7">
 
-						<div class="g-recaptcha" :data-sitekey="config.sitekey" data-callback="captchaCallback"></div>
+								<label class="label">Client ID</label>
 
-						<div class="spacer"></div>
-						<div class="spacer"></div>
-						<div class="spacer-sm"></div>
+								<div class="field">
 
-						<h4><span class="label beluga-bg">HMAC</span></h4>
-
-						<div class="row captcha-w-row">
-
-							<div class="form-group col-sm-6">
-
-								<label>Cookie</label>
-
-								<input class="form-control steeple-bg" type="text" spellcheck="false" v-model="config.hmac">
-
-							</div>
-
-							<div class="form-group col-sm-6">
-
-								<label>Splash</label>
-
-								<div class="input-group btn-group-justified">
-
-									<a class="btn btn-default btn-block" :href="splashLink" target="_blank">Open</a>
+									<p class="control">
+										<input class="input" type="text" spellcheck="false" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" v-model="config.clientID">
+									</p>
 
 								</div>
 
@@ -226,26 +176,133 @@
 
 						</div>
 
-						<div class="form-group captcha-w">
+						<br>
 
-							<div class="input-group col-sm-12">
+						<h1 class="title">Captcha</h1>
 
-								<label>Value</label>
+						<div class="columns">
 
-								<div class="pull-right">
-									<span class="badge btn-bg beluga-fg" id="hmac_timer" :class="{ invisible : !(hmac.status == 'Valid') }"></span>
-									<span class="badge btn-bg beluga-fg" :class="{ 'solar-bg' : (hmac.status == 'Valid') }">{{hmac.status}}</span>
+							<div class="column is-12">
+
+								<label class="label">Sitekey
+
+									<div class="is-pulled-right">
+										<span class="tag" id="token_timer" :class="{ 'is-hidden': !tokens.length }"></span>
+										<span class="tag has-pointer" :class="{ 'red-fill': tokens.length }" @click="editTokens">Tokens: {{tokens.length}}</span>
+									</div>
+
+								</label>
+
+								<div class="field has-addons">
+
+									<p class="control is-expanded">
+										<input class="input" type="text" spellcheck="false" readonly="true" v-model="config.sitekey">
+									</p>
+
+									<p class="control">
+										<button class="button" @click="editSitekey">Edit</button>
+									</p>
+
+									<p class="control">
+										<button class="button" :class="{ 'is-loading': sitekey.loading }" @click="fetchSitekey">Get</button>
+									</p>
+
 								</div>
 
-								<div class="input-group">
+							</div>
 
-									<input class="form-control steeple-bg" type="text" spellcheck="false" readonly="true" style="font-size: 10px" :disabled="!cookiesAccess" v-model="hmac.cookie">
+						</div>
 
-									<span class="input-group-btn">
-										<button class="btn btn-default" :disabled="!cookiesAccess" @click="editHMAC">
-											<span class="glyphicon glyphicon-cog"></span>
-										</button>
-									</span>
+						<div class="columns">
+
+							<div class="column is-12">
+
+								<label class="label">
+									
+									<div @click='[solver.method.tucap, solver.method.acap] = [solver.method.acap, solver.method.tucap]' class="has-pointer is-unselectable">
+										<span :class="{ 'label-inactive': !solver.method.tucap }" v-text="solver.method.tucap ? '2Captcha' : '2C'"></span>
+										<span class="label-inactive">&nbsp;|&nbsp;</span>
+										<span :class="{ 'label-inactive': !solver.method.acap }" v-text="solver.method.acap ? 'AntiCaptcha' : 'AC'"></span>
+									</div>
+
+									<div class="is-pulled-right">
+										<span class="tag" v-if="solver.error">{{solver.error}}</span>
+										<span class="tag" v-if="!solver.error">Requests: {{solver.requests}}</span>
+									</div>
+
+								</label>
+
+								<div class="field has-addons">
+
+									<p class="control is-expanded" v-show="solver.method.tucap">
+										<input class="input" type="text" spellcheck="false" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" v-model="config.tucap">
+									</p>
+									<p class="control is-expanded" v-show="solver.method.acap">
+										<input class="input" type="text" spellcheck="false" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" v-model="config.acap">
+									</p>
+
+									<p class="control">
+										<button class="button" :class="{ 'is-loading': solver.loading }" @click="requestSolver">Send</button>
+									</p>
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="columns">
+
+							<div class="column is-12">
+
+								<div class="g-recaptcha-wrap">
+									<div class="g-recaptcha" :data-sitekey="config.sitekey" data-callback="captchaCallback"></div>
+								</div>
+
+							</div>
+
+						</div>
+
+						<br>
+
+						<h1 class="title">HMAC</h1>
+
+						<div class="columns">
+
+							<div class="column is-3">
+
+								<label class="label">Cookie</label>
+
+								<div class="field">
+
+									<p class="control is-expanded">
+										<input class="input" type="text" spellcheck="false" v-model="config.hmac">
+									</p>
+
+								</div>
+
+							</div>
+
+							<div class="column is-9">
+
+								<label class="label">Value
+
+									<div class="is-pulled-right">
+										<span class="tag" id="hmac_timer" :class="{ 'is-hidden': !(hmac.status == 'Valid') }"></span>
+										<span class="tag" :class="{ 'red-fill': (hmac.status == 'Valid') }">{{hmac.status}}</span>
+									</div>
+
+								</label>
+
+								<div class="field has-addons">
+
+									<p class="control is-expanded">
+										<input class="input" type="text" spellcheck="false" readonly="true" v-model="hmac.cookie">
+									</p>
+
+									<p class="control">
+										<button class="button" :disabled="!cookiesAccess" @click="editHMAC">Edit</button>
+									</p>
 
 								</div>
 
@@ -255,96 +312,99 @@
 
 					</div>
 
-					<div class="col-lg-4 col-sm-6">
+					<div class="column is-4">
 
-						<h4><span class="label beluga-bg">Inventory</span></h4>
+						<h1 class="title">Inventory</h1>
 
-						<div class="row table-w-row">
+						<div class="columns">
 
-							<div class="form-group col-sm-6">
+							<div class="column is-6">
 
-								<label for="auto_atc">Mode</label>
+								<label class="label">Mode</label>
 
-								<div class="input-group">
+								<div class="field has-addons">
 
-									<div class="btn-group btn-group-sm" data-toggle="buttons">
+									<p class="control">
+										<a class="button" :class="{ 'is-active': inventory.atc.mode == 'Off' }" @click="inventory.atc.mode = 'Off'">OFF</a>
+									</p>
 
-										<label class="btn btn-default" :class="{ active : inventory.atc.mode == 'Off'}">
-											<input type="radio" name="atc_mode" v-model="inventory.atc.mode" value="Off">
-												<span class="glyphicon glyphicon-off"></span>
-											</input>
-										</label>
-										<label class="btn btn-default" :class="{ active : inventory.atc.mode == 'Auto'}">
-											<input type="radio" name="atc_mode" v-model="inventory.atc.mode" value="Auto">Auto
-										</label>
-										<label class="btn btn-default" :class="{ active : inventory.atc.mode == 'Monitor'}" @click.prevent="inventory.atc.mode = 'Monitor'; enableNotifications();">
-											<input type="radio" name="atc_mode">Monitor
-										</label>
+									<p class="control">
+										<a class="button" :class="{ 'is-active': inventory.atc.mode.includes('Auto'), 'blue-ul': inventory.atc.mode.includes('X') }" @click="inventory.atc.mode = 'Auto'" @contextmenu.prevent="inventory.atc.mode += 'X'">Auto</a>
+									</p>
 
-									</div>
-									
+									<p class="control">
+										<a class="button" :class="{ 'is-active': inventory.atc.mode == 'Monitor' }" @click="inventory.atc.mode = 'Monitor'; enableNotifications();">Monitor</a>
+									</p>
+
 								</div>
 
 							</div>
 
-							<div class="form-group col-sm-6">
+							<div class="column is-6">
 
-								<label for="refresh_s">Refresh</label>
-								<span class="badge btn-bg beluga-fg pull-right">{{inventory.status}}</span>
+								<label class="label">Refresh
+									<div class="is-pulled-right">
+										<span class="tag" v-if="inventory.status">{{inventory.status}}</span>
+									</div>
+								</label>
 
-								<div class="input-group input-group-sm">
+								<div class="level">
 
-									<div class="btn-group btn-group-sm" data-toggle="buttons">
+									<div class="level-left">
 
-										<label class="btn btn-default" :class="{ active : inventory.refresh.mode == 'Off'}">
-											<input type="radio" name="refresh_mode" v-model="inventory.refresh.mode" value="Off">
-												<span class="glyphicon glyphicon-off"></span>
-											</input>
-										</label>
-										<label class="btn btn-default" :class="{ active : inventory.refresh.mode == 'Captcha'}">
-											<input type="radio" name="refresh_mode" v-model="inventory.refresh.mode" value="Captcha">
-												<span class="glyphicon glyphicon-repeat"></span>
-											</input>
-										</label>
-										<label class="btn btn-default" :class="{ active : inventory.refresh.mode == 'Timer'}" @click.prevent="setSleep">
-											<input type="radio" name="refresh_mode">{{inventory.refresh.sleep}} s
-										</label>
+										<div class="field has-addons">
+
+											<p class="control">
+												<a class="button" :class="{ 'is-active': inventory.refresh.mode == 'Off' }" @click="inventory.refresh.mode = 'Off'">OFF</a>
+											</p>
+
+											<p class="control">
+												<a class="button" :class="{ 'is-active': inventory.refresh.mode == 'Timer' }" @click="setSleep" v-text="inventory.refresh.sleep +  ' sec'"></a>
+											</p>
+
+										</div>
 
 									</div>
 
-									<span class="input-group-btn"> 
-										<button class="btn btn-default" :disabled="inventory.refresh.mode == 'Timer' || inventory.status == '...'" @click="loadInventory">
-											<span class="glyphicon glyphicon-refresh" id="stock_gif" :class="{ 'gly-spin' : inventory.status == '...' }"></span>
-										</button>
-									</span>
-									
+									<div class="level-right">
+
+										<div class="field">
+
+											<p class="control is-pulled-right">
+												<button class="button" :disabled="inventory.refresh.mode == 'Timer' || inventory.status == '...'" :class="{ 'is-loading': inventory.status == '...' }" @click="loadInventory">Load</button>
+											</p>
+
+										</div>
+
+									</div>
+
 								</div>
 
 							</div>
 
 						</div>
 
-						<table class="table table-hover table-condensed form-bg table-w" id="stock_table">
+						<table class="table is-narrow" id="inv_table">
 
 							<colgroup>
-								<col width="13%">
-								<col width="17%">
+								<col width="15%">
+								<col width="20%">
 								<col width="15%">
 								<col width="15%">
 								<col width="15%">
-								<col width="25%">
+								<col width="20%">
 							</colgroup>
 							<thead>
 								<tr>
-									<th>Size</th>
+									<th class="has-pointer" @click="atcManual">Size</th>
 									<th>{{inventory.locale}}</th>
-									<th class="text-right pointer" :class="{ strike : !inventory.avail.set }" @click="inventory.avail.set = !inventory.avail.set">{{inventory.avail.total}}</th>
-									<th class="text-right pointer" :class="{ strike : !inventory.stock.set }" @click="inventory.stock.set = !inventory.stock.set">{{inventory.stock.total}}</th>
-									<th class="text-right">Δ</th>
+									<th class="has-text-right has-pointer" :class="{ 'has-strike': !inventory.avail.set }" @click="inventory.avail.set = !inventory.avail.set">{{inventory.avail.total}}</th>
+									<th class="has-text-right has-pointer" :class="{ 'has-strike': !inventory.stock.set }" @click="inventory.stock.set = !inventory.stock.set">{{inventory.stock.total}}</th>
+									<th class="has-text-right">▲</th>
 									<th></th>
 								</tr>
 							</thead>
-							<tbody id="stock_body">
+							<tbody id="inv_body">
 								<tr>
 									<td></td>
 									<td></td>
@@ -359,40 +419,57 @@
 
 					</div>
 
+					<div class="column is-4">
 
-					<div class="col-lg-4 col-sm-12">
+						<h1 class="title">adidas.{{config.locale.domain}}</h1>
 
-						<h4><span class="label beluga-bg">adidas.{{config.locale.domain}}</span></h4>
+						<div class="columns">
 
-						<div class="row">
+							<div class="column is-5">
 
-							<div class="form-group col-sm-5">
+								<label class="label">Account</label>
 
-								<label for="account_buttons">Account</label>
-								
-								<div class="btn-group btn-group-sm input-group" role="group">
-									<a class="btn btn-default" name="account_buttons" :href="adcLink('login')" target="_blank">Login</a>
-									<a class="btn btn-default" name="account_buttons" :href="adcLink('logout')" target="_blank">Logout</a>
+								<div class="field has-addons">
+
+									<p class="control">
+										<a class="button" :href="adcLink('login')" target="_blank">Login</a>
+									</p>
+
+									<p class="control">
+										<a class="button" :href="adcLink('logout')" target="_blank">Logout</a>
+									</p>
+
 								</div>
 
 							</div>
 
-							<div class="form-group col-sm-7">
+							<div class="column is-7">
 
-								<div class="pull-right">
+								<div class="is-pulled-right">
 
-									<label for="cart_buttons">Cart</label>
+									<label class="label">Cart
 
-									<span class="badge btn-bg beluga-fg pull-right pointer" v-if="cart.adding">{{cart.text}}</span>
+										<div class="is-pulled-right">
+											<span class="tag has-pointer" v-if="cart.adding">{{cart.text}}</span>
+											<span class="tag has-pointer" v-if="!cart.adding && cookiesAccess" :class="{'red-fill' : cart.items && cart.userCount}" @click="resetCart">Items: {{cart.items}}
+										</div>
 
-									<span class="badge btn-bg beluga-fg pull-right pointer" v-if="!cart.adding && cookiesAccess" :class="{'solar-bg' : cart.items && cart.userCount}" @click="resetCart">
-										<span class="glyphicon glyphicon-shopping-cart"></span> {{cart.items}}
-									</span>
+									</label>
 
-									<div class="btn-group btn-group-sm input-group" role="group">
-										<a class="btn btn-default" name="cart_buttons" :href="adcLink('show')" target="_blank">Show</a>
-										<a class="btn btn-default" name="cart_buttons" :href="adcLink('paypal')" target="_blank">PayPal</a>
-										<a class="btn btn-default" name="cart_buttons" :href="adcLink('checkout')" target="_blank">Checkout</a>
+									<div class="field has-addons">
+
+										<p class="control">
+											<a class="button" :href="adcLink('show')" target="_blank">Show</a>
+										</p>
+
+										<p class="control">
+											<a class="button" :href="adcLink('paypal')" target="_blank">PayPal</a>
+										</p>
+
+										<p class="control">
+											<a class="button" :href="adcLink('checkout')" target="_blank">Checkout</a>
+										</p>
+
 									</div>
 
 								</div>
@@ -407,68 +484,102 @@
 
 				</div>
 
+				<div class="columns end red-fill" v-cloak>
 
-				<footer class="footer solar-bg">
+					<div class="column is-12">
 
-					&copy; 2017 &mdash; v2.8 &mdash; <a href="https://twitter.com/InstaCopV2" target="_blank">InstaCop on Twitter</a> &mdash; <a href="https://twitter.com/bqdxo" target="_blank">@bq</a> &mdash; Bookmarklets:
+						<div class="level">
+							
+							<div>
 
-					<a href="
+								Version <span class="is-bold">2.8.0</span>
 
-						javascript: (function () {
+							</div>
 
-							var instaURL = prompt('Enter InstaCop URL:', 'w.www.adidas.de');
-							var queryString = '/?';
-							try {queryString += '&pid=' + document.getElementsByName('masterPid')[0].value;} catch(err) {}
-							try {queryString += '&sitekey=' + document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey');} catch(err) {}
-							if (window.OCAPI_KEY != undefined) queryString += '&clientID=' + window.OCAPI_KEY;
-							try {
-							    window.captchaResponse();
-							    queryString += '&captchaDup=' +  document.getElementsByClassName('captcha-duplicate')[0].name;
-							} catch(err) {}
-							window.open('http://' + instaURL + queryString);
+							<div>
 
-						})();
+								Bookmarklets:
 
-						">InstaLaunch</a>,
+								<a href="
 
-					<a href="
+									javascript: (function () {
 
-						javascript: (function () {
+										let instaURL = prompt('Enter InstaCop URL:', 'w.www.adidas.de');
+										let queryString = '/?';
+										if (window.PRODUCT_STORE_ID) queryString += '&style=' + window.PRODUCT_STORE_ID;
+										if (window.OCAPI_KEY) queryString += '&clientID=' + window.OCAPI_KEY;
+										try { queryString += '&sitekey=' + document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey'); } catch(err) {}
+										try {
+										    window.captchaResponse();
+										    queryString += '&captchaDup=' +  document.getElementsByClassName('captcha-duplicate')[0].name;
+										} catch(err) {}
+										window.open('http://' + instaURL + queryString);
 
-							decodeURIComponent(document.cookie).split(';').forEach( item => {
-								let name = item.split('=')[0].split(' ').join('');
-								if (name.includes('dwanon')) {
-									let value = item.split('=')[1].split(' ').join('');
-									prompt(name, value);
-								}
-							});
+									})();"
 
-						})();
+									title="Use this bookmarklet when you're through splash to launch InstaCop with all necessary parameters.">AfterSplash</a>,
 
-						">InstaCart</a> &mdash; Utils:
+								<a href="
 
-					<a :href="instaLink">InstaLink</a>,
+									javascript: (function () {
 
-					<a href="javascript: prompt('This is your UserAgent:', navigator.userAgent); void(0);">UserAgent</a>,
+										decodeURIComponent(document.cookie).split(';').forEach( item => {
+											let name = item.split('=')[0].split(' ').join('');
+											if (name.includes('dwanon')) {
+												let value = item.split('=')[1].split(' ').join('');
+												prompt(name, value);
+											}
+										});
 
-					<a href="javascript: $.get('https://ipinfo.io', function(response) { alert(response.ip + ' (' + response.country + ')'); }, 'jsonp'); void(0);">IP</a>
+									})();"
 
-				</footer>
+									title="Use this bookmarklet on the adidas.com cart page to extract the cart ID.">CartID</a>
+
+							</div>
+
+							<div>
+
+								Utils:
+
+								<a :href="instaLink" title="Drag this link to another browser window in order to launch InstaCop with all current parameters.">ConfigLink</a>,
+
+								<a href="javascript: prompt('This is your UserAgent:', navigator.userAgent); void(0);">UserAgent</a>,
+
+								<a :href="splashLink" target="_blank">YeezySplash</a>
+
+							</div>
+
+							<div>
+
+								<a href="https://twitter.com/InstaCopV2" target="_blank">Twitter</a>,
+
+								<a href="https://github.com/bequadro/instacop" target="_blank">Github</a>,
+
+								<a href="https://paypal.me/InstaCop" target="_blank">Donate ♥</a>
+
+							</div>
+
+							<div class="is-flex">
+
+								<div>
+
+									&copy; 2017 @<a href="https://twitter.com/bqdxo" target="_blank">bequadro</a>
+
+								</div>
+
+								<div class="bq-logo"></div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
 
 			</div>
 
 		</div>
-
-		<script src="instacop/jquery.min.js"></script>
-		<script src='instacop/js.cookie.js'></script>
-		<script src="instacop/json2html.js"></script>
-
-		<script src="instacop/inventory.js"></script>
-		<script src="instacop/minutes2.js"></script>
-
-		<script src="instacop/vue.js"></script>
-		<script src="instacop/config.js"></script>
-		<script src="instacop/app.js"></script>
 
 	</body>
 
