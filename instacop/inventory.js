@@ -347,8 +347,8 @@ window.Inventory = {
 
 					try { //2nd fallback: getAvailSizes + scrape HTML.
 
-						//Start both requests simultaneously.
-						let _getAvail = $.getJSON(URLs.getAvail(self.main.style));
+						//Start both requests simultaneously. Catch getAvail in case of 403.
+						let _getAvail = $.getJSON(URLs.getAvail(self.main.style)).catch(err => Promise.resolve({ sizes: [] }));
 						let _getHTML = $.get(URLs.getHTML(self.main.style));
 
 						//Await both promises.
