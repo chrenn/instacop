@@ -28,9 +28,7 @@ Visit **[bequadro.github.io/instacop/](https://bequadro.github.io/instacop/)** f
 
 Installation is similar to Solemartyr's script. Check YouTube if you have problems.
 
-### 1. Download and unzip.
-
-   [![Github All Releases](https://img.shields.io/github/downloads/bequadro/instacop/total.svg?style=flat-square)](https://github.com/bequadro/instacop/releases/latest)
+### 1. Clone/download and unzip.
 
 ### 2. Start a local server.
 
