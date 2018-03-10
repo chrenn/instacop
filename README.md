@@ -6,6 +6,8 @@ I decided to open source my adidas.com script. This has been in development sinc
 
 Like the infamous Solemartyr script, InstaCop runs solely in the browser and is therefore limited in its scope.
 
+Visit **[bequadro.github.io/instacop/](https://bequadro.github.io/instacop/)** for a live demo. HMAC and Captcha will not work there due to security limitations.
+
 **This will not help you get through splash.**
 
 # Features
@@ -90,7 +92,7 @@ Get the necessary parameters during release (Sitekey, ClientID, Duplicate) from 
 
 You can retrieve the sitekey for the currently loaded PID with the `Get` button.
 
-If you get through splash yourself, you can use the `AfterSplash` bookmarklet on the splash page. Just enter your local URL to transfer the values to InstaCop.
+~~If you get through splash yourself, you can use the `AfterSplash` bookmarklet on the splash page. Just enter your local URL to transfer the values to InstaCop.~~
 
 ## Stock Checking
 
@@ -100,11 +102,11 @@ Pairs that are ready to be carted | Current stock including cart holds | Differe
 
 The five stock checking methods are ranked by ther usefulness and combined when necessary. You can force fallback options by toggling the `Avail.` and `Stock` table headers.
 
-**Client** is the primary method and the only one that can show avail. pairs. It checks the Demandware API with the provided ClientID key.
+~~**Client** is the primary method and the only one that can show avail. pairs. It checks the Demandware API with the provided ClientID key.~~ Unfortunately, adidas disabled that.
 
 **API** uses the new adidas.com API. Generally pretty accurate, but only shows stock amount up to 15.
 
-~~**HTML** scrapes the product page for stock numbers.~~ Deprecated.
+**HTML** scrapes the product page for stock numbers. Click `Avail.` to force HTML stock checking.
 
 **Sizes** shows if a size is in stock or not. Usually accessible as soon as stock goes live.
 
@@ -137,8 +139,6 @@ Included in the download is a HMAC test page, which is accessible by navigating 
 ## Config
 
 Most of the editable values are saved locally. You can export them to another browser window by dragging the `ConfigLink` (located at the bottom under `Utils`).
-
-There is also a preset option for the product code. Right click the button between product code and image. Use the following format: `PRODUCT_NAME,PRODUCT_CODE`.
 
 # Support
 

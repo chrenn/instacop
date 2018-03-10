@@ -11,7 +11,6 @@
 
 		locale: { id: 'DE', domain: 'de', lang: 'de' },
 		style: 'CP9654',
-		preset: 'V2,CP9654',
 		sitekey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
 		tucap: '',
 		acap: '',

@@ -100,7 +100,7 @@ window.app = new Vue({
 
 		//Direct link to product page.
 		pidLink() {
-			return this.adcBase + 'Product-Show?pid='+ this.config.style;
+			return this.adcBase + 'Product-Show?pid=%20' + this.config.style;
 		},
 
 	},
@@ -158,9 +158,9 @@ window.app = new Vue({
 				document.getElementById("post_form").action = this.adcBase + 'Cart-MiniAddProduct' + (this.config.clientID ? '?clientId=' + this.config.clientID : '');
 
 				//Add POST parameters.
-				document.getElementById("post_pid").value = this.config.style.trim() + '_' + size;
+				document.getElementById("post_pid").value = this.config.style + '_' + size;
 				document.getElementById("post_token").value = token;
-				document.getElementById("post_mpid").value = this.config.style.trim();
+				document.getElementById("post_mpid").value = this.config.style;
 
 				document.getElementById("post_dup").name = this.config.captchaDup;
 				document.getElementById("post_dup").value = token;
@@ -176,9 +176,9 @@ window.app = new Vue({
 						type: "POST",
 						url: "https://www.adidas.de/api/cart_items",
 						data: JSON.stringify({
-							product_id: this.config.style.trim(),
+							product_id: this.config.style,
 							quantity: 1,
-							product_variation_sku: this.config.style.trim() + '_' + size,
+							product_variation_sku: this.config.style + '_' + size,
 							size: "44",
 							recipe: null,
 							invalidFields: [],
@@ -629,42 +629,6 @@ window.app = new Vue({
 			this.solver.requests += -1;
 			await wait(2000);
 			this.solver.error = '';
-
-		},
-
-		//Style code preset: input name and code (comma separated).
-		presetStyle() {
-
-			let input = prompt('Edit preset:', this.config.preset);
-
-			if (input && input.split(',').length > 1) {
-
-				this.config.preset = input;
-
-			} else if (input == '') {
-
-				this.config.preset = "YZY,YZY"
-
-			}
-
-		},
-
-		//Apply style code preset. Cycle randomly through Yeezy style codes if specified.
-		setStyle() {
-
-			let style = this.config.preset.split(',')[1].toUpperCase();
-
-			if (style == "YZY") {
-
-				let yeezys = ['B35309', 'AQ4832', 'AQ2659', 'BB1839', 'AQ2661', 'BB1840', 'BB1826', 'BY2456', 'BY9611', 'BY9612', 'BY1605', 'BY1604', 'CQ1693', 'CP9652', 'CP9366', 'CP9654'];
-				
-				this.config.style = yeezys[Math.floor(Math.random()*yeezys.length)];
-
-			} else {
-
-				this.config.style = style;
-
-			}
 
 		},
 

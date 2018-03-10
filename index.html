@@ -91,6 +91,7 @@
 													<option :value="{ id: 'IE', domain: 'ie', lang: 'en' }">Ireland</option>
 													<option :value="{ id: 'IT', domain: 'it', lang: 'it' }">Italy</option>
 													<option :value="{ id: 'NL', domain: 'nl', lang: 'nl' }">Netherlands</option>
+													<option :value="{ id: 'NO', domain: 'no', lang: 'no' }">Norway</option>
 													<option :value="{ id: 'PL', domain: 'pl', lang: 'pl' }">Poland</option>
 													<option :value="{ id: 'RU', domain: 'ru', lang: 'ru' }">Russia</option>
 													<option :value="{ id: 'SK', domain: 'sk', lang: 'sk' }">Slovakia</option>
@@ -125,10 +126,6 @@
 
 										<p class="control">
 											<input class="input" type="text" spellcheck="false" placeholder="XX0000" v-model="config.style">
-										</p>
-
-										<p class="control">
-											<button class="button" @click="setStyle" @contextmenu.prevent="presetStyle">{{config.preset.split(',')[0]}}</button>
 										</p>
 
 									</div>
@@ -493,7 +490,7 @@
 							
 							<div>
 
-								Version <span class="is-bold">2.8.3</span>
+								Version <span class="is-bold">2.8.4</span>
 
 							</div>
 
@@ -502,23 +499,17 @@
 								Bookmarklets:
 
 								<a href="
-
+									
 									javascript: (function () {
 
-										let instaURL = prompt('Enter InstaCop URL:', 'w.www.adidas.de');
-										let queryString = '/?';
-										if (window.PRODUCT_STORE_ID) queryString += '&style=' + window.PRODUCT_STORE_ID;
-										if (window.OCAPI_KEY) queryString += '&clientID=' + window.OCAPI_KEY;
-										if (window.CAPTCHA_KEY) queryString += '&sitekey=' + window.CAPTCHA_KEY;
 										try {
-										    window.captchaResponse();
-										    queryString += '&captchaDup=' +  document.getElementsByClassName('captcha-duplicate')[0].name;
+											let sitekey = document.querySelector('.g-recaptcha').getAttribute('data-sitekey');
+											prompt('Sitekey', sitekey);
 										} catch (err) {}
-										window.open('http://' + instaURL + queryString);
 
 									})();"
-
-									title="Use this bookmarklet when you're through splash to launch InstaCop with all necessary parameters.">AfterSplash</a>,
+									
+									title="Use this bookmarklet on the adidas.com splash page to extract the sitekey.">Sitekey</a>,
 
 								<a href="
 
@@ -562,7 +553,7 @@
 
 								<div>
 
-									&copy; 2017 @<a href="https://twitter.com/b_q_____" target="_blank">bequadro</a>
+									&copy; 2017 @<a href="https://twitter.com/_bequadro" target="_blank">bequadro</a>
 
 								</div>
 

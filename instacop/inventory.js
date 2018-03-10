@@ -24,7 +24,7 @@ window.URLs = {
 
 	//Fallback using the new ADC API.
 	apiAvail(pid) {
-		return app.inventory.stock.set ? 'https://www.adidas.' + app.config.locale.domain + '/api/products/' + pid  + '/availability' : '';
+		return app.inventory.avail.set ? 'https://www.adidas.' + app.config.locale.domain + '/api/products/' + pid  + '/availability' : '';
 	},
 
 	//Fetches sizes and stock availability (not those ready to cart anymore...).
@@ -34,7 +34,7 @@ window.URLs = {
 
 	//Crawls stock numbers from the HTML size picker. Only displays available sizes.
 	getHTML(pid) {
-		return this.proxy + app.adcBase + 'Product-Show?pid=' + pid;
+		return this.proxy + app.adcBase + 'Product-Show?pid=%20' + pid;
 	},
 
 	//Fetches stock numbers (not in real time, but sometimes available before product is loaded on other methods).
