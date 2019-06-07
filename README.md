@@ -6,8 +6,6 @@ I decided to open source my adidas.com script. This has been in development sinc
 
 Like the infamous Solemartyr script, InstaCop runs solely in the browser and is therefore limited in its scope.
 
-Visit **[bequadro.github.io/instacop/](https://bequadro.github.io/instacop/)** for a live demo. HMAC and Captcha will not work there due to security limitations.
-
 **This will not help you get through splash.**
 
 # Features
@@ -143,26 +141,3 @@ Most of the editable values are saved locally. You can export them to another br
 I will provide absolutely no support regarding setup and usage.
 
 Try Twitter or [r/adidasATC](https://reddit.com/r/adidasATC).
-
-# Contributing
-
-Feature-wise we are probably at the limit of what can be done with a client-side script. If you think of something, contact me or submit a pull request.
-
-## About the code
-
-Please excuse the messy code. This was my first JavaScript project.
-
-I put everything in a single Vue.js component. `app.js` and `inventory.js` are coupled in a strange way. The CSS on top of bulma.css has way too many `!important`s in it.
-
-I also did not use any build tools for this project, which is kind of insane, but makes forking easier for you.
-
-Unfortunately, I don't have the time to refactor this project. If you'd like to contribute, please contact me or submit a pull request.
-
-# License
-
-☠️ Anyone on Sneaker Twitter trying to sell this in any shape or form can rot in hell.
-
-# Contact
-
-- [bequadro](https://twitter.com/b_q_____)
-- [InstaCop](https://twitter.com/InstaCopV2)
